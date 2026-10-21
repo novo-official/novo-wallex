@@ -1,0 +1,7 @@
+# Trading universe. Default-deny: a symbol is tradable only if it is listed in
+# `allowlist` AND is not in blocked_markets.txt. An empty list means nothing is tradable.
+#
+# Entries may be written as BASE/QUOTE or as the API symbol (OP/TMN or OPTMN).
+
+[markets]
+allowlist = []
