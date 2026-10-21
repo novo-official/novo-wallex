@@ -1,0 +1,22 @@
+# Secrets
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+
+# Local outputs
+probe_output*.txt
+scratchpad/
+*.log
+
+# Node (dashboard, later phase)
+node_modules/
+.next/
+
+# Editors / OS
+.idea/
+.vscode/
+.DS_Store
