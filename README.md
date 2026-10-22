@@ -1,132 +1,81 @@
-# Wallex Algorithmic Trading System
+# NOVO Team: agentic AI trading engine for Wallex
 
-Spot-only, long-only algorithmic trading for the Wallex hackathon challenge.
-Django 5.2 + DRF + PostgreSQL. The trading engine is a set of management
-commands that share the same ORM and code path as the backtester.
+> **خلاصه:** موتور معاملاتی تیم نوو برای چالش والکس در هکاتون Starkoch. بازار اسپات، فقط خرید، و بدون دخالت انسان.
+> - **تصمیم‌گیری:** مدل ML بازارها را رتبه‌بندی می‌کند، دو نقش مدل زبانی محلی (افسر ریسک و عامل معامله) تأیید می‌کنند و RiskGuard حرف آخر را می‌زند.
+> - **یک مسیر کد:** شادو و زنده یک کد مشترک دارند و همه چیز در DecisionLog ثبت می‌شود.
+> - **مستندات:** معماری و استراتژی در `STRATEGY.md`، راه‌اندازی زنده و خرابی‌ها در `RUNBOOK.md`، و ویدیوی دمو در `DEMO_SCRIPT.md`.
 
-Status: **Phase 4 (local LLM roles, RiskGuard) in progress**. See `STRATEGY.md`. Strategy, ML, agent, execution and the dashboard
-are not implemented yet.
+Django 5.2 + DRF + PostgreSQL, Python 3.12, LightGBM, a local LLM (Ollama, `qwen3:8b` pinned by digest) and a
+Next.js dashboard (Persian, RTL). The backtester, shadow and live share the same strategy, risk and feature code.
 
-## Setup
+| document | contents |
+|---|---|
+| `STRATEGY.md` | architecture (Mermaid), trading logic, AI role and ablation, buy/sell rules, risk, results, lessons |
+| `RUNBOOK.md` | go-live checklist, smoke test, manual challenge end, failure playbook |
+| `DEMO_SCRIPT.md` | 5-minute demo with Persian narration |
+| `docs/RESEARCH_P2.md` … `P4.md` | data, costs, rules, ML, LLM roles: every experiment and its numbers |
+| `reports/experiments.jsonl` | append-only log of every experiment run (configs tried, holdout looks) |
+| `reports/decision_logs/` | exported decision logs (shadow; live once it runs) |
 
-```bash
-cp .env.example .env          # then fill in WALLEX_API_KEY and passwords
-python3.12 -m venv .venv && source .venv/bin/activate
-pip install -r requirements-dev.txt
-```
-
-Or with Docker (PostgreSQL + web):
-
-```bash
-docker compose up --build
-```
-
-## Tests
+## 1. Setup
 
 ```bash
-pytest
+cp .env.example .env                       # WALLEX_API_KEY, POSTGRES_PASSWORD, CHALLENGE_END (see RUNBOOK §3)
+python3.12 -m venv .venv && .venv/bin/pip install -r requirements-dev.txt ruff
+brew install libomp postgresql@16           # macOS: LightGBM runtime, local Postgres (role/db "wallex")
+.venv/bin/python manage.py migrate
+make test                                   # ~250 tests
+make llm-setup                              # Ollama + the pinned model (only for shadow/live and LLM regeneration)
 ```
 
-Covers the Wallex client (auth header, retries, backoff, rate limiting) and the
-market policy (blocklist parsing, default-deny allowlist, startup check).
+Docker (`docker compose up --build`) exists but was not used for the runs.
 
-## Probe the Wallex API (read-only)
+## 2. Data
+
+Everything the backtests need is committed: 180 days of 1m candles for 21 symbols (`data/candles/1m/`,
+sha256 in `data/MANIFEST.json`), market rules, frozen slippage (`config/slippage.json`) and every LLM answer
+(`data/llm_cache/`).
 
 ```bash
-python scripts/probe_api.py
-python scripts/probe_api.py --symbol BTCTMN --resolution 60 --days 2 --out scratchpad/probe.txt
+.venv/bin/python manage.py import_candles                    # verify sha256, load into the DB
+.venv/bin/python manage.py download_history --resolution 1 --days 180 --resume   # refresh from Wallex (GET only)
+nohup scripts/run_recorder.sh >/dev/null 2>&1 &              # order book recorder (not committed: data/orderbook/)
 ```
 
-Sends GET requests only. Output is redacted by default (identifiers everywhere,
-balances and ids on account/prop endpoints); `--no-redact` is for a local look
-only. Endpoints marked UNVERIFIED are not in the Swagger file. Real public
-fixtures are refreshed with `python scripts/capture_fixtures.py`.
-
-## Market data (Phase 1)
+## 3. Backtests and experiments
 
 ```bash
-python manage.py sync_markets                       # spot markets, precision, min order, market-order flag, policy flags
-python manage.py sync_orderbook                     # top-of-book snapshot per allowlisted market (GET /v1/depth)
-python manage.py download_history --days 30         # 1h candles for allowed markets (idempotent)
-python manage.py download_history --symbol BTCTMN --start 2026-10-01T00:00:00+00:00 --end 2026-10-08T00:00:00+00:00
-python manage.py build_universe                     # ELIGIBLE / REJECTED with reasons
+.venv/bin/python scripts/ai_activity_fix_check.py            # live config, 3 variants, last 14 days, measured fees
+.venv/bin/python scripts/backtest_ai_activity.py             # live config, 14 + 7 days, the 3-row fee table
+.venv/bin/python manage.py window_study                      # rolling 3-day windows (trend rules)
+.venv/bin/python manage.py p3_experiment <name> [--final]    # ML experiments (docs/RESEARCH_P3.md)
+.venv/bin/python manage.py p4_experiment ablation --llm replay [--final]   # LLM ablation from the cache
+make reproduce                                               # replay the LLM ablation: no model, no network
 ```
 
-Every command passes the market policy before it makes a request. Blocked or
-non-allowlisted symbols are refused.
+Overfitting guard: at most 30 configurations per experiment, selection windows only, the holdout only with
+`--final`, every run appended to `reports/experiments.jsonl`.
 
-Responses are validated with Pydantic models in `exchange/schemas.py`. The test
-fixtures in `tests/fixtures/wallex/` are real captures (see the README there).
-Fields the Swagger does not document are not used.
-
-## Orderbook recorder (Phase 2)
-
-Order book history cannot be downloaded later, so it is recorded from day one
-(GET only, public endpoints, no API key sent):
+## 4. Shadow, live and the dashboard
 
 ```bash
-nohup scripts/run_recorder.sh >/dev/null 2>&1 &   # restarts after crashes, keeps the Mac awake
-.venv/bin/python manage.py recorder_status --hours 1
-scripts/stop_recorder.sh
+scripts/run_engine.sh shadow &              # simulated fills on the live public book; no API key used
+make preflight                              # live readiness (RUNBOOK §1)
+make go-live                                # preflight -> smoke test (typed YES) -> GO LIVE -> tag live-v1 -> start
+make api                                    # read-only DRF API on 127.0.0.1:8000
+make dashboard-install && make dashboard    # http://localhost:3000  (Overview, Decision Timeline; ?mode=shadow|live)
+.venv/bin/python scripts/export_decisions.py --mode shadow   # reports/decision_logs/shadow_decisions.{jsonl,csv}
 ```
 
-Every 10 s it stores the top 20 levels of `/v1/depth` for the 21 data-universe
-symbols (11 TMN markets and their USDT pairs). Each symbol's public trades are
-polled every 30 s and the bid/ask of every market every 60 s. Every request is
-logged as an event with its latency, the server clock offset and any error. Files:
-`data/orderbook/<stream>/YYYY-MM-DD/HH.parquet` (UTC).
+Files the engine writes: `journal/<mode>/decisions-YYYYMMDD.jsonl` (the DecisionLog, committed),
+`logs/engine_state_<mode>.json`, `logs/heartbeat_<mode>.txt`, `logs/llm_journal.jsonl` (not committed).
 
-## Data, backtest and evidence (Phase 2)
+## 5. Safety
 
-```bash
-.venv/bin/python manage.py download_history --resolution 1 --days 180   # 21 symbols, ~25 min
-.venv/bin/python manage.py export_candles                                 # data/candles/1m/*.parquet + data/MANIFEST.json
-.venv/bin/python manage.py edge_study                                     # does any signal beat random entries after costs?
-.venv/bin/python manage.py window_study                                   # rolling 3-day windows, selection/holdout, fee stress
-.venv/bin/python manage.py run_backtest --start 2026-10-19T00:00:00Z --end 2026-10-22T00:00:00Z
-```
-
-The backtester reads only the committed `data/` and `config/`, so no network is needed. The
-strategy code (`strategy/`) and the risk caps (`risk/limits.py`) are the same ones the live
-engine will use. Results and their interpretation are in `docs/RESEARCH_P2.md`.
-
-## ML and the ablation (Phase 3)
-
-```bash
-brew install libomp                                    # macOS only (LightGBM)
-.venv/bin/python manage.py p3_experiment ml_targets    # which ML target has skill net of costs (selection only)
-.venv/bin/python manage.py p3_experiment rules_plus_ml # rules vs rules + ML on 3-day windows
-.venv/bin/python manage.py p3_experiment rules_plus_ml --final   # holdout, logged once per model
-```
-
-Every experiment has at most 30 configurations, reports a 3-row fee table and is appended to
-`reports/experiments.jsonl`. Findings: `docs/RESEARCH_P3.md`.
-
-## AI: local, pinned, reproducible (Phase 4)
-
-The AI roles (Regime/Risk Officer, Trade Agent) run on a **local open-weight model** through Ollama:
-zero cost, offline, pinned by name and digest in `config/llm.toml` (`qwen3:8b`), JSON-schema outputs,
-temperature 0, fixed seed. Every answer is cached in `data/llm_cache/` (committed), so the AI's
-decisions can be replayed without any model installed. Rationale and evidence: `STRATEGY.md` §2.
-
-```bash
-make reproduce            # replay the LLM ablation from data/ + data/llm_cache/ and check every metric
-make llm-setup            # install Ollama + the pinned model and run a health check (needed only to regenerate)
-make reproduce-llm-live   # regenerate every LLM answer with the pinned model into a fresh cache (hours)
-.venv/bin/python manage.py p4_experiment benchmark   # 20 calls: latency, JSON validity, determinism
-```
-
-Optional free-tier fallbacks (Groq, Gemini Flash) for shadow/live only: set `GROQ_API_KEY` /
-`GEMINI_API_KEY` in `.env`. They are never used by the backtest.
-
-## Market policy (default-deny)
-
-- `blocked_markets.txt`: markets that must never be traded (BASE/QUOTE, one per line).
-- `config/trading.toml`: `markets.allowlist`. The default-deny rule is enforced in code. An empty list means nothing is tradable.
-- `config/trading.toml`: `data.symbols`. Read-only data universe (the USDT pairs for fair value). Never traded; a blocked symbol here stops the policy from loading.
-- `manage.py check` runs `exchange.E001` (invalid policy file, error) and `exchange.W001` (empty allowlist, warning).
-
-## Safety
-
-- Live trading requires both `--mode live` and `LIVE_TRADING_CONFIRMED=true`. The default is `false`.
-- Secrets live only in `.env`, which is git-ignored.
+- **Live needs all of:** `--mode live`, `LIVE_TRADING_CONFIRMED=true`, a passing preflight and the team's
+  explicit go-ahead (`make go-live` asks for it twice).
+- **Market policy:** default-deny allowlist (`config/trading.toml`) plus the organizer blocklist
+  (`blocked_markets.txt`, OP/TMN), checked at startup and immediately before every order.
+- **RiskGuard:** has the final word over every entry (STRATEGY.md §4); the LLM can only reduce risk.
+- **Secrets:** only in `.env` (git-ignored); the key is never logged, and shadow does not send it.
+- **Probes:** probe scripts are GET only and redact identifiers and balances.

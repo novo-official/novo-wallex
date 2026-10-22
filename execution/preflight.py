@@ -10,7 +10,7 @@ from django.conf import settings
 
 
 def run_preflight(mode: str) -> list[tuple[str, bool, str]]:
-    from exchange.client import WallexClient
+    from exchange.client import WallexAPIError, WallexClient
     from exchange.factory import build_policy
 
     from .broker import LiveBroker, parse_balances
@@ -74,7 +74,18 @@ def run_preflight(mode: str) -> list[tuple[str, bool, str]]:
         check("no open orders", open_orders)
 
         def prop():
-            data = client.get_json("/v1/prop/user/packages/history")
+            try:
+                data = client.get_json("/v1/prop/user/packages/history")
+            except WallexAPIError as exc:
+                if exc.status_code != 401:
+                    raise
+                # Verified 2026-10-23: this endpoint wants a web login, not the API key. Then the challenge end
+                # must be set by hand (RUNBOOK.md §3) and liquidity_limit stays unknown (the -2.5% kill switch
+                # is far above any plausible prop floor).
+                manual = bool(challenge_end(live))
+                return manual, "401 (needs a web login): " + (
+                    "using the manual challenge end; liquidity_limit unknown" if manual else "set CHALLENGE_END"
+                )
             rows = data.get("result") or []
             rows = rows if isinstance(rows, list) else rows.get("data", [rows])
             active = [r for r in rows if str(r.get("status", "")).lower() in ("active", "running", "open", "1")] or rows
