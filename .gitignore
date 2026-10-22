@@ -5,11 +5,12 @@
 __pycache__/
 *.py[cod]
 .venv/
+venv/
 .pytest_cache/
 
 # Local outputs
 probe_output*.txt
-# scratchpad/
+scratchpad/
 *.log
 
 # Node (dashboard, later phase)

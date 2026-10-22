@@ -1,10 +1,10 @@
 """Read-only HTTP client for the Wallex REST API.
 
-Phase 0 exposes GET requests only. Order placement and cancellation are added
-in the execution phase, after the official docs have been confirmed.
+GET requests only. Order placement and cancellation are added in the execution
+phase (P5), after the official docs have been confirmed.
 
-Responses are returned as parsed JSON (`Any`). Typed models are added after
-`scripts/probe_api.py` has confirmed the real response shapes.
+Responses are returned as parsed JSON (`Any`) and validated by the callers with
+the models in exchange/schemas.py.
 """
 
 from __future__ import annotations
@@ -132,9 +132,21 @@ class WallexClient:
     def get_markets(self) -> Any:
         return self.get_json("/hector/web/v1/markets")
 
+    def get_market_rules(self) -> Any:
+        # Probe-verified on api.wallex.ir (not in Swagger): minNotional, minQty, precision, market-order flag.
+        return self.get_json("/v1/markets")
+
     def get_depth_all(self) -> Any:
-        # UNVERIFIED path: the docs were unreachable when this was written. Confirm with the probe.
+        # In Swagger, but answered HTTP 503 on every probe so far. Use get_depth(symbol) instead.
         return self.get_json("/depth/all")
+
+    def get_depth(self, symbol: str) -> Any:
+        # Probe-verified on api.wallex.ir (not in Swagger); shape matches resources.SingleMarketDepthResponse.
+        return self.get_json("/v1/depth", {"symbol": symbol})
+
+    def get_trades(self, symbol: str) -> Any:
+        # Probe-verified on api.wallex.ir (not in Swagger): the last 50 public trades.
+        return self.get_json("/v1/trades", {"symbol": symbol})
 
     def get_udf_history(self, symbol: str, resolution: str, from_ts: int, to_ts: int) -> Any:
         params = {"symbol": symbol, "resolution": resolution, "from": from_ts, "to": to_ts}

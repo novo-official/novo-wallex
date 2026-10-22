@@ -37,14 +37,16 @@ python scripts/probe_api.py
 python scripts/probe_api.py --symbol BTCTMN --resolution 60 --days 2 --out scratchpad/probe.txt
 ```
 
-Sends GET requests only and prints the raw responses. Use it to confirm real
-response shapes before typed models are written.
+Sends GET requests only. Output is redacted by default (identifiers everywhere,
+balances and ids on account/prop endpoints); `--no-redact` is for a local look
+only. Endpoints marked UNVERIFIED are not in the Swagger file. Real public
+fixtures are refreshed with `python scripts/capture_fixtures.py`.
 
 ## Market data (Phase 1)
 
 ```bash
-python manage.py sync_markets                       # spot markets, precision, volumes, blocked/allowed flags
-python manage.py sync_orderbook                     # top-of-book snapshot for allowlisted markets
+python manage.py sync_markets                       # spot markets, precision, min order, market-order flag, policy flags
+python manage.py sync_orderbook                     # top-of-book snapshot per allowlisted market (GET /v1/depth)
 python manage.py download_history --days 30         # 1h candles for allowed markets (idempotent)
 python manage.py download_history --symbol BTCTMN --start 2026-10-01T00:00:00+00:00 --end 2026-10-08T00:00:00+00:00
 python manage.py build_universe                     # ELIGIBLE / REJECTED with reasons

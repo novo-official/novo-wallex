@@ -12,10 +12,14 @@ class Market(models.Model):
     quote_asset = models.CharField(max_length=16)
     amount_precision = models.PositiveSmallIntegerField()
     price_precision = models.PositiveSmallIntegerField()
-    # The spot Swagger has no minimum order value field. This stays NULL until the
-    # docs or the team confirm the source. The execution layer must refuse orders
-    # when it is NULL (fail closed).
+    # Exchange minimums from GET /v1/markets (minNotional in the quote asset, minQty in
+    # the base asset). That endpoint is probe-verified, not in the Swagger file. NULL
+    # means the rules were not synced; the execution layer must refuse orders then
+    # (fail closed). The strategy's own minimum order size is a separate, larger value.
     min_order_value = models.DecimalField(null=True, blank=True, **DECIMAL_FIELD)
+    min_qty = models.DecimalField(null=True, blank=True, **DECIMAL_FIELD)
+    # Only a few markets accept MARKET orders (7 of 373 at capture). False until proven otherwise.
+    market_orders_enabled = models.BooleanField(default=False)
     last_price = models.DecimalField(null=True, blank=True, **DECIMAL_FIELD)
     volume_24h = models.DecimalField(null=True, blank=True, **DECIMAL_FIELD)
     quote_volume_24h = models.DecimalField(null=True, blank=True, **DECIMAL_FIELD)

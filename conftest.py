@@ -36,3 +36,19 @@ def mock_client():
         )
 
     return _make
+
+
+@pytest.fixture
+def market_routes(load_fixture):
+    """Mock routes for sync_markets: both real market captures."""
+    return {
+        "/hector/web/v1/markets": load_fixture("markets_subset.json"),
+        "/v1/markets": load_fixture("markets_v1_subset.json"),
+    }
+
+
+@pytest.fixture
+def depth_routes(load_fixture):
+    """Mock route for GET /v1/depth that serves the real capture of the requested symbol."""
+    captured = load_fixture("depth_v1_allowlist.json")
+    return {"/v1/depth": lambda request: captured[request.url.params["symbol"]]}

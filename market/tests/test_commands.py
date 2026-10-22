@@ -8,7 +8,7 @@ from django.core.management.base import CommandError
 
 from exchange.symbols import load_market_policy
 from market import services
-from tests.support import json_response
+from tests.support import route
 
 
 @pytest.fixture
@@ -17,24 +17,17 @@ def policy():
 
 
 @pytest.mark.django_db
-def test_build_universe_prints_verdicts_from_stored_data(mock_client, load_fixture, policy):
-    services.sync_markets(
-        mock_client(lambda request: json_response(load_fixture("markets_subset.json"))),
-        policy,
-    )
-    services.sync_orderbook(
-        mock_client(lambda request: json_response(load_fixture("depth_all_synthetic.json"))),
-        policy,
-        captured_at=datetime(2026, 10, 22, tzinfo=UTC),
-    )
+def test_build_universe_prints_verdicts_from_stored_data(mock_client, market_routes, depth_routes, policy):
+    services.sync_markets(mock_client(route(market_routes)), policy)
+    services.sync_orderbook(mock_client(route(depth_routes)), policy, captured_at=datetime(2026, 10, 22, tzinfo=UTC))
     out = StringIO()
 
     call_command("build_universe", stdout=out)
 
     lines = out.getvalue().splitlines()
     assert any(line.startswith("BTCTMN") and "ELIGIBLE" in line and "REJECTED" not in line for line in lines)
-    assert any(line.startswith("DOGETMN") and "REJECTED" in line and "spread" in line for line in lines)
-    assert "eligible=2 of 11 allowlisted" in lines  # BTCTMN and ETHTMN; the rest lack depth or fail the spread rule
+    assert any(line.startswith("SHIBTMN") and "REJECTED" in line and "spread" in line for line in lines)
+    assert "eligible=10 of 11 allowlisted" in lines  # real capture 2026-10-22: only SHIBTMN fails (spread)
 
 
 def test_download_history_rejects_naive_timestamps_before_any_request():

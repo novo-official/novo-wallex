@@ -3,7 +3,14 @@ from decimal import Decimal
 import pydantic
 import pytest
 
-from exchange.schemas import AllMarketDepthResponse, MarketsResponse, UdfHistoryResponse
+from exchange.schemas import (
+    AllMarketDepthResponse,
+    MarketRulesResponse,
+    MarketsResponse,
+    SingleMarketDepthResponse,
+    TradesResponse,
+    UdfHistoryResponse,
+)
 
 
 def test_markets_fixture_parses_real_response(load_fixture):
@@ -40,8 +47,48 @@ def test_udf_rejects_arrays_of_different_length(load_fixture):
         UdfHistoryResponse.model_validate(raw)
 
 
-def test_depth_fixture_parses_levels_as_decimal(load_fixture):
-    response = AllMarketDepthResponse.model_validate(load_fixture("depth_all_synthetic.json"))
-    btc = response.result["BTCTMN"]
-    assert btc.bid[0].price == Decimal("22080000000")
-    assert btc.ask[0].quantity == Decimal("0.012")
+def test_single_market_depth_parses_real_capture(load_fixture):
+    response = SingleMarketDepthResponse.model_validate(load_fixture("depth_v1_allowlist.json")["BTCTMN"])
+    book = response.result
+    assert len(book.ask) == len(book.bid) == 50
+    assert book.bid[0].price == Decimal("22131272732")
+    assert isinstance(book.ask[0].quantity, Decimal)
+    assert [level.price for level in book.ask] == sorted(level.price for level in book.ask)  # best ask first
+    assert [level.price for level in book.bid] == sorted((level.price for level in book.bid), reverse=True)
+
+
+def test_depth_sum_is_level_notional_not_cumulative(load_fixture):
+    book = SingleMarketDepthResponse.model_validate(load_fixture("depth_v1_allowlist.json")["ETHTMN"]).result
+    for level in book.ask + book.bid:
+        assert abs(level.sum - level.price * level.quantity) < Decimal("0.01")
+
+
+def test_all_market_depth_envelope_accepts_real_books(load_fixture):
+    # /depth/all answered 503 on every probe; this wraps real /v1/depth books in the Swagger envelope.
+    captured = load_fixture("depth_v1_allowlist.json")
+    raw = {"success": True, "message": "", "result": {symbol: body["result"] for symbol, body in captured.items()}}
+    assert set(AllMarketDepthResponse.model_validate(raw).result) == set(captured)
+
+
+def test_market_rules_parse_real_capture(load_fixture):
+    symbols = MarketRulesResponse.model_validate(load_fixture("markets_v1_subset.json")).result.symbols
+    btc, sol, usdt_pair = symbols["BTCTMN"], symbols["SOLTMN"], symbols["BTCUSDT"]
+    assert (btc.amount_decimals, btc.price_decimals) == (8, 0)
+    assert btc.min_notional == Decimal("50000") and btc.min_qty == Decimal("0.00000001")
+    assert btc.market_orders_enabled and not sol.market_orders_enabled
+    assert usdt_pair.min_notional == Decimal("1")
+    assert btc.stats.bid_price is not None and btc.stats.bid_price < btc.stats.ask_price
+
+
+def test_market_rules_blank_stats_become_none(load_fixture):
+    raw = load_fixture("markets_v1_subset.json")
+    raw["result"]["symbols"]["BTCTMN"]["stats"].update(bidPrice="", askPrice="-", lastPrice="-")  # both seen live
+    stats = MarketRulesResponse.model_validate(raw).result.symbols["BTCTMN"].stats
+    assert (stats.bid_price, stats.ask_price, stats.last_price) == (None, None, None)
+
+
+def test_trades_parse_real_capture(load_fixture):
+    trades = TradesResponse.model_validate(load_fixture("trades_v1_btctmn.json")).result.latest_trades
+    assert len(trades) == 50
+    assert all(trade.symbol == "BTCTMN" and trade.timestamp.tzinfo is not None for trade in trades)
+    assert trades[0].timestamp >= trades[-1].timestamp  # newest first

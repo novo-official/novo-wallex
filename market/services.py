@@ -14,7 +14,14 @@ from decimal import Decimal
 from django.db import transaction
 
 from exchange.client import WallexClient, WallexError
-from exchange.schemas import AllMarketDepthResponse, MarketDepth, MarketsResponse, UdfHistoryResponse
+from exchange.schemas import (
+    MarketDepth,
+    MarketRules,
+    MarketRulesResponse,
+    MarketsResponse,
+    SingleMarketDepthResponse,
+    UdfHistoryResponse,
+)
 from exchange.symbols import MarketPolicy, MarketPolicyError, to_api_symbol
 
 from .history import Bar, floor_to_step, parse_bars, resolution_seconds, split_windows
@@ -32,6 +39,7 @@ class SyncSummary:
     allowed: int
     blocked: int
     skipped_non_spot: int
+    without_rules: int  # spot markets with no /v1/markets entry; their min_order_value stays NULL
 
 
 @dataclass(frozen=True)
@@ -41,21 +49,45 @@ class DownloadSummary:
     bars_written: int
 
 
+def _rules_conflict(symbol: str, rules: MarketRules, price_precision: int, amount_precision: int) -> bool:
+    """True when the two market endpoints disagree on precision. Such a market is not allowed (fail closed)."""
+    if (rules.price_decimals, rules.amount_decimals) == (price_precision, amount_precision):
+        return False
+    logger.error(
+        "%s: precision mismatch between /hector/web/v1/markets (%s, %s) and /v1/markets (%s, %s); not allowed",
+        symbol,
+        price_precision,
+        amount_precision,
+        rules.price_decimals,
+        rules.amount_decimals,
+    )
+    return True
+
+
 def sync_markets(client: WallexClient, policy: MarketPolicy) -> SyncSummary:
-    """Upsert spot markets with precision, last price, volumes and the blocked/allowed flags."""
+    """Upsert spot markets with precision, exchange minimums, volumes and the blocked/allowed flags."""
     response = MarketsResponse.model_validate(client.get_markets())
     if not response.success:
         raise WallexError(f"markets request was not successful: {response.message}")
+    rules_response = MarketRulesResponse.model_validate(client.get_market_rules())
+    if not rules_response.success:
+        raise WallexError(f"market rules request was not successful: {rules_response.message}")
+    all_rules = {to_api_symbol(symbol): rules for symbol, rules in rules_response.result.symbols.items()}
 
-    spot_markets = skipped = allowed = blocked = 0
+    spot_markets = skipped = allowed = blocked = without_rules = 0
     with transaction.atomic():
         for info in response.result.markets:
             if not info.is_spot:
                 skipped += 1
                 continue
             symbol = to_api_symbol(info.symbol)
+            rules = all_rules.get(symbol)
+            if rules is None:
+                without_rules += 1
             is_blocked = symbol in policy.blocked
-            is_allowed = policy.is_tradable(symbol)
+            is_allowed = policy.is_tradable(symbol) and (
+                rules is None or not _rules_conflict(symbol, rules, info.price_precision, info.amount_precision)
+            )
             Market.objects.update_or_create(
                 symbol=symbol,
                 defaults={
@@ -66,6 +98,9 @@ def sync_markets(client: WallexClient, policy: MarketPolicy) -> SyncSummary:
                     "last_price": info.price,
                     "volume_24h": info.volume_24h,
                     "quote_volume_24h": info.quote_volume_24h,
+                    "min_order_value": rules.min_notional if rules else None,
+                    "min_qty": rules.min_qty if rules else None,
+                    "market_orders_enabled": rules.market_orders_enabled if rules else False,
                     "is_blocked": is_blocked,
                     "is_allowed": is_allowed,
                 },
@@ -73,7 +108,13 @@ def sync_markets(client: WallexClient, policy: MarketPolicy) -> SyncSummary:
             spot_markets += 1
             allowed += is_allowed
             blocked += is_blocked
-    return SyncSummary(spot_markets=spot_markets, allowed=allowed, blocked=blocked, skipped_non_spot=skipped)
+    return SyncSummary(
+        spot_markets=spot_markets,
+        allowed=allowed,
+        blocked=blocked,
+        skipped_non_spot=skipped,
+        without_rules=without_rules,
+    )
 
 
 def _top_of_book(depth: MarketDepth) -> tuple[Decimal, Decimal] | None:
@@ -84,19 +125,26 @@ def _top_of_book(depth: MarketDepth) -> tuple[Decimal, Decimal] | None:
 
 
 def sync_orderbook(client: WallexClient, policy: MarketPolicy, captured_at: datetime) -> int:
-    """Store one top-of-book snapshot per allowlisted market. Returns the number stored."""
-    response = AllMarketDepthResponse.model_validate(client.get_depth_all())
-    if not response.success:
-        raise WallexError(f"depth request was not successful: {response.message}")
+    """Store one top-of-book snapshot per allowlisted market. Returns the number stored.
 
+    Uses GET /v1/depth per symbol, because /depth/all answered 503 on every probe.
+    One failing market is logged and skipped; it does not stop the others.
+    """
     stored = 0
-    for symbol, depth in response.result.items():
-        if not policy.is_tradable(symbol):
-            continue
+    for symbol in sorted(policy.allowlist):
         market = Market.objects.filter(symbol=symbol).first()
-        top = _top_of_book(depth)
-        if market is None or top is None:
-            logger.info("no snapshot for %s (market row %s, top of book %s)", symbol, market is not None, top)
+        if market is None:
+            logger.info("no snapshot for %s: market not in the DB (run sync_markets)", symbol)
+            continue
+        policy.check(symbol)  # before every request, even though the loop starts from the allowlist
+        try:
+            response = SingleMarketDepthResponse.model_validate(client.get_depth(symbol))
+        except WallexError as exc:
+            logger.warning("no snapshot for %s: %s", symbol, exc)
+            continue
+        top = _top_of_book(response.result) if response.success else None
+        if top is None:
+            logger.info("no snapshot for %s: empty book or unsuccessful response (%s)", symbol, response.message)
             continue
         best_bid, best_ask = top
         try:

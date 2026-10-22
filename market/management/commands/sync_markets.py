@@ -13,5 +13,6 @@ class Command(BaseCommand):
             summary = services.sync_markets(client, policy)
         self.stdout.write(
             f"spot markets stored={summary.spot_markets} allowed={summary.allowed} "
-            f"blocked={summary.blocked} skipped_non_spot={summary.skipped_non_spot}"
+            f"blocked={summary.blocked} skipped_non_spot={summary.skipped_non_spot} "
+            f"without_rules={summary.without_rules}"
         )

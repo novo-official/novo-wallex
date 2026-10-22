@@ -9,7 +9,7 @@ from exchange.symbols import MarketBlockedError, MarketNotAllowedError, load_mar
 from market import services
 from market.config import load_market_config
 from market.models import Candle, Market, OrderbookSnapshot
-from tests.support import json_response
+from tests.support import json_response, route
 
 START = datetime(2026, 10, 20, 5, 0, tzinfo=UTC)
 END = datetime(2026, 10, 22, 5, 0, tzinfo=UTC)
@@ -39,54 +39,102 @@ def _udf_handler(udf_response: dict, *, filter_by_window: bool = False):
 
 
 @pytest.mark.django_db
-def test_sync_markets_stores_spot_markets_with_policy_flags(mock_client, load_fixture, policy):
-    raw = load_fixture("markets_subset.json")
-    client = mock_client(lambda request: json_response(raw))
+def test_sync_markets_stores_spot_markets_with_policy_flags(mock_client, market_routes, policy):
+    summary = services.sync_markets(mock_client(route(market_routes)), policy)
 
-    summary = services.sync_markets(client, policy)
-
+    raw = market_routes["/hector/web/v1/markets"]
     spot = sum(1 for market in raw["result"]["markets"] if market["is_spot"])
     assert summary.spot_markets == Market.objects.count() == spot
     btc = Market.objects.get(symbol="BTCTMN")
     assert btc.is_allowed and not btc.is_blocked
     assert btc.amount_precision == 8 and btc.price_precision == 0
-    assert btc.min_order_value is None  # unknown until confirmed; execution must fail closed
     zec = Market.objects.get(symbol="ZECTMN")
     assert zec.is_blocked and not zec.is_allowed
     assert not Market.objects.get(symbol="BTCUSDT").is_allowed  # not allowlisted
 
 
 @pytest.mark.django_db
-def test_sync_markets_is_idempotent(mock_client, load_fixture, policy):
-    raw = load_fixture("markets_subset.json")
-    client = mock_client(lambda request: json_response(raw))
+def test_sync_markets_stores_exchange_minimums_and_market_order_flag(mock_client, market_routes, policy):
+    services.sync_markets(mock_client(route(market_routes)), policy)
+
+    btc = Market.objects.get(symbol="BTCTMN")
+    assert btc.min_order_value == Decimal("50000")  # TMN, from /v1/markets minNotional
+    assert btc.min_qty == Decimal("0.00000001")
+    assert btc.market_orders_enabled is True
+    sol = Market.objects.get(symbol="SOLTMN")
+    assert sol.market_orders_enabled is False  # exits on SOLTMN must use limit orders
+    assert Market.objects.get(symbol="BTCUSDT").min_order_value == Decimal("1")  # USDT
+
+
+@pytest.mark.django_db
+def test_market_without_rules_keeps_null_minimum(mock_client, market_routes, policy):
+    del market_routes["/v1/markets"]["result"]["symbols"]["ETHTMN"]
+
+    summary = services.sync_markets(mock_client(route(market_routes)), policy)
+
+    eth = Market.objects.get(symbol="ETHTMN")
+    assert eth.min_order_value is None and eth.min_qty is None  # execution must refuse (fail closed)
+    assert eth.market_orders_enabled is False
+    assert summary.without_rules == 1
+
+
+@pytest.mark.django_db
+def test_precision_conflict_between_endpoints_disallows_market(mock_client, market_routes, policy):
+    market_routes["/v1/markets"]["result"]["symbols"]["BTCTMN"]["stepSize"] = 6
+
+    services.sync_markets(mock_client(route(market_routes)), policy)
+
+    assert not Market.objects.get(symbol="BTCTMN").is_allowed
+    assert Market.objects.get(symbol="ETHTMN").is_allowed
+
+
+@pytest.mark.django_db
+def test_sync_markets_is_idempotent(mock_client, market_routes, policy):
+    client = mock_client(route(market_routes))
     services.sync_markets(client, policy)
     services.sync_markets(client, policy)
+    raw = market_routes["/hector/web/v1/markets"]
     assert Market.objects.count() == sum(1 for market in raw["result"]["markets"] if market["is_spot"])
 
 
 @pytest.mark.django_db
-def test_sync_orderbook_stores_top_of_book_for_allowed_markets_only(mock_client, load_fixture, policy):
-    services.sync_markets(mock_client(lambda request: json_response(load_fixture("markets_subset.json"))), policy)
-    depth = load_fixture("depth_all_synthetic.json")
-    depth["result"]["OPTMN"] = {
-        "ask": [{"price": 2, "quantity": 1, "sum": 1}],
-        "bid": [{"price": 1, "quantity": 1, "sum": 1}],
-    }
-    client = mock_client(lambda request: json_response(depth))
+def test_sync_orderbook_requests_only_allowlisted_markets(mock_client, market_routes, depth_routes, policy):
+    services.sync_markets(mock_client(route(market_routes)), policy)
+    requested: list[str] = []
 
-    stored = services.sync_orderbook(client, policy, captured_at=datetime(2026, 10, 22, tzinfo=UTC))
+    def depth(request: httpx.Request):
+        requested.append(request.url.params["symbol"])
+        return depth_routes["/v1/depth"](request)
 
-    assert stored == 3  # BTCTMN, ETHTMN, DOGETMN; OPTMN is blocked and not stored
+    stored = services.sync_orderbook(
+        mock_client(route({"/v1/depth": depth})), policy, datetime(2026, 10, 22, tzinfo=UTC)
+    )
+
+    assert stored == 11
+    assert sorted(requested) == sorted(policy.allowlist)  # never a blocked or non-allowlisted market
     btc = OrderbookSnapshot.objects.get(market__symbol="BTCTMN")
-    assert btc.best_bid == Decimal("22080000000")
-    assert btc.best_ask == Decimal("22100000000")
-    assert not OrderbookSnapshot.objects.filter(market__symbol="OPTMN").exists()
+    assert btc.best_bid == Decimal("22131272732")  # real capture, 2026-10-22
+    assert btc.best_ask == Decimal("22155918712")
 
 
 @pytest.mark.django_db
-def test_download_candles_stores_all_bars_of_the_real_capture(mock_client, load_fixture, policy):
-    services.sync_markets(mock_client(lambda request: json_response(load_fixture("markets_subset.json"))), policy)
+def test_sync_orderbook_skips_a_failing_market_and_continues(mock_client, market_routes, depth_routes, policy):
+    services.sync_markets(mock_client(route(market_routes)), policy)
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.params["symbol"] == "ETHTMN":
+            return httpx.Response(503, text="<html>unavailable</html>")
+        return json_response(depth_routes["/v1/depth"](request))
+
+    stored = services.sync_orderbook(mock_client(handler), policy, datetime(2026, 10, 22, tzinfo=UTC))
+
+    assert stored == 10
+    assert not OrderbookSnapshot.objects.filter(market__symbol="ETHTMN").exists()
+
+
+@pytest.mark.django_db
+def test_download_candles_stores_all_bars_of_the_real_capture(mock_client, load_fixture, market_routes, policy):
+    services.sync_markets(mock_client(route(market_routes)), policy)
     client = mock_client(_udf_handler(load_fixture("udf_history_btctmn_60.json")))
 
     summary = services.download_candles(client, policy, "BTC/TMN", "60", START, END, chunk_bars=500)
@@ -99,8 +147,10 @@ def test_download_candles_stores_all_bars_of_the_real_capture(mock_client, load_
 
 
 @pytest.mark.django_db
-def test_download_candles_rerun_does_not_duplicate_and_updates_changed_bars(mock_client, load_fixture, policy):
-    services.sync_markets(mock_client(lambda request: json_response(load_fixture("markets_subset.json"))), policy)
+def test_download_candles_rerun_does_not_duplicate_and_updates_changed_bars(
+    mock_client, load_fixture, market_routes, policy
+):
+    services.sync_markets(mock_client(route(market_routes)), policy)
     udf = load_fixture("udf_history_btctmn_60.json")
     services.download_candles(mock_client(_udf_handler(udf)), policy, "BTCTMN", "60", START, END, 500)
 
@@ -112,8 +162,10 @@ def test_download_candles_rerun_does_not_duplicate_and_updates_changed_bars(mock
 
 
 @pytest.mark.django_db
-def test_download_candles_splits_into_chunks_without_losing_or_duplicating_bars(mock_client, load_fixture, policy):
-    services.sync_markets(mock_client(lambda request: json_response(load_fixture("markets_subset.json"))), policy)
+def test_download_candles_splits_into_chunks_without_losing_or_duplicating_bars(
+    mock_client, load_fixture, market_routes, policy
+):
+    services.sync_markets(mock_client(route(market_routes)), policy)
     client = mock_client(_udf_handler(load_fixture("udf_history_btctmn_60.json"), filter_by_window=True))
 
     summary = services.download_candles(client, policy, "BTCTMN", "60", START, END, chunk_bars=10)
@@ -142,13 +194,9 @@ def test_download_refuses_market_outside_allowlist_before_any_request(mock_clien
 
 
 @pytest.mark.django_db
-def test_universe_end_to_end_with_real_markets_and_synthetic_depth(mock_client, load_fixture, policy):
-    services.sync_markets(mock_client(lambda request: json_response(load_fixture("markets_subset.json"))), policy)
-    services.sync_orderbook(
-        mock_client(lambda request: json_response(load_fixture("depth_all_synthetic.json"))),
-        policy,
-        captured_at=datetime(2026, 10, 22, tzinfo=UTC),
-    )
+def test_universe_end_to_end_with_real_captures(mock_client, market_routes, depth_routes, policy):
+    services.sync_markets(mock_client(route(market_routes)), policy)
+    services.sync_orderbook(mock_client(route(depth_routes)), policy, captured_at=datetime(2026, 10, 22, tzinfo=UTC))
     config = load_market_config(settings.TRADING_CONFIG_FILE)
 
     verdicts, missing = services.build_universe(policy, config.universe)
@@ -157,6 +205,24 @@ def test_universe_end_to_end_with_real_markets_and_synthetic_depth(mock_client, 
     assert missing == []
     assert by_symbol["BTCTMN"].eligible
     assert by_symbol["ETHTMN"].eligible
-    assert not by_symbol["DOGETMN"].eligible  # spread about 1.9%, above 0.5%
-    assert any("spread" in reason for reason in by_symbol["DOGETMN"].reasons)
-    assert "no orderbook snapshot" in by_symbol["SOLTMN"].reasons  # not in the depth fixture
+    assert not by_symbol["SHIBTMN"].eligible  # spread about 1.05% in this capture, above 0.5%
+    assert any("spread" in reason for reason in by_symbol["SHIBTMN"].reasons)
+    assert sum(verdict.eligible for verdict in verdicts) == 10
+
+
+@pytest.mark.django_db
+def test_universe_rejects_market_without_snapshot(mock_client, market_routes, depth_routes, policy):
+    services.sync_markets(mock_client(route(market_routes)), policy)
+    captured = depth_routes["/v1/depth"]
+    without_sol = {
+        "/v1/depth": lambda request: (
+            {"success": False, "message": "x", "result": {"ask": [], "bid": []}}
+            if request.url.params["symbol"] == "SOLTMN"
+            else captured(request)
+        )
+    }
+    services.sync_orderbook(mock_client(route(without_sol)), policy, captured_at=datetime(2026, 10, 22, tzinfo=UTC))
+
+    verdicts, _ = services.build_universe(policy, load_market_config(settings.TRADING_CONFIG_FILE).universe)
+
+    assert "no orderbook snapshot" in {verdict.symbol: verdict for verdict in verdicts}["SOLTMN"].reasons
