@@ -47,6 +47,11 @@ class DownloadSummary:
     requests: int
     bars_received: int
     bars_written: int
+    suspicious_windows: int = 0  # windows with far fewer bars than expected
+
+
+# A window returning fewer bars than this share of the expected count is logged.
+TRUNCATION_RATIO = 0.9
 
 
 def _rules_conflict(symbol: str, rules: MarketRules, price_precision: int, amount_precision: int) -> bool:
@@ -198,28 +203,48 @@ def download_candles(
     end: datetime,
     chunk_bars: int,
 ) -> DownloadSummary:
-    """Download completed bars in [start, end) for one allowlisted market.
+    """Download completed bars in [start, end) for one data-universe market.
 
-    The policy check runs before any request. The bar that is still open at
+    The policy check runs before any request (data universe: allowlist plus
+    `[data] symbols`, never a blocked market). The bar that is still open at
     `end` is excluded, so only complete bars are stored.
+
+    The server fills minutes without trades with zero-volume bars, so a window
+    normally returns every bar. A 1m request whose window is too wide answers
+    with a single bar instead of an error; a window that returns less than
+    TRUNCATION_RATIO of the expected bars is therefore logged as suspicious.
     """
     api_symbol = to_api_symbol(symbol)
-    policy.check(api_symbol)  # raises for blocked or non-allowlisted markets, before any request
+    policy.check_data(api_symbol)  # raises for blocked or unknown markets, before any request
     market = Market.objects.get(symbol=api_symbol)
 
     step = resolution_seconds(resolution)
     window_start = floor_to_step(int(start.timestamp()), step)
     window_end = floor_to_step(int(end.timestamp()), step)
 
-    requests = bars_received = bars_written = 0
+    requests = bars_received = bars_written = suspicious = 0
     for from_ts, to_ts in split_windows(window_start, window_end, step, chunk_bars):
         raw = client.get_udf_history(api_symbol, resolution, from_ts, to_ts)
         requests += 1
         bars = parse_bars(UdfHistoryResponse.model_validate(raw))
         in_window = [bar for bar in bars if from_ts <= int(bar.open_time.timestamp()) <= to_ts]
+        expected = (to_ts - from_ts + 1) // step
+        if expected >= 100 and len(in_window) < TRUNCATION_RATIO * expected:
+            suspicious += 1
+            logger.warning(
+                "%s %s: %d of %d bars in window %d..%d (truncated response or listing gap?)",
+                api_symbol,
+                resolution,
+                len(in_window),
+                expected,
+                from_ts,
+                to_ts,
+            )
         bars_received += len(in_window)
         bars_written += upsert_candles(market, resolution, in_window)
-    return DownloadSummary(requests=requests, bars_received=bars_received, bars_written=bars_written)
+    return DownloadSummary(
+        requests=requests, bars_received=bars_received, bars_written=bars_written, suspicious_windows=suspicious
+    )
 
 
 def build_universe(policy: MarketPolicy, config: UniverseConfig) -> tuple[list[Verdict], list[str]]:

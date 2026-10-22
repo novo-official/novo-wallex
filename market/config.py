@@ -28,6 +28,7 @@ class RecorderConfig:
 class MarketConfig:
     universe: UniverseConfig
     chunk_bars: int  # max bars per udf/history request
+    history_requests_per_second: float
     recorder: RecorderConfig
 
 
@@ -43,6 +44,7 @@ def load_market_config(path: Path) -> MarketConfig:
             max_spread_fraction=Decimal(str(universe["max_spread_fraction"])),
         ),
         chunk_bars=int(history["chunk_bars"]),
+        history_requests_per_second=float(history["requests_per_second"]),
         recorder=_recorder_config(config["recorder"]),
     )
 

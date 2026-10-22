@@ -41,5 +41,10 @@ min_quote_volume_24h = "1000000000"  # 1e9 TMN over 24h
 max_spread_fraction = "0.005"        # 0.5% of mid price
 
 [history]
-# Proposed. The maximum number of bars per udf/history request is not documented yet.
-chunk_bars = 500
+# Probe 2026-10-22: resolution "1" returns full windows up to at least 2041 bars
+# (34 h) but a single bar for a 48 h window, without an error. 1440 bars (24 h)
+# stays well inside that. Resolution "60" returns only the latest 696 bars.
+# Valid resolutions: 1, 15, 60, 240, 720, 1D; but 15 returns 1m bars and
+# 240/720 return 1h bars, so we download 1m and resample locally.
+chunk_bars = 1440
+requests_per_second = "3"  # shared with the recorder's ~2.8 req/s

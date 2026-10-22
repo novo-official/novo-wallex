@@ -1,0 +1,74 @@
+{
+  "measured_at": "2026-10-22T09:38:21+00:00",
+  "method": "median over recorded /v1/depth snapshots of (half spread + book impact) for a 1000000 TMN taker order, buy and sell averaged; floor 0.0002",
+  "slippage": {
+    "ADATMN": 0.001653,
+    "BNBTMN": 0.001248,
+    "BTCTMN": 0.000401,
+    "DOGETMN": 0.001257,
+    "ETHTMN": 0.000319,
+    "LTCTMN": 0.002143,
+    "SHIBTMN": 0.004246,
+    "SOLTMN": 0.001186,
+    "TRXTMN": 0.001052,
+    "USDTTMN": 0.0002,
+    "XRPTMN": 0.001214
+  },
+  "evidence": {
+    "USDTTMN": {
+      "snapshots": 277,
+      "too_thin": 0,
+      "median": 2.8e-05
+    },
+    "BTCTMN": {
+      "snapshots": 277,
+      "too_thin": 0,
+      "median": 0.000401
+    },
+    "ETHTMN": {
+      "snapshots": 277,
+      "too_thin": 0,
+      "median": 0.000319
+    },
+    "SOLTMN": {
+      "snapshots": 277,
+      "too_thin": 0,
+      "median": 0.001186
+    },
+    "XRPTMN": {
+      "snapshots": 277,
+      "too_thin": 0,
+      "median": 0.001214
+    },
+    "DOGETMN": {
+      "snapshots": 277,
+      "too_thin": 0,
+      "median": 0.001257
+    },
+    "TRXTMN": {
+      "snapshots": 277,
+      "too_thin": 0,
+      "median": 0.001052
+    },
+    "ADATMN": {
+      "snapshots": 277,
+      "too_thin": 0,
+      "median": 0.001653
+    },
+    "BNBTMN": {
+      "snapshots": 277,
+      "too_thin": 0,
+      "median": 0.001248
+    },
+    "LTCTMN": {
+      "snapshots": 277,
+      "too_thin": 0,
+      "median": 0.002143
+    },
+    "SHIBTMN": {
+      "snapshots": 277,
+      "too_thin": 0,
+      "median": 0.004246
+    }
+  }
+}

@@ -68,4 +68,4 @@ def test_repository_universe_config_loads():
     assert config.universe.quote_asset == "TMN"
     assert config.universe.min_quote_volume_24h == Decimal("1000000000")
     assert config.universe.max_spread_fraction == Decimal("0.005")
-    assert config.chunk_bars == 500
+    assert config.chunk_bars == 1440

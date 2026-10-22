@@ -1,0 +1,47 @@
+# Strategy, backtest and window-study settings. Everything here enters the config hash.
+
+[backtest]
+initial_equity = "5000000"
+# Defaults until the organizers confirm our fees (CLAUDE.md §5). TMN-quoted markets.
+fee_maker = "0.0025"
+fee_taker = "0.0035"
+fee_stress = "1.5"              # the fee-stress case multiplies both fees
+slippage_file = "config/slippage.json"  # frozen taker slippage per symbol, from measure_costs
+default_slippage = "0.002"      # for a symbol with no recorded book
+# TMN markets the strategy may trade (a subset of markets.allowlist in trading.toml).
+tradable = [
+  "USDTTMN", "BTCTMN", "ETHTMN", "SOLTMN", "XRPTMN", "DOGETMN",
+  "TRXTMN", "ADATMN", "BNBTMN", "LTCTMN", "SHIBTMN",
+]
+
+[windows]
+window_days = 3.0
+step_hours = 12.0
+warmup_days = 10.0
+selection_share = 0.7     # parameters are chosen on the first 70% of windows
+min_positive = 0.60       # objective constraints (CLAUDE.md §7)
+min_p10_drawdown = -0.04
+
+# Canonical strategy parameters (the one the engine runs). Missing keys use the code defaults.
+[strategy]
+modules = ["trend"]
+symbols = ["USDTTMN", "BTCTMN", "ETHTMN"]
+
+[strategy.trend]
+stop_atr = 2.0
+tp_r = 2.5
+regime_exit = "4h"
+require_4h = true
+trigger = "breakout"
+
+[strategy.fair_value]
+enabled = false
+
+# Grid for the window study: dotted keys into [strategy], each a list of values.
+# The cartesian product must stay at or below 50 combinations.
+[grid]
+"symbols" = [["USDTTMN", "BTCTMN", "ETHTMN"], ["USDTTMN", "BTCTMN", "ETHTMN", "SOLTMN", "XRPTMN", "TRXTMN", "BNBTMN"]]
+"trend.trigger" = ["breakout", "pullback_breakout"]
+"trend.regime_exit" = ["1h", "4h", "none"]
+"trend.tp_r" = [2.0, 3.5]
+"trend.max_stop" = [0.015, 0.02]

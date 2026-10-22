@@ -5,7 +5,7 @@ import httpx
 import pytest
 from django.conf import settings
 
-from exchange.symbols import MarketBlockedError, MarketNotAllowedError, load_market_policy
+from exchange.symbols import MarketBlockedError, MarketNotInDataUniverseError, load_market_policy
 from market import services
 from market.config import load_market_config
 from market.models import Candle, Market, OrderbookSnapshot
@@ -185,12 +185,23 @@ def test_download_refuses_blocked_market_before_any_request(mock_client, policy)
 
 
 @pytest.mark.django_db
-def test_download_refuses_market_outside_allowlist_before_any_request(mock_client, policy):
+def test_download_refuses_market_outside_data_universe_before_any_request(mock_client, policy):
     def handler(request: httpx.Request) -> httpx.Response:
-        raise AssertionError("no request may be sent for a non-allowlisted market")
+        raise AssertionError("no request may be sent for a market outside the data universe")
 
-    with pytest.raises(MarketNotAllowedError):
-        services.download_candles(mock_client(handler), policy, "ETHUSDT", "60", START, END, 500)
+    with pytest.raises(MarketNotInDataUniverseError):
+        services.download_candles(mock_client(handler), policy, "XLMTMN", "60", START, END, 500)
+
+
+@pytest.mark.django_db
+def test_download_flags_a_truncated_window(mock_client, load_fixture, market_routes, policy):
+    services.sync_markets(mock_client(route(market_routes)), policy)
+    udf = load_fixture("udf_history_btctmn_60.json")
+    single = {key: values[:1] if isinstance(values, list) else values for key, values in udf.items()}
+
+    summary = services.download_candles(mock_client(_udf_handler(single)), policy, "BTCTMN", "1", START, END, 1440)
+
+    assert summary.requests == 2 and summary.suspicious_windows == 2  # 2 x 1440 expected, 1 or 0 received
 
 
 @pytest.mark.django_db
