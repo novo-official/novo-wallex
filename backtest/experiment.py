@@ -88,6 +88,7 @@ def run_experiment(
     benchmark_data: dict[str, MarketData] | None = None,
     processes: int | None = None,
     notes: str = "",
+    log: bool = True,
 ) -> dict:
     """Run `variants` on the selection windows, choose one, then the fee table (and holdout if `final`)."""
     if len(variants) > MAX_CONFIGS:
@@ -156,15 +157,16 @@ def run_experiment(
     write_json(out_dir / "config.json", {"config_hash": digest, "config": payload})
     base = table_rows[(table_rows["cost_case"] == "base") & (table_rows["variant"] == names[chosen_id])]
     write_window_charts(out_dir, base, f"{name}: {names[chosen_id]} (base fees)")
-    log_experiment(
-        reports_dir,
-        name,
-        len(variants),
-        final,
-        report=str(out_dir.relative_to(reports_dir.parent)) if out_dir.is_relative_to(reports_dir.parent) else None,
-        notes=notes or f"chosen: {names[chosen_id]}",
-        config_hash=digest,
-    )
+    if log:
+        log_experiment(
+            reports_dir,
+            name,
+            len(variants),
+            final,
+            report=str(out_dir.relative_to(reports_dir.parent)) if out_dir.is_relative_to(reports_dir.parent) else None,
+            notes=notes or f"chosen: {names[chosen_id]}",
+            config_hash=digest,
+        )
     return {"summary": summary, "ranking": ranking, "fee_table": fee_frame, "benchmarks": pd.DataFrame(benchmarks)}
 
 

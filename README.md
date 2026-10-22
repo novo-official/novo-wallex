@@ -4,7 +4,7 @@ Spot-only, long-only algorithmic trading for the Wallex hackathon challenge.
 Django 5.2 + DRF + PostgreSQL. The trading engine is a set of management
 commands that share the same ORM and code path as the backtester.
 
-Status: **Phase 3 done (ML + ablation); Phase 4 (LLM) next**. Strategy, ML, agent, execution and the dashboard
+Status: **Phase 4 (local LLM roles, RiskGuard) in progress**. See `STRATEGY.md`. Strategy, ML, agent, execution and the dashboard
 are not implemented yet.
 
 ## Setup
@@ -101,6 +101,23 @@ brew install libomp                                    # macOS only (LightGBM)
 
 Every experiment has at most 30 configurations, reports a 3-row fee table and is appended to
 `reports/experiments.jsonl`. Findings: `docs/RESEARCH_P3.md`.
+
+## AI: local, pinned, reproducible (Phase 4)
+
+The AI roles (Regime/Risk Officer, Trade Agent) run on a **local open-weight model** through Ollama:
+zero cost, offline, pinned by name and digest in `config/llm.toml` (`qwen3:8b`), JSON-schema outputs,
+temperature 0, fixed seed. Every answer is cached in `data/llm_cache/` (committed), so the AI's
+decisions can be replayed without any model installed. Rationale and evidence: `STRATEGY.md` §2.
+
+```bash
+make reproduce            # replay the LLM ablation from data/ + data/llm_cache/ and check every metric
+make llm-setup            # install Ollama + the pinned model and run a health check (needed only to regenerate)
+make reproduce-llm-live   # regenerate every LLM answer with the pinned model into a fresh cache (hours)
+.venv/bin/python manage.py p4_experiment benchmark   # 20 calls: latency, JSON validity, determinism
+```
+
+Optional free-tier fallbacks (Groq, Gemini Flash) for shadow/live only: set `GROQ_API_KEY` /
+`GEMINI_API_KEY` in `.env`. They are never used by the backtest.
 
 ## Market policy (default-deny)
 

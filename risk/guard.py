@@ -69,8 +69,8 @@ class LLMAdjustment:
     size_fraction: float | None = None
     stop_price: float | None = None
     take_profit: float | None = None
-    rationale: str = ""  # goes into the decision log with the prompt hash
-    prompt_hash: str = ""
+    rationale: str = ""  # goes into the decision log with the provenance
+    prompt_hash: str = ""  # provenance: provider/model@digest prompt-version #request-hash
 
 
 @dataclass(frozen=True)
@@ -151,7 +151,7 @@ class RiskGuard:
         fraction = _decimal(intent.size_fraction)
         stop_value, tp_value = intent.stop_price, intent.take_profit
         if llm is not None:
-            tag = f"LLM[{llm.prompt_hash[:12]}]" if llm.prompt_hash else "LLM"
+            tag = f"LLM[{llm.prompt_hash}]" if llm.prompt_hash else "LLM"
             if not llm.approve:
                 return EntryDecision(False, reasons=(f"rejected by {tag}: {llm.rationale}".rstrip(": "),))
             if llm.rationale:

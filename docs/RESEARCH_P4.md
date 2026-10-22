@@ -1,94 +1,52 @@
-# Phase 4: LLM roles, RiskGuard and the LLM ablation (design and status)
+# Phase 4: local LLM roles, RiskGuard and the LLM ablation
 
-> **خلاصه:** دو نقش LLM ساخته شد.
-> - **افسر رژیم و ریسک:** ساعتی تصمیم می‌گیرد که حالت ریسک NORMAL باشد، DEFENSIVE یا OFF، کدام بازارها کنار گذاشته شوند، و معاملات فعالیت روشن باشند یا نه.
-> - **عامل معامله:** هر ورود اصلی را تأیید یا رد می‌کند، و می‌تواند حجم را کم کند، استاپ را تنگ‌تر کند یا هدف را نزدیک‌تر بیاورد.
->
-> RiskGuard (کد خالص) حرف آخر را می‌زند: LLM فقط می‌تواند ریسک را کم کند، هرگز زیاد.
-> - **ورودی‌ها مسیرمستقل‌اند،** یعنی هر تصمیم فقط به بازار در آن لحظه بستگی دارد، نه به وضعیت حساب. برای همین پاسخ‌ها cache می‌شوند و اجرای مجدد رایگان و یکسان است.
-> - **در بازپخش تاریخی** هیچ تاریخ و قیمت مطلقی به مدل داده نمی‌شود، تا مدل از حافظه‌اش دربارهٔ آن دوره استفاده نکند.
-> - **مقایسهٔ بدون LLM / با افسر / با افسر و عامل معامله** روی پنجره‌های ۳ روزهٔ بدون هم‌پوشانی آماده است و فقط کلید API و تأیید هزینه را لازم دارد (حدود ۱۰ دلار برای selection و ۱۸ دلار با holdout، با Batch API و مدل Opus 5.5).
-> - نتیجه‌ای هنوز وجود ندارد، چون هیچ تماسی با LLM گرفته نشده است.
+> **خلاصه:** (پس از اجرای ablation تکمیل می‌شود.)
 
-## 1. What changed in the strategy (user decisions, 2026-10-22)
+## 1. Decisions (user, 2026-10-22)
 
-- **Canonical** = trend rules (USDT/BTC/ETH, full size) + **activity trades**: h24 ML signal, E[net] > −0.5%, 100k TMN, 2h hold; minimum order 50k. This keeps ≥ 3 round trips/day. The cost is accepted (holdout mean −0.39% vs +0.06% for the rules alone; `docs/RESEARCH_P3.md` §7).
-- **Daily-quota variant** (at most 2 activity entries per Tehran day): `[shadow_variants.activity_quota]` in `config/strategy.toml`. It is judged **only on forward (shadow) data**; `backtest/experiment.py` refuses to run it on history.
-- `models/ml_net_h24/` is the model live trading loads (`ml/live.py`).
+- **No paid LLM spend.**
+  - **Primary model:** local, open-weight, through Ollama: `qwen3:8b` (Q4_K_M, 8.2B), pinned by digest `500a1f067a9f…` in `config/llm.toml`.
+  - **Why this size:** the machine is an Apple M4 with 16 GB, which suits an 8B 4-bit model.
+  - **Calls:** JSON schema in `format`, temperature 0, seed 42, `think: false`.
+- **Fallbacks:** the free tiers of Groq and Gemini Flash through one OpenAI-compatible client, with rate-limit backoff. They are used in shadow/live only, never in the canonical backtest. If every provider fails: no new entries, keep managing exits.
+- **Activity rule:** ≥ 1 round trip per day, with as few zero-trade windows as possible. The canonical strategy is the trend rules alone. The 100k activity trades with a daily quota are a shadow-only variant, which the code refuses on history.
+- **News role:** free RSS feeds only, summarized by the same local model. Only the interface and a stub exist (`agent/news.py`); it will be evaluated in shadow.
 
-## 2. RiskGuard (`risk/guard.py`), the final word
+## 2. Provenance and reproducibility
 
-For every entry, in order:
-1. market policy;
-2. kill switch, daily loss block, last 2 h, risk_mode OFF, halt;
-3. one position per symbol;
-4. self-trade guard (returns a "cancel your resting sell" action);
-5. LLM adjustments, clamped: size only down, stop only tighter, take-profit only closer and ≥ 0.7%; DEFENSIVE halves the size;
-6. caps: risk per trade, 20% per position, 60% total, minimum order, precision;
-7. the buffer above `liquidity_limit`.
+- **Cache key:** sha256 of the provider identity (provider, model, digest) plus the full request (system prompt, messages, schema, tools, options). Answers from different models can never mix.
+- **Journal:** every call logs role, prompt version (file name + content hash), provider, model, digest, request hash, cache hit, latency, tokens and the output.
+- **Decision record:** RiskGuard writes `LLM[ollama/qwen3:8b@500a1f067a9f regime_officer_v1@… #<hash>]: <rationale>` into each trade's decision record.
+- **`make reproduce`:** replays from the committed `data/llm_cache/`, with no model and no network, and checks every metric against `reports/p4-llm_ablation/fee_table.csv`.
+- **`make reproduce-llm-live`:** regenerates all answers with the pinned model into a fresh cache.
 
-The backtest engine sends every decision through it. A re-run of the P2 rules on 233 windows gave the identical result after the refactor.
+## 3. Benchmark (`reports/p4-benchmark`, 20 calls, cache bypassed)
 
-## 3. The roles (`agent/roles.py`, prompts in `agent/prompts/*.md`, versioned by content hash)
+The 20 calls are 5 officer contexts and 5 trade-agent candidates, each sent twice.
 
-| | Regime/Risk Officer | Trade Agent |
-|---|---|---|
-| when | first tick of every hour | each core (trend) entry; activity trades only via the officer's hourly switch |
-| input | market-only summary: returns, volatility, trend, fair-value premium, breadth, Tehran hour/weekday; news when a feed is plugged in | the candidate (stop/target distances, signal ratios) plus the same market summary; read-only WallexTools when available (≤ 3 calls) |
-| output (schema-validated) | risk_mode NORMAL/DEFENSIVE/OFF (code ceiling), avoid_symbols, activity_trades, usdt_risk, rationale | approve, size_fraction, stop_fraction, take_profit_fraction, rationale |
-| on failure | OFF: no new entries, exits continue | reject |
+| metric | value |
+|---|---|
+| schema-valid JSON on the first answer | **100%** (20/20) |
+| identical decision fields when the same input is sent twice | **100%** (10/10) |
+| byte-identical output (rationale text included) | 70% (7/10) |
+| latency, median / max | 11.0 s / 20.1 s (officer 9.2 s, trade agent 13.7 s) |
+| tokens per call, median | ~1,080 in / ~100 out |
 
-- **Why market-only and path-independent:** account risk is RiskGuard's job in code. Keeping the LLM inputs free of account state makes every call depend only on the hour (or the entry), so calls are cacheable, batchable and identical across overlapping windows.
-- **Blind replay (anti-leakage):** historical contexts carry no date, no price level and no free-text rule reason (those contain prices). A model trained on data up to 2026 could otherwise recognize the period and trade on hindsight. A test checks this.
-- **Decision log:** every LLM call is journaled with role, prompt version, prompt hash, cache hit, tokens and output (`logs/llm_journal.jsonl`). RiskGuard writes `LLM[<prompt hash>]: <rationale>` into each trade's decision record.
+**Observations:**
+- **Determinism:** temperature 0 and a fixed seed make the *decisions* deterministic, but the wording of the rationale can still vary. On Apple Metal, llama.cpp is not bit-reproducible across runs. The committed cache is what makes a replay exact.
+- **An unsupported claim:** one trade-agent rationale mentioned a "thin order book", although no order book was given (`tools_available: false`). Rationales can contain claims that the data does not support.
+- **Default sizing:** the trade agent tends to answer `size_fraction: 0.8`. That is a systematic 20% size cut, and the ablation has to separate it from skill.
+- **Runtime under load:** during the long run, throughput fell to ~20 s per call under memory pressure (16 GB, other apps open, 2 GB swap).
 
-## 4. LLM client (`agent/llm.py`)
+## 4. Replay cadence (documented difference)
 
-- **Model and SDK:** `claude-opus-5-5` through the official Anthropic SDK. Server-side refusal fallback is on for online calls; it is not available on batches.
-- **Proxy:** `LLM_HTTPS_PROXY` is used only by this client.
-- **Requests:** structured output (`output_config.format`, strict JSON schema), effort `low`, at most 3 tool calls.
-- **Failures:** invalid output gets one retry; after that the safe fallback applies.
-- **Daily token budget.**
-- **Disk cache keyed by the sha256 of the full request.** `ReplayProvider` never calls out: a cache miss is a fallback, not a network call. Opus 5.5 takes no `temperature`, so determinism comes from the cache.
-- **Tools (`agent/tools.py`):**
-  - live: GET `/v1/depth`, `/v1/trades`, `/v1/markets`, policy-checked;
-  - recorded: the recorder's Parquet as of a time;
-  - unavailable: historical replay.
-  - It is an adapter, so the official Wallex MCP can replace it later.
+| | officer cadence | trade agent | context | tools |
+|---|---|---|---|---|
+| live / shadow | every hour | each core entry | real time, prices, news (when enabled) | live Wallex GET (≤ 3 calls) |
+| historical replay | **every 4 h** (runtime: 1,008 calls instead of ~4,000) | each core entry | **blind**: no dates, no price levels, no news | none (no order book before 2026-10-22) |
 
-## 5. The LLM ablation (ready, not run)
+## 5. Ablation (pending: runs after the officer precompute)
 
-- **Setup:** non-overlapping 3-day windows, one every 3 days, so every hour is seen once. There are 23 selection windows (2026-06-20 → 08-29) and 17 holdout windows.
-- **Variants:** canonical without LLM, + officer, + officer + trade agent. Three configs, logged, holdout once.
-- **Replay:** the officer is precomputed in one Message Batch (`p4_experiment plan` → `submit --confirm-spend` → `collect`). The trade agent calls the API only for entries that happen (no tools in historical replay: no order book exists before 2026-10-22).
-- **Cost plan** (offline estimate, `p4_experiment plan`, Opus 5.5 at batch prices):
-  - selection: 1,656 officer calls, about $10;
-  - with holdout: 2,880 calls, about $18;
-  - trade agent: about $6.
-- **Honest limits:**
-  1. Historical replay has **no news**, and news is the role the evidence points to (USDTTMN moves in news-driven jumps). The backtest can only test the price-based judgment. The news role can be judged in shadow and live only.
-  2. 23 + 17 windows is a small sample, so differences of a few tenths of a percent will not be significant.
-  3. The trade agent has no order book in replay, so its live behavior (with tools) is not what the backtest measures.
-
-## 6. Status
-
-**Built and tested:**
-- RiskGuard: 13 tests.
-- LLM client:
-  - cache, replay without network, retry, refusal, budget;
-  - the 3-tool limit;
-  - the request built by the precompute has the same hash as the one sent at run time.
-- Roles and the agent layer:
-  - the officer's ceiling and fallback;
-  - one officer call per hour;
-  - vetoes;
-  - blind context.
-- The engine obeys the agent and RiskGuard clamps it: a "go big" size × 5 is ignored.
-- Recorded tools.
-- The ablation harness and the cost plan.
-
-**Pending:**
-- An Anthropic API key and a reachable `LLM_HTTPS_PROXY`.
-- `pip install anthropic==1.17.0` (PyPI was unreachable from this machine on 2026-10-22).
-- The user's approval of the spend.
-- Then the ablation runs.
+- **Setup:** non-overlapping 3-day windows, 39 selection and 17 holdout.
+- **Variants:** rules, rules + officer, rules + officer + trade agent.
+- **What is reported:** the fee table, P(>+0.2%), mean/median, p10 and worst drawdown, worst window, and no-trade windows.

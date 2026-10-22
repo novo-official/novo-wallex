@@ -25,13 +25,14 @@ Full rules: `docs/CHALLENGE.md`. Ground truth for the API: `docs/wallex_spot_swa
   host) does **not resolve** from this machine: DNS failure, not a block. If Wallex becomes unreachable, tell the
   user (VPN split tunnel); do not work around it.
 - LightGBM needs `brew install libomp` on macOS (Docker installs `libgomp1`).
-- `anthropic==1.17.0` is pinned but **not installed yet** (PyPI unreachable on 2026-10-22). No LLM key in `.env`.
+- **LLM = local Ollama** (`brew services start ollama`), model `qwen3:8b` pinned by digest in `config/llm.toml`.
+  No paid API (user decision). 16 GB M4: ~10–20 s per call; heavy apps slow it (swap).
 - Python 3.12 in `.venv/` (`python3.12 -m venv .venv && .venv/bin/pip install -r requirements-dev.txt ruff`).
   `venv/` (Python 3.14) is an old local env; ignore it.
 - Postgres: Homebrew Postgres on localhost:5432, role/db `wallex` (password in `.env`). Docker compose exists but is
   untested and would clash on port 5432.
 - `.env` holds `WALLEX_API_KEY` (currently **empty**: account endpoints answer 401). Never print, log or commit it.
-- LLM calls (P4) go through `LLM_HTTPS_PROXY`, used only by the LLM client, never by the Wallex client.
+- Optional free LLM fallbacks (shadow/live only): `GROQ_API_KEY`, `GEMINI_API_KEY` in `.env`.
 - Shell: `rm` is aliased to interactive; use `/bin/rm -f` in scripts.
 
 ## 3. Working rules
@@ -71,9 +72,8 @@ Full rules: `docs/CHALLENGE.md`. Ground truth for the API: `docs/wallex_spot_swa
 
 ## 5. Defaults until the organizers confirm
 
-- **Objective (user, 2026-10-22):** maximize P(3-day return > +0.2%) s.t. p10 drawdown ≥ −3.5% and ≥ 3 round trips/day;
-  zero-trade windows are failures; report mean/median too. User kept 3/day; its cheapest form (rules + 100k ML
-  trades) costs ≈ −0.45 pp mean / −11 pp P(>+0.2%) on holdout (`docs/RESEARCH_P3.md` §7). Decision still open.
+- **Objective (user, 2026-10-22):** maximize P(3-day return > +0.2%) s.t. p10 drawdown ≥ −3.5% and **≥ 1 round
+  trip/day**; zero-trade windows are failures (minimize them); report mean/median, DD and worst window too.
 - **Every report has the 3-row fee table:** low 0.15/0.20, base 0.25/0.35, stress ×1.5 (`config/strategy.toml`).
 
 - Fees: TMN maker 0.25% / taker 0.35%; USDT maker 0.15% / taker 0.20%. Always also run fee stress ×1.5.
@@ -111,10 +111,13 @@ Full rules: `docs/CHALLENGE.md`. Ground truth for the API: `docs/wallex_spot_swa
 | `strategy/modules/ml_signal.py`, `usdt_allocation.py` | ML-only module (E[net] > threshold, confidence sizing); USDT regime allocation |
 | `market/orderbook_features.py` | spread, imbalance, depth, microprice from a snapshot (logged later, not trained on) |
 | `risk/guard.py` | **RiskGuard** (pure, final word): policy, kill/daily/end, risk_mode, one position/symbol, self-trade, LLM clamps, caps, liquidity buffer; the engine routes every entry through it |
-| `agent/llm.py` | LLM client: Anthropic SDK (`claude-opus-5-5`, lazy import, `LLM_HTTPS_PROXY`), strict JSON output, ≤ 3 tool calls, disk cache by request hash, `ReplayProvider` (never calls out), retry → fallback, daily budget, journal |
+| `agent/llm.py` | provider-neutral client: `OllamaProvider` (pinned digest, `format` schema, temp 0, seed), `OpenAICompatibleProvider` (Groq/Gemini, backoff), `ReplayProvider`; cache key = identity + request; ≤ 3 tools; retry → fallback; budget; journal |
+| `config/llm.toml` | pinned local model + digest, options, officer cadence (1 h live / 4 h replay), fallbacks, news sources |
+| `agent/news.py` | news interface + stub: free RSS feeds, local-model digest (shadow only) |
+| `Makefile`, `scripts/check_reproduce.py`, `scripts/llm_check.py` | `make reproduce` (no model needed), `make llm-setup`, `make reproduce-llm-live` |
 | `agent/roles.py`, `agent/prompts/` | Regime/Risk Officer (hourly, market-only, ceiling, fallback OFF), Trade Agent (core entries, fallback reject), `AgentLayer` (engine hook), blind replay context (no dates/prices) |
 | `agent/tools.py` | WallexTools adapter: live GET / recorded Parquet / unavailable (historical) |
-| `agent/replay.py`, `agent/experiments.py` | officer batch precompute, cost estimate, LLM ablation on non-overlapping windows; `p4_experiment plan/submit/collect/ablation` |
+| `agent/replay.py`, `agent/experiments.py` | client modes (replay / live-local / live), resumable officer precompute, benchmark, ablation; `p4_experiment benchmark/plan/precompute/ablation [--llm] [--final]` |
 | `agent/context.py` | context builder with pluggable `NewsFeed` (news role for P5+) |
 | `models/` | `ml_net_h48/` (P3b final, not live), `aligned_3d/` (P3a) |
 | `config/strategy.toml` | fees, objective, tradable markets, windows, canonical `[strategy]` (rules + activity), `[grid]` (≤ 30), `[shadow_variants]` |
@@ -174,8 +177,11 @@ Planned (not built): `execution/` (Shadow/Live executors, order state machine, r
 .venv/bin/python manage.py window_study                                   # 3-day windows -> reports/windows-*/
 .venv/bin/python manage.py run_backtest --start ... --end ...             # one run with trades + decision log
 .venv/bin/python manage.py p3_experiment <name> [--final]                 # P3 experiments (see docs/RESEARCH_P3.md)
-.venv/bin/python manage.py p4_experiment plan [--final]                   # LLM replay: cached vs to buy, cost (free)
-.venv/bin/python manage.py p4_experiment submit --confirm-spend           # officer batch (spends money: user approval)
+.venv/bin/python manage.py p4_experiment benchmark                       # local model: latency, JSON validity, determinism
+.venv/bin/python manage.py p4_experiment plan --final --seconds-per-call 15  # officer calls cached vs to compute, runtime
+.venv/bin/python manage.py p4_experiment precompute --final               # resumable; progress in logs/p4_precompute_progress.jsonl
+.venv/bin/python manage.py p4_experiment ablation --llm live-local [--final]
+make reproduce                                                           # replay from the committed cache, no model
 .venv/bin/python manage.py build_universe
 nohup scripts/run_recorder.sh >/dev/null 2>&1 &   # start the recorder (survives the terminal)
 scripts/stop_recorder.sh                          # stop it cleanly
@@ -205,10 +211,10 @@ across adjacent polls. ~2.8 req/s, no rate-limit headers seen; a 429 is retried 
   detrended) and SOL/XRP are negative or inactive; rules + ML adds activity but not holdout return. Recommendation:
   live = trend rules (USDT/BTC/ETH, maker entries) only. 32 experiments / 1,684 configs / 17 holdout evaluations.
   Fixed: fair-value step reset module sizes to 1.0 (affected P3b ML sizing only).
-- **P4 in progress (2026-10-22)** (`docs/RESEARCH_P4.md`). Canonical = trend rules + 100k h24 activity trades (user
-  kept 3 trades/day); quota variant shadow-only (code refuses it on history). RiskGuard built and wired (identical
-  results). LLM roles, client, tools, replay and ablation harness built and tested with fakes. **Blocked on:** API key +
-  proxy, SDK install, user approval of ~$10 (selection) / ~$18 (with holdout) batch spend + ~$6 trade agent.
+- **P4 in progress (2026-10-22)** (`docs/RESEARCH_P4.md`, `STRATEGY.md`). No paid LLM: local `qwen3:8b` via Ollama,
+  pinned digest. Canonical = trend rules (activity ≥ 1/day); activity-quota variant shadow-only. RiskGuard wired.
+  Benchmark: 100% valid JSON, 100% deterministic decisions, ~11 s/call. Officer precompute (1,008 calls, 4 h cadence)
+  then the ablation (39 selection + 17 holdout non-overlapping windows). News: interface + stub only.
 - Later: P5 execution/engine/preflight/shadow ≥ 24h,
   P6 DRF + Next.js dashboard, P7 docs, canonical report, `make reproduce`, demo script, final audit.
 - Triage if short on time: keep backtester + 3-day study, RiskGuard, execution + reconcile + end flatten,

@@ -105,13 +105,14 @@ def test_experiment_refuses_more_than_30_configs(tmp_path):
         run_experiment("too big", config, None, {}, [("v", {})] * (MAX_CONFIGS + 1), tmp_path, tmp_path)
 
 
-def test_canonical_strategy_has_activity_trades_and_quota_is_shadow_only(tmp_path):
+def test_canonical_strategy_is_the_rules_and_quota_is_shadow_only(tmp_path):
     from backtest.experiment import run_experiment
 
     config = load_study_config(settings.BASE_DIR / "config" / "strategy.toml", settings.BASE_DIR)
-    assert config.strategy["modules"] == ["trend", "ml_signal"]
-    assert config.strategy["ml_signal"]["size_scale"] == 0.1 and config.strategy["risk"]["min_order_tmn"] == 50000
+    assert config.strategy["modules"] == ["trend"] and "ml_signal" not in config.strategy
+    assert config.objective.min_trades_per_day == 1.0
     quota = config.shadow_variants["activity_quota"]
-    assert quota["ml_signal"]["max_entries_per_day"] == 2 and quota["ml_signal"]["threshold"] == -0.005
+    assert quota["modules"] == ["trend", "ml_signal"] and quota["ml_signal"]["max_entries_per_day"] == 2
+    assert quota["ml_signal"]["size_scale"] == 0.1 and quota["risk"]["min_order_tmn"] == 50000
     with pytest.raises(ValueError, match="shadow-only"):
         run_experiment("quota", config, None, {}, [("quota", quota)], tmp_path, tmp_path)

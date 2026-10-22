@@ -1,0 +1,36 @@
+# LLM configuration (user decision 2026-10-22): zero-cost, offline, pinned, reproducible AI.
+# The canonical backtest and its committed cache use ONLY the pinned local model below.
+
+[local]
+provider = "ollama"
+base_url = "http://localhost:11434"
+model = "qwen3:8b"                     # Qwen3 8B, Q4_K_M, 5.2 GB: fits a 16 GB Apple M4 comfortably
+digest = "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41"
+num_ctx = 8192
+
+[options]                              # part of every cache key
+temperature = 0
+seed = 42
+
+[cadence]
+officer_hours_live = 1                 # live and shadow: every hour
+officer_hours_replay = 4               # historical replay: every 4 h (runtime), see docs/RESEARCH_P4.md
+
+# Optional free-tier fallbacks for shadow/live ONLY (never the canonical backtest). Keys come from .env.
+# Model names are UNVERIFIED until a live call succeeds; check each provider's current free models.
+[fallbacks.groq]
+base_url = "https://api.groq.com/openai/v1"
+model = "llama-3.3-70b-versatile"
+key_env = "GROQ_API_KEY"
+
+[fallbacks.gemini]
+base_url = "https://generativelanguage.googleapis.com/v1beta/openai"
+model = "gemini-2.5-flash"
+key_env = "GEMINI_API_KEY"
+
+# News role (shadow only; never in the historical backtest). Free public RSS/Atom feeds only:
+# Iranian economic news, USDT/gold-rate news. No URL ships with the code: add and verify them here.
+[news]
+enabled = false
+lookback_hours = 6
+sources = {}   # e.g. { name = "https://..." }

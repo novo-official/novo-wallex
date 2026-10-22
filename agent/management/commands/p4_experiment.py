@@ -1,58 +1,43 @@
 import json
-from pathlib import Path
 
 from django.conf import settings
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand
 
-from agent import experiments, replay
+from agent import experiments
 from backtest.config import load_study_config
 from backtest.experiment import print_tables
 
 
 class Command(BaseCommand):
-    help = "Phase 4 LLM steps: plan (free), submit (spends money: needs --confirm-spend), collect, ablation."
+    help = "Phase 4, local LLM: benchmark | plan | precompute | ablation. No paid API is ever called."
 
     def add_arguments(self, parser):
-        parser.add_argument("step", choices=["plan", "submit", "collect", "ablation"])
-        parser.add_argument("--batch-id", default=None)
-        parser.add_argument("--confirm-spend", action="store_true", help="required for submit")
+        parser.add_argument("step", choices=["benchmark", "plan", "precompute", "ablation"])
+        parser.add_argument(
+            "--llm",
+            default="replay",
+            choices=["replay", "live-local"],
+            help="replay: committed cache only (no model needed); live-local: the pinned Ollama model",
+        )
         parser.add_argument("--final", action="store_true", help="include the holdout windows (logged; once)")
-        parser.add_argument("--agent-mode", default="live", choices=["live", "replay"])
+        parser.add_argument("--seconds-per-call", type=float, default=None, help="for the runtime estimate")
 
     def handle(self, *args, **options):
         config = load_study_config(settings.BASE_DIR / "config" / "strategy.toml", settings.BASE_DIR)
         data = settings.BASE_DIR / "data"
+        reports = settings.BASE_DIR / "reports"
         step = options["step"]
-        record = settings.BASE_DIR / "reports" / "llm_batches.jsonl"
-        if step in ("plan", "submit", "collect"):
-            plan = experiments.llm_plan(config, data, final=options["final"])
-            summary = {k: v for k, v in plan.items() if k != "requests"}
-            self.stdout.write(json.dumps(summary, indent=2))
-            if step == "submit":
-                if not plan["requests"]:
-                    self.stdout.write("nothing to submit: every officer request is cached")
-                    return
-                if not options["confirm_spend"]:
-                    raise CommandError(f"submitting costs about ${plan['to_buy']['usd_est']}; add --confirm-spend")
-                batch_id = replay.submit_batch(plan["requests"], record)
-                self.stdout.write(f"submitted batch {batch_id}; run: p4_experiment collect --batch-id {batch_id}")
-            elif step == "collect":
-                if not options["batch_id"]:
-                    raise CommandError("--batch-id is required")
-                all_requests = replay.officer_requests(*_windows(config, data, options["final"]))
-                self.stdout.write(json.dumps(replay.collect_batch(options["batch_id"], all_requests)))
-            return
-        out = settings.BASE_DIR / "reports" / "p4-llm_ablation"
-        result = experiments.llm_ablation(
-            config, data, out, settings.BASE_DIR / "reports", final=options["final"], agent_mode=options["agent_mode"]
-        )
-        print_tables(result, self.stdout.write)
-
-
-def _windows(config, data_dir: Path, final: bool):
-    from backtest.experiment import select_windows
-
-    config = experiments._config(config)
-    market, first = experiments._market(config, data_dir)
-    selection, holdout = select_windows(market, config, first)
-    return market, selection + (holdout if final else []), config.windows.window_days
+        if step == "benchmark":
+            summary = experiments.benchmark(config, data, reports / "p4-benchmark", reports)
+            self.stdout.write(json.dumps({k: v for k, v in summary.items() if k != "schemas"}, indent=2))
+        elif step == "plan":
+            planned = experiments.plan(config, data, options["final"], options["seconds_per_call"])
+            self.stdout.write(json.dumps({k: v for k, v in planned.items() if not k.startswith("_")}, indent=2))
+        elif step == "precompute":
+            progress = settings.BASE_DIR / "logs" / "p4_precompute_progress.jsonl"
+            self.stdout.write(json.dumps(experiments.precompute(config, data, options["final"], progress)))
+        else:
+            result = experiments.llm_ablation(
+                config, data, reports / "p4-llm_ablation", reports, final=options["final"], llm=options["llm"]
+            )
+            print_tables(result, self.stdout.write)

@@ -1,0 +1,443 @@
+{
+  "by_role": {
+    "officer": {
+      "median_s": 9.215,
+      "valid": 10
+    },
+    "trade_agent": {
+      "median_s": 13.68,
+      "valid": 10
+    }
+  },
+  "calls": 20,
+  "deterministic_pairs": 0.7,
+  "latency_s": {
+    "max": 20.12,
+    "mean": 11.8745,
+    "median": 10.969999999999999
+  },
+  "model": {
+    "digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+    "model": "qwen3:8b",
+    "provider": "ollama"
+  },
+  "rows": [
+    {
+      "attempt": 0,
+      "deterministic": true,
+      "input_tokens": 1044,
+      "output": {
+        "activity_trades": false,
+        "avoid_symbols": [
+          "USDTTMN"
+        ],
+        "rationale": "USDTTMN shows negative returns and low activity, indicating potential instability. The other markets show mixed signals with uptrends but low volatility. Given the elevated USDTTMN risk, activity trades are paused to avoid exposure.",
+        "risk_mode": "NORMAL",
+        "usdt_risk": "elevated"
+      },
+      "output_tokens": 93,
+      "role": "officer",
+      "seconds": 19.65,
+      "valid_json": true
+    },
+    {
+      "attempt": 1,
+      "deterministic": true,
+      "input_tokens": 1044,
+      "output": {
+        "activity_trades": false,
+        "avoid_symbols": [
+          "USDTTMN"
+        ],
+        "rationale": "USDTTMN shows negative returns and low activity, indicating potential instability. The other markets show mixed signals with uptrends but low volatility. Given the elevated USDTTMN risk, activity trades are paused to avoid exposure.",
+        "risk_mode": "NORMAL",
+        "usdt_risk": "elevated"
+      },
+      "output_tokens": 93,
+      "role": "officer",
+      "seconds": 5.57,
+      "valid_json": true
+    },
+    {
+      "attempt": 0,
+      "deterministic": true,
+      "input_tokens": 1046,
+      "output": {
+        "activity_trades": false,
+        "avoid_symbols": [
+          "USDTTMN",
+          "BTCTMN",
+          "ETHTMN"
+        ],
+        "rationale": "All symbols show negative returns and are in downtrends. USDTTMN has a high volatility and is experiencing sharp declines. The market is showing signs of stress, and the risk of a sudden USDTTMN move is elevated. Defensive mode is appropriate to limit exposure.",
+        "risk_mode": "DEFENSIVE",
+        "usdt_risk": "elevated"
+      },
+      "output_tokens": 115,
+      "role": "officer",
+      "seconds": 10.41,
+      "valid_json": true
+    },
+    {
+      "attempt": 1,
+      "deterministic": true,
+      "input_tokens": 1046,
+      "output": {
+        "activity_trades": false,
+        "avoid_symbols": [
+          "USDTTMN",
+          "BTCTMN",
+          "ETHTMN"
+        ],
+        "rationale": "All symbols show negative returns and are in downtrends. USDTTMN has a high volatility and is experiencing sharp declines. The market is showing signs of stress, and the risk of a sudden USDTTMN move is elevated. Defensive mode is appropriate to limit exposure.",
+        "risk_mode": "DEFENSIVE",
+        "usdt_risk": "elevated"
+      },
+      "output_tokens": 115,
+      "role": "officer",
+      "seconds": 6.82,
+      "valid_json": true
+    },
+    {
+      "attempt": 0,
+      "deterministic": true,
+      "input_tokens": 1040,
+      "output": {
+        "activity_trades": false,
+        "avoid_symbols": [
+          "USDTTMN",
+          "BTCTMN",
+          "ETHTMN"
+        ],
+        "rationale": "All markets show negative returns and low breadth of uptrends. USDTTMN and BTCTMN have high volatility and are in a downtrend. ETHTMN shows moderate volatility but also negative returns. The risk of a sharp USDTTMN move is elevated due to recent trends and the potential for sudden news impacts.",
+        "risk_mode": "DEFENSIVE",
+        "usdt_risk": "elevated"
+      },
+      "output_tokens": 125,
+      "role": "officer",
+      "seconds": 11.45,
+      "valid_json": true
+    },
+    {
+      "attempt": 1,
+      "deterministic": true,
+      "input_tokens": 1040,
+      "output": {
+        "activity_trades": false,
+        "avoid_symbols": [
+          "USDTTMN",
+          "BTCTMN",
+          "ETHTMN"
+        ],
+        "rationale": "All markets show negative returns and low breadth of uptrends. USDTTMN and BTCTMN have high volatility and are in a downtrend. ETHTMN shows moderate volatility but also negative returns. The risk of a sharp USDTTMN move is elevated due to recent trends and the potential for sudden news impacts.",
+        "risk_mode": "DEFENSIVE",
+        "usdt_risk": "elevated"
+      },
+      "output_tokens": 125,
+      "role": "officer",
+      "seconds": 7.45,
+      "valid_json": true
+    },
+    {
+      "attempt": 0,
+      "deterministic": true,
+      "input_tokens": 1047,
+      "output": {
+        "activity_trades": true,
+        "avoid_symbols": [],
+        "rationale": "The USDTTMN market shows a slight downtrend in the last hour but remains in an uptrend over 4 hours. BTCTMN and ETHTMN are both in uptrends with positive returns and moderate volatility. No news is available, and the risk of a sharp USDTTMN move is low. The system can proceed with normal trading.",
+        "risk_mode": "NORMAL",
+        "usdt_risk": "low"
+      },
+      "output_tokens": 113,
+      "role": "officer",
+      "seconds": 11.01,
+      "valid_json": true
+    },
+    {
+      "attempt": 1,
+      "deterministic": true,
+      "input_tokens": 1047,
+      "output": {
+        "activity_trades": true,
+        "avoid_symbols": [],
+        "rationale": "The USDTTMN market shows a slight downtrend in the last hour but remains in an uptrend over 4 hours. BTCTMN and ETHTMN are both in uptrends with positive returns and moderate volatility. No news is available, and the risk of a sharp USDTTMN move is low. The system can proceed with normal trading.",
+        "risk_mode": "NORMAL",
+        "usdt_risk": "low"
+      },
+      "output_tokens": 113,
+      "role": "officer",
+      "seconds": 6.81,
+      "valid_json": true
+    },
+    {
+      "attempt": 0,
+      "deterministic": true,
+      "input_tokens": 1045,
+      "output": {
+        "activity_trades": true,
+        "avoid_symbols": [],
+        "rationale": "USDTTMN shows a slight positive return over the last day, but the market is range-bound with low volatility. BTCTMN and ETHTMN are underperforming with negative returns, but their volatility is moderate. No news is available, and the risk of a sharp USDTTMN move is low. The system remains in NORMAL mode with activity trades active.",
+        "risk_mode": "NORMAL",
+        "usdt_risk": "low"
+      },
+      "output_tokens": 116,
+      "role": "officer",
+      "seconds": 11.71,
+      "valid_json": true
+    },
+    {
+      "attempt": 1,
+      "deterministic": true,
+      "input_tokens": 1045,
+      "output": {
+        "activity_trades": true,
+        "avoid_symbols": [],
+        "rationale": "USDTTMN shows a slight positive return over the last day, but the market is range-bound with low volatility. BTCTMN and ETHTMN are underperforming with negative returns, but their volatility is moderate. No news is available, and the risk of a sharp USDTTMN move is low. The system remains in NORMAL mode with activity trades active.",
+        "risk_mode": "NORMAL",
+        "usdt_risk": "low"
+      },
+      "output_tokens": 116,
+      "role": "officer",
+      "seconds": 8.02,
+      "valid_json": true
+    },
+    {
+      "attempt": 0,
+      "deterministic": true,
+      "input_tokens": 1085,
+      "output": {
+        "approve": true,
+        "rationale": "The market shows an uptrend for BTCTMN with positive returns and a strong ADX. The rule's signal aligns with the trend, and the stop and take-profit levels are reasonable given the current market conditions.",
+        "size_fraction": 0.8,
+        "stop_fraction": 0.02,
+        "take_profit_fraction": 0.06
+      },
+      "output_tokens": 92,
+      "role": "trade_agent",
+      "seconds": 17.59,
+      "valid_json": true
+    },
+    {
+      "attempt": 1,
+      "deterministic": true,
+      "input_tokens": 1085,
+      "output": {
+        "approve": true,
+        "rationale": "The market shows an uptrend for BTCTMN with positive returns and a strong ADX. The rule's signal aligns with the trend, and the stop and take-profit levels are reasonable given the current market conditions.",
+        "size_fraction": 0.8,
+        "stop_fraction": 0.02,
+        "take_profit_fraction": 0.06
+      },
+      "output_tokens": 92,
+      "role": "trade_agent",
+      "seconds": 10.93,
+      "valid_json": true
+    },
+    {
+      "attempt": 0,
+      "deterministic": false,
+      "input_tokens": 1079,
+      "output": {
+        "approve": true,
+        "rationale": "The market shows an uptrend (uptrend_1h: true) with a moderate RSI (53.25) and positive returns in the last hour. The breakout strength is low, but the trend module aligns with the uptrend. The stop and take-profit levels are reasonable given the recent volatility and market conditions.",
+        "size_fraction": 0.8,
+        "stop_fraction": 0.02,
+        "take_profit_fraction": 0.06
+      },
+      "output_tokens": 116,
+      "role": "trade_agent",
+      "seconds": 20.12,
+      "valid_json": true
+    },
+    {
+      "attempt": 1,
+      "deterministic": false,
+      "input_tokens": 1079,
+      "output": {
+        "approve": true,
+        "rationale": "The market shows an uptrend (uptrend_1h: true) with moderate volatility. The RSI is within neutral range, and the breakout strength is positive. The rule's parameters align with the current market conditions.",
+        "size_fraction": 0.8,
+        "stop_fraction": 0.02,
+        "take_profit_fraction": 0.06
+      },
+      "output_tokens": 93,
+      "role": "trade_agent",
+      "seconds": 10.4,
+      "valid_json": true
+    },
+    {
+      "attempt": 0,
+      "deterministic": false,
+      "input_tokens": 1083,
+      "output": {
+        "approve": false,
+        "rationale": "The market is in a weak uptrend with a low breakout strength. The recent 1-hour return is negative, and the trend strength is weak. The trade may be risky due to the current market conditions.",
+        "size_fraction": 0.5,
+        "stop_fraction": 0.02,
+        "take_profit_fraction": 0.06
+      },
+      "output_tokens": 90,
+      "role": "trade_agent",
+      "seconds": 17.63,
+      "valid_json": true
+    },
+    {
+      "attempt": 1,
+      "deterministic": false,
+      "input_tokens": 1083,
+      "output": {
+        "approve": false,
+        "rationale": "The market is in a weak uptrend with a low breakout strength and a thin order book. The recent price movement shows a sharp decline, which may indicate a potential reversal. The rule's signal is weak, and the risk layer should be cautious with the size.",
+        "size_fraction": 0.5,
+        "stop_fraction": 0.02,
+        "take_profit_fraction": 0.06
+      },
+      "output_tokens": 101,
+      "role": "trade_agent",
+      "seconds": 11.03,
+      "valid_json": true
+    },
+    {
+      "attempt": 0,
+      "deterministic": true,
+      "input_tokens": 1084,
+      "output": {
+        "approve": true,
+        "rationale": "The market shows an uptrend with positive returns and moderate volatility. The rule's signal values align with the trend, and the stop and take-profit levels are reasonable given the current conditions.",
+        "size_fraction": 0.8,
+        "stop_fraction": 0.02,
+        "take_profit_fraction": 0.06
+      },
+      "output_tokens": 85,
+      "role": "trade_agent",
+      "seconds": 16.47,
+      "valid_json": true
+    },
+    {
+      "attempt": 1,
+      "deterministic": true,
+      "input_tokens": 1084,
+      "output": {
+        "approve": true,
+        "rationale": "The market shows an uptrend with positive returns and moderate volatility. The rule's signal values align with the trend, and the stop and take-profit levels are reasonable given the current conditions.",
+        "size_fraction": 0.8,
+        "stop_fraction": 0.02,
+        "take_profit_fraction": 0.06
+      },
+      "output_tokens": 85,
+      "role": "trade_agent",
+      "seconds": 8.6,
+      "valid_json": true
+    },
+    {
+      "attempt": 0,
+      "deterministic": false,
+      "input_tokens": 1087,
+      "output": {
+        "approve": true,
+        "rationale": "The market shows an uptrend for BTCTMN with positive returns and a strong RSI. The breakout strength and ATR suggest a valid trend. However, the size is reduced to 80% to account for potential volatility.",
+        "size_fraction": 0.8,
+        "stop_fraction": 0.02,
+        "take_profit_fraction": 0.06
+      },
+      "output_tokens": 95,
+      "role": "trade_agent",
+      "seconds": 16.33,
+      "valid_json": true
+    },
+    {
+      "attempt": 1,
+      "deterministic": false,
+      "input_tokens": 1087,
+      "output": {
+        "approve": true,
+        "rationale": "The market shows an uptrend for BTCTMN with positive returns and a strong RSI. The breakout strength and ATR suggest a valid trend. However, the size is reduced to 80% to account for potential volatility and ensure risk management.",
+        "size_fraction": 0.8,
+        "stop_fraction": 0.02,
+        "take_profit_fraction": 0.06
+      },
+      "output_tokens": 99,
+      "role": "trade_agent",
+      "seconds": 9.49,
+      "valid_json": true
+    }
+  ],
+  "schemas": {
+    "officer": {
+      "additionalProperties": false,
+      "properties": {
+        "activity_trades": {
+          "type": "boolean"
+        },
+        "avoid_symbols": {
+          "items": {
+            "enum": [
+              "USDTTMN",
+              "BTCTMN",
+              "ETHTMN"
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "risk_mode": {
+          "enum": [
+            "NORMAL",
+            "DEFENSIVE",
+            "OFF"
+          ],
+          "type": "string"
+        },
+        "usdt_risk": {
+          "enum": [
+            "low",
+            "elevated",
+            "high"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "activity_trades",
+        "avoid_symbols",
+        "rationale",
+        "risk_mode",
+        "usdt_risk"
+      ],
+      "type": "object"
+    },
+    "trade_agent": {
+      "additionalProperties": false,
+      "properties": {
+        "approve": {
+          "type": "boolean"
+        },
+        "rationale": {
+          "type": "string"
+        },
+        "size_fraction": {
+          "type": "number"
+        },
+        "stop_fraction": {
+          "type": "number"
+        },
+        "take_profit_fraction": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "approve",
+        "rationale",
+        "size_fraction",
+        "stop_fraction",
+        "take_profit_fraction"
+      ],
+      "type": "object"
+    }
+  },
+  "valid_json_rate": 1.0
+}

@@ -140,26 +140,21 @@ class RegimeOutcome:
     avoid: frozenset[str]
     activity_trades: bool
     rationale: str
-    prompt_hash: str
+    prompt_hash: str  # full provenance: provider/model@digest prompt-version #request-hash
     ok: bool
 
 
 class RegimeOfficer:
-    def __init__(
-        self, client: LLMClient, prompt: Prompt | None = None, max_mode: str = "NORMAL", effort: str = "low"
-    ) -> None:
+    def __init__(self, client: LLMClient, prompt: Prompt | None = None, max_mode: str = "NORMAL") -> None:
         self.client = client
         self.prompt = prompt or load_prompt("regime_officer_v1")
         self.max_mode = max_mode
-        self.effort = effort
 
     def first_request(self, context: dict) -> dict:
         """The request `decide` sends first (same hash), for the batch precompute."""
         user = json.dumps(context, sort_keys=True)
         messages = [{"role": "user", "content": user}]
-        return self.client.build_request(
-            self.prompt.text, messages, strict_schema(RegimeDecision), None, self.effort, 4000
-        )
+        return self.client.build_request(self.prompt.text, messages, strict_schema(RegimeDecision), None)
 
     def decide(self, context: dict) -> RegimeOutcome:
         result = self.client.run(
@@ -168,10 +163,9 @@ class RegimeOfficer:
             system=self.prompt.text,
             user=json.dumps(context, sort_keys=True),
             output=RegimeDecision,
-            effort=self.effort,
         )
         if not result.ok:
-            return RegimeOutcome("OFF", frozenset(), False, f"fallback: {result.error}", result.prompt_hash, False)
+            return RegimeOutcome("OFF", frozenset(), False, f"fallback: {result.error}", result.tag, False)
         decision: RegimeDecision = result.data
         mode = decision.risk_mode if MODE_ORDER[decision.risk_mode] <= MODE_ORDER[self.max_mode] else self.max_mode
         return RegimeOutcome(
@@ -179,16 +173,15 @@ class RegimeOfficer:
             frozenset(decision.avoid_symbols),
             decision.activity_trades,
             decision.rationale,
-            result.prompt_hash,
+            result.tag,
             True,
         )
 
 
 class TradeAgent:
-    def __init__(self, client: LLMClient, prompt: Prompt | None = None, effort: str = "low") -> None:
+    def __init__(self, client: LLMClient, prompt: Prompt | None = None) -> None:
         self.client = client
         self.prompt = prompt or load_prompt("trade_agent_v1")
-        self.effort = effort
 
     @staticmethod
     def payload(intent, market: dict, tools: ToolSet | None) -> dict:
@@ -197,9 +190,7 @@ class TradeAgent:
     def first_request(self, intent, market: dict, tools: ToolSet | None) -> dict:
         """The request `review` sends first (same hash), for the batch precompute."""
         messages = [{"role": "user", "content": json.dumps(self.payload(intent, market, tools), sort_keys=True)}]
-        return self.client.build_request(
-            self.prompt.text, messages, strict_schema(TradeReview), tools, self.effort, 4000
-        )
+        return self.client.build_request(self.prompt.text, messages, strict_schema(TradeReview), tools)
 
     def review(self, intent, market: dict, tools: ToolSet | None) -> LLMAdjustment:
         payload = self.payload(intent, market, tools)
@@ -210,10 +201,9 @@ class TradeAgent:
             user=json.dumps(payload, sort_keys=True),
             output=TradeReview,
             tools=tools,
-            effort=self.effort,
         )
         if not result.ok:
-            return LLMAdjustment(approve=False, rationale=f"fallback: {result.error}", prompt_hash=result.prompt_hash)
+            return LLMAdjustment(approve=False, rationale=f"fallback: {result.error}", prompt_hash=result.tag)
         review: TradeReview = result.data
         limit = float(intent.limit_price)
         return LLMAdjustment(
@@ -222,7 +212,7 @@ class TradeAgent:
             stop_price=limit * (1 - review.stop_fraction) if review.stop_fraction > 0 else None,
             take_profit=limit * (1 + review.take_profit_fraction) if review.take_profit_fraction > 0 else None,
             rationale=review.rationale,
-            prompt_hash=result.prompt_hash,
+            prompt_hash=result.tag,
         )
 
 
@@ -237,6 +227,7 @@ class AgentLayer:
     tools_factory: object = None  # callable(ctx) -> ToolSet | None
     news: NewsFeed | None = None
     reviewed_modules: tuple[str, ...] = ("trend",)
+    officer_hours: int = 1  # live/shadow: 1; historical replay: 4 (config/llm.toml [cadence])
     log: list[dict] = field(default_factory=list)
     _hour = None
     _outcome: RegimeOutcome | None = None
@@ -244,7 +235,7 @@ class AgentLayer:
     def _regime(self, ctx) -> RegimeOutcome | None:
         if self.officer is None:
             return None
-        hour = ctx.now.floor("1h")
+        hour = ctx.now.floor(f"{self.officer_hours}h")
         if hour != self._hour:
             self._hour = hour
             self._outcome = self.officer.decide(market_context(ctx, self.symbols, self.blind, self.news))

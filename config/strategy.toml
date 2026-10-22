@@ -16,12 +16,13 @@ tradable = [
   "TRXTMN", "ADATMN", "BNBTMN", "LTCTMN", "SHIBTMN",
 ]
 
-# Objective (decided 2026-10-22, replaces the 60%-positive rule): maximize P(3-day return > +0.2%)
-# subject to p10 drawdown >= -3.5% and >= 3 round trips per day on average.
+# Objective (user decisions 2026-10-22): maximize P(3-day return > +0.2%) subject to p10 drawdown
+# >= -3.5% and >= 1 round trip per day on average (3/day was dropped: docs/RESEARCH_P3.md section 7);
+# zero-trade windows count as failures, so fewer of them is better.
 [objective]
 metric = "p_above_target"
 min_p10_drawdown = -0.035
-min_trades_per_day = 3.0
+min_trades_per_day = 1.0
 
 [windows]
 window_days = 3.0
@@ -36,11 +37,10 @@ min_p10_drawdown = -0.04
 # BTCTMN/ETHTMN/USDTTMN, which are also the only TMN markets with MARKET orders and 2-4 bps
 # slippage; every altcoin is negative. Exits must be wide (stop 1.5-2%, target 3-6%, hold up to
 # 3 days) because the ~0.6% round trip otherwise eats the edge. Mean reversion: too few, negative.
-# Canonical (user decision 2026-10-22, after reports/p3-activity_cost): the trend rules at full size
-# plus small ML-signal "activity" trades to reach >= 3 round trips/day, accepting their cost
-# (holdout: mean -0.39% vs +0.06% for the rules alone; docs/RESEARCH_P3.md section 7).
+# Canonical (user decision 2026-10-22): the trend rules alone, on USDT/BTC/ETH-TMN. The activity rule
+# is >= 1 trade/day (the rules make ~1.2/day); the 100k activity trades are a shadow-only variant below.
 [strategy]
-modules = ["trend", "ml_signal"]
+modules = ["trend"]
 symbols = ["USDTTMN", "BTCTMN", "ETHTMN"]
 
 [strategy.trend]
@@ -55,24 +55,22 @@ trail_after_r = 0.0      # no breakeven/trailing stop: it cut the winners (repor
 # Chosen by reports/windows-2026-10-22 (params #22); constraints not met, see docs/RESEARCH_P2.md.
 max_hold_bars = 864
 
-[strategy.ml_signal]
-column = "ml_net_h24"     # walk-forward E[net] of a 2h hold (models/ml_net_h24 in live)
-threshold = -0.005        # low-conviction on purpose: these trades exist for activity
-hold_bars = 24
-stop = 0.015
-min_fraction = 1.0        # fixed size ...
-size_scale = 0.1          # ... 10% of the 1M position cap = 100k TMN
-
-[strategy.risk]
-min_order_tmn = 50000     # the exchange minimum, needed for the 100k activity trades
-
 [strategy.fair_value]
 enabled = false
 
 # Shadow-only variants: never evaluated on historical windows (backtest/experiment.py refuses them).
-# Daily quota: the same activity trades, but at most 2 entries per Tehran day across symbols.
+# Activity quota: the rules plus at most 2 small (100k) h24 ML trades per Tehran day, to cut
+# zero-trade windows at a bounded cost. Judged on forward (shadow) data only.
 [shadow_variants.activity_quota]
+"modules" = ["trend", "ml_signal"]
+"ml_signal.column" = "ml_net_h24"
+"ml_signal.threshold" = -0.005
+"ml_signal.hold_bars" = 24
+"ml_signal.stop" = 0.015
+"ml_signal.min_fraction" = 1.0
+"ml_signal.size_scale" = 0.1
 "ml_signal.max_entries_per_day" = 2
+"risk.min_order_tmn" = 50000
 
 # Grid for the window study: dotted keys into [strategy], each a list of values.
 # The cartesian product must stay at or below 30 combinations (here 24).
