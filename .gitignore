@@ -12,6 +12,11 @@ venv/
 probe_output*.txt
 scratchpad/
 *.log
+logs/
+
+# Recorder: uncompacted part files and interrupted writes (compacted hours are kept)
+data/orderbook/**/part-*.parquet
+*.parquet.tmp
 
 # Node (dashboard, later phase)
 node_modules/

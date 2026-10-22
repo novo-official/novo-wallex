@@ -80,10 +80,15 @@ Full rules: `docs/CHALLENGE.md`. Ground truth for the API: `docs/wallex_spot_swa
 | `exchange/checks.py` | system checks `exchange.E001` (bad policy) / `W001` (empty allowlist) |
 | `exchange/redact.py` | redaction of identifiers/balances for probe output and logs |
 | `exchange/factory.py` | builds client and policy from settings |
+| `exchange/symbols.py` (data) | `[data] symbols` = read-only data universe (USDT pairs); `check_data()` before every data request |
 | `market/models.py` | `Market` (precision, min_order_value, min_qty, market_orders_enabled, flags), `Candle`, `OrderbookSnapshot` |
 | `market/services.py` | `sync_markets`, `sync_orderbook` (per-symbol `/v1/depth`), `download_candles`, `build_universe` |
 | `market/history.py` | pure: resolution maths, non-overlapping windows, bar parsing + OHLC sanity |
 | `market/universe.py` | pure `evaluate()` with a reason per rejection |
+| `market/parquet_store.py` | hourly Parquet store (zstd, decimal128(38,18)), atomic part files, hourly compaction |
+| `market/recorder.py` | `OrderbookRecorder`: depth top-20 every 10 s, trades round-robin every 30 s, tickers 60 s, events |
+| `market/recorder_status.py` | coverage, error rate, latency, clock offset, spread per symbol |
+| `scripts/run_recorder.sh` | supervisor: restart on crash, `caffeinate -is`, `logs/recorder.pid` / `logs/recorder.log` |
 | `scripts/probe_api.py` | GET-only probe, both hosts, redacted by default, `--save-dir` |
 | `scripts/capture_fixtures.py` | GET-only, policy-checked capture of public fixtures |
 | `tests/fixtures/wallex/` | real captures only (see its README) |
@@ -131,7 +136,15 @@ Planned apps (not built): `strategy/` (features, modules, `Strategy.on_cycle(ctx
 .venv/bin/python manage.py sync_orderbook
 .venv/bin/python manage.py download_history --resolution 5 --days 180
 .venv/bin/python manage.py build_universe
+nohup scripts/run_recorder.sh >/dev/null 2>&1 &   # start the recorder (survives the terminal)
+scripts/stop_recorder.sh                          # stop it cleanly
+.venv/bin/python manage.py recorder_status --hours 1
 ```
+
+Recorder data: `data/orderbook/{depth,trades,tickers,events}/YYYY-MM-DD/HH.parquet` (UTC hours). Part files of the
+current hour are gitignored. Trades: consecutive polls are de-duplicated by multiset difference; after a restart the
+first poll may repeat trades already written, so loaders de-duplicate on (symbol, trade_time, price, quantity, side)
+across adjacent polls. ~2.8 req/s, no rate-limit headers seen; a 429 is retried with backoff.
 
 ## 9. Phase status
 
@@ -140,8 +153,9 @@ Planned apps (not built): `strategy/` (features, modules, `Strategy.on_cycle(ctx
 - **First actions done (2026-10-22):** this file, `docs/CHALLENGE.md`, repo hygiene (scratchpad untracked, probe
   redaction), probe of both hosts + 6 candidate endpoints, real depth/rules/trades fixtures, `/v1/markets` rules
   stored on `Market`, `sync_orderbook` switched to `/v1/depth`. 95 tests green.
-- **Next: P2** (awaiting approval): data download + Parquet export/import + orderbook recorder (start early),
-  features and modules, event-driven backtester, rolling 3-day window study.
+- **P2 in progress (approved 2026-10-22).** Done: data universe, orderbook recorder **running since
+  2026-10-22 08:51 UTC** on the user's Mac (crash-restart verified). Next: candle download (1m 30d, 5m 180d) for the
+  data universe, Parquet export/import + MANIFEST, resampling, features + lookahead test, backtester, 3-day study.
 - Later: P3 ML + ablation, P4 LLM agents + WallexTools + RiskGuard, P5 execution/engine/preflight/shadow ≥ 24h,
   P6 DRF + Next.js dashboard, P7 docs, canonical report, `make reproduce`, demo script, final audit.
 - Triage if short on time: keep backtester + 3-day study, RiskGuard, execution + reconcile + end flatten,

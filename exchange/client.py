@@ -118,12 +118,16 @@ class WallexClient:
 
     def get_json(self, path: str, params: dict[str, Any] | None = None) -> Any:
         """GET and parse JSON. Raises WallexAPIError for non-2xx responses."""
+        return self.get_json_response(path, params)[0]
+
+    def get_json_response(self, path: str, params: dict[str, Any] | None = None) -> tuple[Any, httpx.Response]:
+        """Like get_json, but also returns the response (headers such as Date, timing)."""
         response = self.get(path, params)
         if not response.is_success:
             raise WallexAPIError(response.status_code, response.text)
         try:
             # parse_float=Decimal: every JSON number becomes an exact Decimal, never a float.
-            return json.loads(response.text, parse_float=Decimal)
+            return json.loads(response.text, parse_float=Decimal), response
         except ValueError as exc:
             raise WallexResponseError(f"GET {path} returned non-JSON body: {response.text[:300]}") from exc
 

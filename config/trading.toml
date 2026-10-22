@@ -11,6 +11,29 @@ allowlist = [
   "TRXTMN", "ADATMN", "BNBTMN", "LTCTMN", "SHIBTMN",
 ]
 
+[data]
+# Read-only data universe: market data may be downloaded and recorded for these
+# symbols (plus the allowlist), but they are never traded unless also allowlisted.
+# The USDT pairs feed the fair-value feature (price_USDT * USDTTMN). Blocked
+# symbols here make the policy fail to load.
+symbols = [
+  "BTCUSDT", "ETHUSDT", "SOLUSDT", "XRPUSDT", "DOGEUSDT",
+  "TRXUSDT", "ADAUSDT", "BNBUSDT", "LTCUSDT", "SHIBUSDT",
+]
+
+[recorder]
+# Orderbook/trades/ticker recorder (record_orderbook). Orderbook history cannot be
+# downloaded later, so this runs from day one. Request budget at these settings:
+# 21 depth requests per 10 s + 21 trades requests per 30 s + 1 markets request per
+# 60 s, about 2.8 requests/s.
+out_dir = "data/orderbook"
+depth_interval_seconds = 10
+depth_levels = 20
+trades_interval_seconds = 30
+tickers_interval_seconds = 60
+flush_interval_seconds = 60
+max_requests_per_second = "6"
+
 [universe]
 # Proposed thresholds, not yet calibrated. Volume is in the quote asset (TMN).
 quote_asset = "TMN"
