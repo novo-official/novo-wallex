@@ -107,6 +107,8 @@ REST_FRAMEWORK = {
 # --- Wallex exchange client ---------------------------------------------------
 WALLEX_BASE_URL = os.environ.get("WALLEX_BASE_URL", "https://api.wallex.ir")
 WALLEX_API_KEY = os.environ.get("WALLEX_API_KEY", "")
+# Challenge end (ISO, Asia/Tehran if no offset). Overrides config/live.toml [challenge] end when set.
+CHALLENGE_END = os.environ.get("CHALLENGE_END", "")
 WALLEX_TIMEOUT_SECONDS = float(os.environ.get("WALLEX_TIMEOUT_SECONDS", "10"))
 WALLEX_MAX_RETRIES = int(os.environ.get("WALLEX_MAX_RETRIES", "3"))
 WALLEX_REQUESTS_PER_SECOND = float(os.environ.get("WALLEX_REQUESTS_PER_SECOND", "5"))

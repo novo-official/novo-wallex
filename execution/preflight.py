@@ -41,7 +41,7 @@ def run_preflight(mode: str) -> list[tuple[str, bool, str]]:
     def end():
         moment = challenge_end(live)
         if moment is None:
-            return False, "config/live.toml [challenge] end is empty"
+            return False, "challenge end missing: set CHALLENGE_END in .env or [challenge] end in config/live.toml"
         left = moment - datetime.now(moment.tzinfo)
         return left > timedelta(hours=1), f"{moment.isoformat()} ({left.total_seconds() / 3600:.1f} h left)"
 

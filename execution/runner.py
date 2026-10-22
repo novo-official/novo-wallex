@@ -36,7 +36,10 @@ def load_live_config() -> dict:
 
 
 def challenge_end(live: dict) -> datetime | None:
-    raw = live["challenge"]["end"].strip()
+    """Env `CHALLENGE_END` (set manually when the prop endpoint is unavailable) wins over live.toml.
+
+    ISO time; without an offset it is Asia/Tehran. None (preflight fails) when neither is set."""
+    raw = (getattr(settings, "CHALLENGE_END", "") or live["challenge"]["end"]).strip()
     if not raw:
         return None
     moment = datetime.fromisoformat(raw)
