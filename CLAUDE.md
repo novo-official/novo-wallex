@@ -130,8 +130,13 @@ Full rules: `docs/CHALLENGE.md`. Ground truth for the API: `docs/wallex_spot_swa
 | `scripts/capture_fixtures.py` | GET-only, policy-checked capture of public fixtures |
 | `tests/fixtures/wallex/` | real captures only (see its README) |
 
-Planned (not built): `execution/` (Shadow/Live executors, order state machine, reconcile), `engine/` (`run_engine`, `preflight`),
-`journal/` (DecisionLog), `api/` (DRF) and `dashboard/` (Next.js, Persian RTL).
+| `strategy/modules/ai_activity.py` | **the live module**: ML-ranked candidates per 60 min slot, one approved entry per slot |
+| `execution/` | `engine.py` (one loop for shadow + live), `broker.py` (Live/Shadow), `feed.py`, `journal.py` (DecisionLog), `runner.py`, `preflight.py`, `smoke.py`; commands `run_engine`, `preflight`, `smoke_test` |
+| `config/live.toml` | live/shadow config: challenge, risk profile, engine, `[ai_activity]`, `[llm]` |
+| `journal/<mode>/` | DecisionLog (committed); `reports/decision_logs/` = exports (`scripts/export_decisions.py`) |
+| `api/`, `dashboard/` | read-only DRF API (`/api/overview`, `/api/decisions`) + Next.js 15 Persian RTL dashboard |
+| `scripts/go_live.sh` | `make go-live`: freeze check → preflight → smoke test → GO LIVE → tag → start live |
+| `README.md`, `STRATEGY.md`, `RUNBOOK.md`, `DEMO_SCRIPT.md`, `CHANGELOG.md` | deliverable docs |
 
 ## 7. Wallex API facts (verified unless marked)
 
@@ -221,7 +226,9 @@ across adjacent polls. ~2.8 req/s, no rate-limit headers seen; a 429 is retried 
   pinned digest. Canonical = trend rules (activity ≥ 1/day); activity-quota variant shadow-only. RiskGuard wired.
   Benchmark: 100% valid JSON, 100% deterministic decisions, ~11 s/call. Officer precompute (1,008 calls, 4 h cadence)
   then the ablation (39 selection + 17 holdout non-overlapping windows). News: interface + stub only.
-- Later: P5 execution/engine/preflight/shadow ≥ 24h,
-  P6 DRF + Next.js dashboard, P7 docs, canonical report, `make reproduce`, demo script, final audit.
+- **P5/P6/P7 (2026-10-23):** engine, brokers, reconcile, preflight, smoke test, `make go-live`; trend OFF in live,
+  AI activity only (fix check: (a) −1.34%, (b) E[net] > 0 +0.03% at 0.14 trades/day, (c) no trades); dashboard;
+  docs. Shadow running (G2 from 2026-10-23 03:17 Tehran). Blocked on the prop account: the key is the main
+  account's (all balances 0); CHALLENGE_END to be set by hand. Live config choice (a)/(b) is the user's.
 - Triage if short on time: keep backtester + 3-day study, RiskGuard, execution + reconcile + end flatten,
   DecisionLog, LLM agent with ablation, docs + reproduce. Cut first: triarb, ML polish, dashboard polish, Telegram.
