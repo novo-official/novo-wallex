@@ -69,6 +69,8 @@ class LLMAdjustment:
     size_fraction: float | None = None
     stop_price: float | None = None
     take_profit: float | None = None
+    rationale: str = ""  # goes into the decision log with the prompt hash
+    prompt_hash: str = ""
 
 
 @dataclass(frozen=True)
@@ -149,8 +151,11 @@ class RiskGuard:
         fraction = _decimal(intent.size_fraction)
         stop_value, tp_value = intent.stop_price, intent.take_profit
         if llm is not None:
+            tag = f"LLM[{llm.prompt_hash[:12]}]" if llm.prompt_hash else "LLM"
             if not llm.approve:
-                return EntryDecision(False, reasons=("rejected by the LLM trade agent",))
+                return EntryDecision(False, reasons=(f"rejected by {tag}: {llm.rationale}".rstrip(": "),))
+            if llm.rationale:
+                reasons.append(f"{tag}: {llm.rationale}")
             if llm.size_fraction is not None and _decimal(llm.size_fraction) < fraction:
                 fraction = max(Decimal(0), _decimal(llm.size_fraction))
                 reasons.append(f"LLM reduced size to {fraction}")

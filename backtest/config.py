@@ -130,6 +130,7 @@ def config_hash(config: StudyConfig, params: dict, data_manifest: dict | None) -
         "strategy": describe(params),
         "risk_overrides": params.get("risk"),
         "module_symbols": params.get("module_symbols"),
+        "agent": params.get("agent"),
         "fees": {"maker": str(config.fees.maker), "taker": str(config.fees.taker), "stress": str(config.fee_stress)},
         "slippage": {symbol: str(value) for symbol, value in sorted(config.slippage.items())},
         "default_slippage": str(config.default_slippage),

@@ -86,7 +86,12 @@ def _run_one(task: tuple) -> dict:
     limits = limits_for(limits, params)
     strategy = factory(params, data.symbols)
     end = start + pd.Timedelta(days=spec.window_days)
-    result = Backtester(data, strategy, costs, limits, record_decisions=False).run(start, end)
+    agent = None
+    if params.get("agent"):
+        from agent.replay import build_agent_layer
+
+        agent = build_agent_layer(params["agent"], data.symbols)
+    result = Backtester(data, strategy, costs, limits, record_decisions=False, agent=agent).run(start, end)
     metrics = compute_metrics(result)
     return {
         "params_id": params_key[0],
@@ -99,6 +104,8 @@ def _run_one(task: tuple) -> dict:
         "fees_share": metrics["fees_share_of_equity"],
         "avg_exposure": metrics["avg_exposure"],
         "halted": metrics["halted"],
+        "llm_calls": len(agent.log) if agent is not None else 0,
+        "llm_fallbacks": sum(1 for e in agent.log if e.get("ok") is False) if agent is not None else 0,
     }
 
 

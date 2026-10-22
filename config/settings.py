@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "market",
     "backtest",
     "ml",
+    "agent",
 ]
 
 MIDDLEWARE = [
