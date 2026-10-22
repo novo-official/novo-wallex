@@ -20,7 +20,7 @@ import logging
 import traceback
 from dataclasses import asdict, dataclass, field, replace
 from datetime import datetime, timedelta
-from decimal import ROUND_DOWN, Decimal
+from decimal import ROUND_CEILING, ROUND_DOWN, Decimal
 from pathlib import Path
 
 import pandas as pd
@@ -264,6 +264,22 @@ class Engine:
             tp = OrderState(new_client_id("T"), order.symbol, "SELL", "LIMIT", position.take_profit, quantity)
             position.tp_client_id = self._track(tp, "take_profit", symbol_role="tp").order.client_id
 
+    def _at_fresh_bid(self, symbol: str, decision):
+        """Move an approved maker entry to the current best bid, keeping quantity and stop/TP distances."""
+        bid, _ = self.feed.best_bid_ask(symbol)
+        if bid is None or bid == decision.limit:
+            return decision
+        digits = self._rules(symbol).price_decimals
+        price = floor_decimals(bid, digits)
+        ratio = price / decision.limit
+        return replace(
+            decision,
+            limit=price,
+            stop=(decision.stop * ratio).quantize(Decimal(1).scaleb(-digits), rounding=ROUND_CEILING),
+            take_profit=floor_decimals(decision.take_profit * ratio, digits) if decision.take_profit else None,
+            notional=decision.quantity * price,
+        )
+
     def _reprice(self, tracked: TrackedOrder, now: datetime) -> None:
         """Re-place an unfilled maker entry at the current best bid (same quantity, same stop/TP distances)."""
         old, meta = tracked.order, dict(tracked.meta)
@@ -502,9 +518,11 @@ class Engine:
                 if not decision.approved:
                     self.journal.decision("REJECT", **record)
                     continue
+                if intent.limit_at_bid:
+                    decision = self._at_fresh_bid(intent.symbol, decision)  # the LLM review may have taken a while
                 order = OrderState(new_client_id("E"), intent.symbol, "BUY", "LIMIT", decision.limit, decision.quantity)
                 timeout = intent.entry_timeout_minutes or self.s.entry_timeout_minutes
-                expires = now + timedelta(minutes=timeout)
+                expires = self.now() + timedelta(minutes=timeout)  # from the order, not from the cycle start
                 if intent.group:
                     approved_groups.add(intent.group)
                 if hasattr(self.strategy, "notify_entry"):

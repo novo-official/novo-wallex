@@ -346,3 +346,27 @@ def test_error_halt_lifts_after_clean_loops_but_a_reconcile_halt_does_not(tmp_pa
         clock.advance(seconds=31)
         engine.step()
     assert engine.entries_halted  # unknown orders on the account: stays halted
+
+
+def test_a_slow_llm_review_does_not_eat_the_entry_timeout_and_the_price_is_the_fresh_bid(tmp_path):
+    engine, feed, broker, strategy, clock = _engine(tmp_path)
+
+    class SlowAgent:
+        def risk_mode(self, ctx, view):
+            return "NORMAL"
+
+        def review(self, intent, ctx, view):
+            clock.advance(seconds=90)  # a local model under load
+            feed.bid, feed.ask = Decimal("99800"), Decimal("99900")
+            return None
+
+    engine.agent = SlowAgent()
+    engine.step()
+    strategy.queue = [_ai_entry()]
+    _cycle(engine, feed, clock)
+    (entry,) = [t for t in engine.orders.values() if t.role == "entry"]
+    assert entry.order.price == Decimal("99800")
+    assert Decimal(entry.meta["stop"]) == Decimal("98802")  # 99800 * 0.99, rounded up to the tick
+    clock.advance(minutes=2)
+    engine.step()
+    assert not entry.order.done  # 3 minutes from the order, not from the cycle start
