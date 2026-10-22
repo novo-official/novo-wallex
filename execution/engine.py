@@ -456,6 +456,18 @@ class Engine:
                 new_stop = Decimal(repr(intent.stop_price))
                 if new_stop > position.stop:
                     position.stop = new_stop
+            elif intent.kind == "ENTER" and not entries:
+                why = "officer risk_mode OFF" if risk_mode == "OFF" else "entries not allowed or halted"
+                self.journal.decision(
+                    "SKIP",
+                    symbol=intent.symbol,
+                    module=intent.module,
+                    reason=intent.reason,
+                    risk=why,
+                    signals=intent.signals,
+                    bar=bar.isoformat(),
+                    risk_mode=risk_mode,
+                )
             elif intent.kind == "ENTER" and entries:
                 if intent.symbol in self.positions or intent.symbol in state.pending_symbols:
                     continue
