@@ -266,7 +266,7 @@ class AgentLayer:
                     rationale=f"officer: avoid {intent.symbol} ({outcome.rationale})",
                     prompt_hash=outcome.prompt_hash,
                 )
-            if intent.module == "ml_signal" and not outcome.activity_trades:
+            if intent.module in ("ml_signal", "activity") and not outcome.activity_trades:
                 return LLMAdjustment(
                     approve=False, rationale="officer: activity trades off this hour", prompt_hash=outcome.prompt_hash
                 )

@@ -151,3 +151,16 @@ def test_module_size_survives_the_composite_when_fair_value_is_off():
 
     (intent,) = CompositeStrategy([Small()], ["AAATMN"]).on_cycle(_ctx(0.0), VIEW)
     assert intent.size_fraction == pytest.approx(0.1)
+
+
+def test_saved_net_model_keeps_negative_expected_returns(tmp_path):
+    from sklearn.isotonic import IsotonicRegression
+
+    from ml.model import CalibratedModel
+
+    _, _, samples, barrier = _samples()
+    model = fit(samples, barrier.horizon * pd.Timedelta(minutes=5), 0.2)
+    calibrator = IsotonicRegression(out_of_bounds="clip").fit([0.0, 0.5, 1.0], [-0.006, -0.004, 0.002])
+    save(CalibratedModel(model.booster, calibrator, model.features, {}), tmp_path, {})
+    again = load(tmp_path)
+    assert again.calibrator.predict([0.0])[0] == pytest.approx(-0.006)  # regression: not clipped to 0

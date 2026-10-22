@@ -1,0 +1,60 @@
+{
+  "end": "2026-10-22 12:20:00+00:00",
+  "limits": "live profile",
+  "results": {
+    "14d/base": {
+      "fees_paid": 26565.7315249665,
+      "halted": false,
+      "max_drawdown": -0.017384051311544524,
+      "return": -0.016098221232461737,
+      "trades": 6,
+      "trades_per_day": 0.42857142857142855,
+      "win_rate": 0.0
+    },
+    "14d/low": {
+      "fees_paid": 15507.412115862071,
+      "halted": false,
+      "max_drawdown": -0.015179726058838328,
+      "return": -0.013890746670268763,
+      "trades": 6,
+      "trades_per_day": 0.42857142857142855,
+      "win_rate": 0.0
+    },
+    "14d/stress": {
+      "fees_paid": 39801.04127425631,
+      "halted": false,
+      "max_drawdown": -0.020012532570300445,
+      "return": -0.018730372074108603,
+      "trades": 6,
+      "trades_per_day": 0.42857142857142855,
+      "win_rate": 0.0
+    },
+    "7d/base": {
+      "fees_paid": 17781.82144773576,
+      "halted": false,
+      "max_drawdown": -0.01061353180785607,
+      "return": -0.009317634770604178,
+      "trades": 4,
+      "trades_per_day": 0.5714285714285714,
+      "win_rate": 0.0
+    },
+    "7d/low": {
+      "fees_paid": 10378.56467814286,
+      "halted": false,
+      "max_drawdown": -0.009137226125851883,
+      "return": -0.007838569222321986,
+      "trades": 4,
+      "trades_per_day": 0.5714285714285714,
+      "win_rate": 0.0
+    },
+    "7d/stress": {
+      "fees_paid": 26662.78175562239,
+      "halted": false,
+      "max_drawdown": -0.012385958270167974,
+      "return": -0.011093143576196937,
+      "trades": 4,
+      "trades_per_day": 0.5714285714285714,
+      "win_rate": 0.0
+    }
+  }
+}

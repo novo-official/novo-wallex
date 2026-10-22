@@ -193,7 +193,9 @@ def load(directory: Path) -> CalibratedModel:
     calibration = json.loads((directory / "calibration.json").read_text(encoding="utf-8"))
     calibrator = None
     if calibration is not None:
-        calibrator = IsotonicRegression(out_of_bounds="clip", y_min=0.0, y_max=1.0)
+        # No y bounds: the per-bar models calibrate to net returns, which are negative (clipping to [0, 1]
+        # turned every negative E[net] into 0). Refitting on the saved thresholds reproduces the map exactly.
+        calibrator = IsotonicRegression(out_of_bounds="clip")
         calibrator.fit(calibration["x"], calibration["y"])
     meta = json.loads((directory / "metadata.json").read_text(encoding="utf-8"))
     return CalibratedModel(booster=booster, calibrator=calibrator, features=meta["features"], meta=meta)

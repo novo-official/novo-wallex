@@ -39,10 +39,14 @@ def _market(config: StudyConfig, data_dir: Path):
     return build_market(config, data_dir, [], replay.TRADED)
 
 
+SUBSET_EVERY = 3  # time-boxed run (deadline 2026-10-23): every 3rd non-overlapping window, a small sample
+
+
 def _windows(config: StudyConfig, data_dir: Path, final: bool):
     config = _config(config)
     data, first = _market(config, data_dir)
     selection, holdout = select_windows(data, config, first)
+    selection, holdout = selection[::SUBSET_EVERY], holdout[::SUBSET_EVERY]
     return config, data, selection, holdout, selection + (holdout if final else [])
 
 

@@ -84,6 +84,7 @@ def run_experiment(
     references: tuple[str, ...] = (),
     final: bool = False,
     since: pd.Timestamp | None = None,
+    windows_override: tuple[list, list] | None = None,
     factory: Callable = build_strategy,
     benchmark_data: dict[str, MarketData] | None = None,
     processes: int | None = None,
@@ -100,7 +101,7 @@ def run_experiment(
     started = datetime.now(UTC)
     names = [variant_name for variant_name, _ in variants]
     params = [variant_params for _, variant_params in variants]
-    selection, holdout = select_windows(data, config, since)
+    selection, holdout = windows_override or select_windows(data, config, since)
     limits = RiskLimits()
 
     rows = run_windows(data, factory, params, {"base": config.costs()}, limits, config.windows, selection, processes)

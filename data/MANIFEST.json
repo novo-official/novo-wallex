@@ -1,153 +1,153 @@
 {
-  "generated_at": "2026-10-22T10:26:10+00:00",
+  "generated_at": "2026-10-22T12:21:56+00:00",
   "source": "Wallex public API (api.wallex.ir): GET /v1/udf/history resolution 1",
   "files": {
     "candles/1m/ADATMN.parquet": {
-      "sha256": "8e27ba041257051603b003b6963953fb1187da83bfc56a18946d422125385291",
-      "bytes": 3035648,
-      "rows": 259027,
+      "sha256": "e953dfcdab2dda7ecd4c4e58cc51542a62822f54c0a92d2d270eab7da49dcf6f",
+      "bytes": 3037315,
+      "rows": 259203,
       "first": "2026-04-25T09:24:00+00:00",
-      "last": "2026-10-22T09:23:00+00:00"
+      "last": "2026-10-22T12:19:00+00:00"
     },
     "candles/1m/ADAUSDT.parquet": {
-      "sha256": "87c736fad6d27fddb6f37073322f8333df928be4e12b50d880e51921020d40fd",
-      "bytes": 1557616,
-      "rows": 258742,
+      "sha256": "99dca4ed6f400ef6daeaa2195de0af9d4057877a4cae9edd8fbbdcd5652a6562",
+      "bytes": 1558307,
+      "rows": 258918,
       "first": "2026-04-25T09:24:00+00:00",
-      "last": "2026-10-22T09:23:00+00:00"
+      "last": "2026-10-22T12:19:00+00:00"
     },
     "candles/1m/BNBTMN.parquet": {
-      "sha256": "4a595395f7d0a8ba475e3cc7dc8e039e1f8943c8324be75f7dabe6845cc7b3b2",
-      "bytes": 3682731,
-      "rows": 259073,
+      "sha256": "3c0a652732d85fbaf97e79268b3c18eabdf25edeb22107fe14e5cab335570873",
+      "bytes": 3684789,
+      "rows": 259249,
       "first": "2026-04-25T09:24:00+00:00",
-      "last": "2026-10-22T09:23:00+00:00"
+      "last": "2026-10-22T12:19:00+00:00"
     },
     "candles/1m/BNBUSDT.parquet": {
-      "sha256": "4cfe4095e05978a1c08242b978fb6a006004e244043ee548b8f2df2f4e5f3702",
-      "bytes": 1876985,
-      "rows": 259007,
+      "sha256": "d003e84a5257b5fc6610f27f7896b4d1b2d3a2aac9fc03e2f857cfe6f5daf1ec",
+      "bytes": 1878548,
+      "rows": 259183,
       "first": "2026-04-25T09:24:00+00:00",
-      "last": "2026-10-22T09:23:00+00:00"
+      "last": "2026-10-22T12:19:00+00:00"
     },
     "candles/1m/BTCTMN.parquet": {
-      "sha256": "ab5431914053f17fdd362e9229ad2f71e6458db86516f025685138a74121cbd4",
-      "bytes": 7235550,
-      "rows": 259104,
+      "sha256": "684d48d4d06dd28ddb4706d8e1dd3b95c0ae3345d258425a2e371e7abb9545cb",
+      "bytes": 7241334,
+      "rows": 259280,
       "first": "2026-04-25T09:24:00+00:00",
-      "last": "2026-10-22T09:23:00+00:00"
+      "last": "2026-10-22T12:19:00+00:00"
     },
     "candles/1m/BTCUSDT.parquet": {
-      "sha256": "3eaa2f3dadf0b6dbfdf701443d0d806181e44b63bc37fa1480ab64552a2ab3a2",
-      "bytes": 3894202,
-      "rows": 259064,
+      "sha256": "454f13b3f6d06aede4794f7faa5fd8a208377dd38d199ce055f96ab85b8df596",
+      "bytes": 3896729,
+      "rows": 259240,
       "first": "2026-04-25T09:24:00+00:00",
-      "last": "2026-10-22T09:23:00+00:00"
+      "last": "2026-10-22T12:19:00+00:00"
     },
     "candles/1m/DOGETMN.parquet": {
-      "sha256": "b6d777475e7f7213cf334326c2bfb3b10e1f89701f60f9d1fceb1ca2558d13ca",
-      "bytes": 3067748,
-      "rows": 259094,
+      "sha256": "9823abb685c05939489e8d46983ea83aec9e5554145cac56c7955fc0fc4a119c",
+      "bytes": 3069280,
+      "rows": 259270,
       "first": "2026-04-25T09:24:00+00:00",
-      "last": "2026-10-22T09:23:00+00:00"
+      "last": "2026-10-22T12:19:00+00:00"
     },
     "candles/1m/DOGEUSDT.parquet": {
-      "sha256": "97d2fe6ea1e5a99f77db20d7a7e06a336dd802abf916cbb196e5908d0e54ed7f",
-      "bytes": 1686161,
-      "rows": 258906,
+      "sha256": "168bc2560b7277da9f0008815bdb6761a60cc3b8b8d045d8f489cfd1bc59b29d",
+      "bytes": 1686745,
+      "rows": 259082,
       "first": "2026-04-25T09:24:00+00:00",
-      "last": "2026-10-22T09:23:00+00:00"
+      "last": "2026-10-22T12:19:00+00:00"
     },
     "candles/1m/ETHTMN.parquet": {
-      "sha256": "0217f5ba44484f7d2eaa4264810a642f33063276979bb4bbe9aaad5b8b8646d4",
-      "bytes": 5662551,
-      "rows": 259075,
+      "sha256": "19aee00a0aac54894ccb9ef5656b59f4356551f9732e1c349a182a9907beaad9",
+      "bytes": 5665798,
+      "rows": 259251,
       "first": "2026-04-25T09:24:00+00:00",
-      "last": "2026-10-22T09:23:00+00:00"
+      "last": "2026-10-22T12:19:00+00:00"
     },
     "candles/1m/ETHUSDT.parquet": {
-      "sha256": "1d71d7a131eca51f91e90538affc21a4b30098a1166365a1d1d660621c40da3d",
-      "bytes": 2866091,
-      "rows": 258836,
+      "sha256": "a0d9f0bcdb578d795a68e4643b3506e72662765b79947217edbbe825e375e901",
+      "bytes": 2867757,
+      "rows": 259012,
       "first": "2026-04-25T09:24:00+00:00",
-      "last": "2026-10-22T09:23:00+00:00"
+      "last": "2026-10-22T12:19:00+00:00"
     },
     "candles/1m/LTCTMN.parquet": {
-      "sha256": "9975efbe6f7bcd1e21003571684ff6478aaa28624e9bd796791681e2b4bd959f",
-      "bytes": 2367885,
-      "rows": 258952,
+      "sha256": "6122bb78f753f2d461320581887062873e0801caab3652490c30a110052510ab",
+      "bytes": 2369435,
+      "rows": 259128,
       "first": "2026-04-25T09:24:00+00:00",
-      "last": "2026-10-22T09:23:00+00:00"
+      "last": "2026-10-22T12:19:00+00:00"
     },
     "candles/1m/LTCUSDT.parquet": {
-      "sha256": "12baf0023afb3333e8c7137a1d355a732f90c0a967c2d382865885ad2b1f87bc",
-      "bytes": 1354197,
-      "rows": 258658,
+      "sha256": "afcddb41500eb9d412107b9e6c194be5f6ba9e6bbdf8b924764420b75f9ea8c6",
+      "bytes": 1354783,
+      "rows": 258834,
       "first": "2026-04-25T09:24:00+00:00",
-      "last": "2026-10-22T09:23:00+00:00"
+      "last": "2026-10-22T12:19:00+00:00"
     },
     "candles/1m/SHIBTMN.parquet": {
-      "sha256": "3b06b61e6d80a124da0da128dcf3ff57f8cf46aca29d58b84a2384f5b396cf6a",
-      "bytes": 2385252,
-      "rows": 259056,
+      "sha256": "ccfcd30e4571a803c7982bdf3b56c86f4d6117c525c7127a5dfd863bbb43c664",
+      "bytes": 2386562,
+      "rows": 259232,
       "first": "2026-04-25T09:24:00+00:00",
-      "last": "2026-10-22T09:23:00+00:00"
+      "last": "2026-10-22T12:19:00+00:00"
     },
     "candles/1m/SHIBUSDT.parquet": {
-      "sha256": "0c0b6dc5a29b62f7b4234a6e2c90aad3fbe791d94fedac366a812edeebfe08f4",
-      "bytes": 1324651,
-      "rows": 258700,
+      "sha256": "d0c505ca04d648e78b9374fa6d5aae76c2b423ea696e26b8592b110a9a00bcd3",
+      "bytes": 1325134,
+      "rows": 258876,
       "first": "2026-04-25T09:24:00+00:00",
-      "last": "2026-10-22T09:23:00+00:00"
+      "last": "2026-10-22T12:19:00+00:00"
     },
     "candles/1m/SOLTMN.parquet": {
-      "sha256": "5e8d086011c0826c0ba55242cfaf8e0112b669269466b7b53d1b1036633c6c8b",
-      "bytes": 4794226,
-      "rows": 259077,
+      "sha256": "6e6b1bf6519e8af573c4849dff7671a9874e238318373e71c659c9d46068931d",
+      "bytes": 4797338,
+      "rows": 259253,
       "first": "2026-04-25T09:24:00+00:00",
-      "last": "2026-10-22T09:23:00+00:00"
+      "last": "2026-10-22T12:19:00+00:00"
     },
     "candles/1m/SOLUSDT.parquet": {
-      "sha256": "a461fd00cfe9796e9eb5233bd634b91dd4b3e76d5afde9fb8044032b9fb9ba31",
-      "bytes": 2166658,
-      "rows": 258965,
+      "sha256": "91a498c6981ca5b91bb6709445b23ad0efd71c405edea9c834b4726c55ce51ae",
+      "bytes": 2167433,
+      "rows": 259141,
       "first": "2026-04-25T09:24:00+00:00",
-      "last": "2026-10-22T09:23:00+00:00"
+      "last": "2026-10-22T12:19:00+00:00"
     },
     "candles/1m/TRXTMN.parquet": {
-      "sha256": "269182340d5d763dd9d4db802176461d263955c978849c051b4aef65ceddc097",
-      "bytes": 3905399,
-      "rows": 259094,
+      "sha256": "c37f80a64113ae33976f18f714a6d7c023bc91be828619bbc32c8c390372d337",
+      "bytes": 3907782,
+      "rows": 259270,
       "first": "2026-04-25T09:24:00+00:00",
-      "last": "2026-10-22T09:23:00+00:00"
+      "last": "2026-10-22T12:19:00+00:00"
     },
     "candles/1m/TRXUSDT.parquet": {
-      "sha256": "2a77539d9dbeda8db52f0767633072e6ed4d7bb5ee7eba77520f60941146af5b",
-      "bytes": 1510319,
-      "rows": 258212,
+      "sha256": "021d2c940f4271169932738264549602284333187c4340240916ffbea0555743",
+      "bytes": 1510946,
+      "rows": 258388,
       "first": "2026-04-25T09:24:00+00:00",
-      "last": "2026-10-22T09:23:00+00:00"
+      "last": "2026-10-22T12:19:00+00:00"
     },
     "candles/1m/USDTTMN.parquet": {
-      "sha256": "80ce5e9c5c763b9840a57aa79ac441cffaeb59d99073ac5772c30143685130dd",
-      "bytes": 6493328,
-      "rows": 258073,
+      "sha256": "51a098448ecdd3e39cdc6809a569c28137934254312ebfb70a2f8ded6f82ca3c",
+      "bytes": 6500257,
+      "rows": 258249,
       "first": "2026-04-25T09:24:00+00:00",
-      "last": "2026-10-22T09:23:00+00:00"
+      "last": "2026-10-22T12:19:00+00:00"
     },
     "candles/1m/XRPTMN.parquet": {
-      "sha256": "c3f198b5eee5a233e7997b55a7f6bf711210bfbbfd395ca54d5fc63b80056c5a",
-      "bytes": 4008180,
-      "rows": 259089,
+      "sha256": "5a817018bcbc4e0b11ef54978ad7772b64a2760864ba90168026c12d1fb21ebb",
+      "bytes": 4010891,
+      "rows": 259265,
       "first": "2026-04-25T09:24:00+00:00",
-      "last": "2026-10-22T09:23:00+00:00"
+      "last": "2026-10-22T12:19:00+00:00"
     },
     "candles/1m/XRPUSDT.parquet": {
-      "sha256": "8419c8430d59f8d220c52b5c51c238fb0b06ae53c235a3f1cdc4a9d7a97f4238",
-      "bytes": 2325575,
-      "rows": 258988,
+      "sha256": "ac5a3c59cc8fdcd20df8bdd3dcbe4937b76fffe2ae16b8f24fd4571e347dd21a",
+      "bytes": 2327099,
+      "rows": 259164,
       "first": "2026-04-25T09:24:00+00:00",
-      "last": "2026-10-22T09:23:00+00:00"
+      "last": "2026-10-22T12:19:00+00:00"
     }
   }
 }

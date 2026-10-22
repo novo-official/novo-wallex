@@ -1,0 +1,42 @@
+# Live / shadow engine (Phase 5, minimal, 1-day run). Every field here enters the config hash.
+
+[challenge]
+# Asia/Tehran. Set from GET /v1/prop/user/packages/history expire_at (step 0) unless the user says otherwise.
+# preflight FAILS while this is empty.
+end = ""
+start_equity_tmn = "5000000"
+
+[risk]                         # tightened for the 1-day run (user, 2026-10-22); RiskGuard enforces it
+max_position_fraction = "0.15"
+max_total_exposure = "0.45"
+kill_switch = "-0.025"         # from the starting equity: flatten to TMN and halt
+daily_loss_limit = "-0.02"
+min_order_tmn = "50000"        # the exchange minimum (ramped core orders and activity trades are smaller than 500k)
+no_entry_before_end_minutes = 120
+flatten_before_end_minutes = 60
+ramp_hours = 2                 # sizes x ramp_factor for the first hours of live
+ramp_factor = "0.5"
+
+[engine]
+loop_seconds = 15
+reconcile_seconds = 30
+candle_refresh_seconds = 60
+history_days = 50              # enough for the 4h EMA200 (~33 days)
+entry_timeout_minutes = 15     # maker entry limit: cancel if not filled
+flatten_limit_timeout_seconds = 120   # flatten: limit at best ask first, then market
+max_consecutive_errors = 5     # then: halt new entries, keep managing exits
+
+[activity]                     # live only (user): rules + at most 2 small maker ML trades per Tehran day
+enabled = true
+module_name = "activity"
+column = "ml_net_h24"
+threshold = -0.005
+hold_bars = 24
+stop = 0.015
+notional_tmn = 100000
+max_entries_per_day = 2
+
+[llm]
+officer = true                 # hourly Regime/Risk Officer (local model); exits always run without it
+trade_agent = true
+mode = "live"                  # local Ollama first; free fallbacks only if configured in .env
