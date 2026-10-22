@@ -27,7 +27,7 @@ from zoneinfo import ZoneInfo
 import numpy as np
 import pandas as pd
 
-from risk.limits import RiskLimits, floor_to_decimals, size_entry
+from risk.limits import RiskLimits, ceil_to_decimals, floor_to_decimals, size_entry
 from strategy.base import Context, FeatureFrame, Intent, PortfolioView, PositionView, Strategy
 
 from .costs import CostModel
@@ -330,7 +330,7 @@ class Backtester:
                         continue  # one position per symbol, no averaging down
                     rules = self.data.rules[symbol]
                     limit = floor_to_decimals(to_decimal(intent.limit_price), rules.price_decimals)
-                    stop = floor_to_decimals(to_decimal(intent.stop_price), rules.price_decimals)
+                    stop = ceil_to_decimals(to_decimal(intent.stop_price), rules.price_decimals)
                     decision = size_entry(
                         equity=equity,
                         exposure=exposure,

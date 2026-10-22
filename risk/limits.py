@@ -7,7 +7,7 @@ which also has the final word over the LLM agents; nothing upstream can loosen t
 from __future__ import annotations
 
 from dataclasses import dataclass
-from decimal import ROUND_DOWN, Decimal
+from decimal import ROUND_DOWN, ROUND_UP, Decimal
 
 
 @dataclass(frozen=True)
@@ -32,6 +32,11 @@ class SizeDecision:
 
 def floor_to_decimals(value: Decimal, decimals: int) -> Decimal:
     return value.quantize(Decimal(1).scaleb(-decimals), rounding=ROUND_DOWN)
+
+
+def ceil_to_decimals(value: Decimal, decimals: int) -> Decimal:
+    """Round up. Used for sell stops: a rounded stop may only be tighter than intended, never wider."""
+    return value.quantize(Decimal(1).scaleb(-decimals), rounding=ROUND_UP)
 
 
 def size_entry(

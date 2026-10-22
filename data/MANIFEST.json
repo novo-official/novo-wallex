@@ -1,0 +1,181 @@
+{
+  "generated_at": "2026-10-22T09:53:52+00:00",
+  "source": "Wallex public API (api.wallex.ir): GET /v1/udf/history resolution 1; recorder: /v1/depth, /v1/trades, /v1/markets",
+  "files": {
+    "candles/1m/ADATMN.parquet": {
+      "sha256": "8e27ba041257051603b003b6963953fb1187da83bfc56a18946d422125385291",
+      "bytes": 3035648,
+      "rows": 259027,
+      "first": "2026-04-25T09:24:00+00:00",
+      "last": "2026-10-22T09:23:00+00:00"
+    },
+    "candles/1m/ADAUSDT.parquet": {
+      "sha256": "87c736fad6d27fddb6f37073322f8333df928be4e12b50d880e51921020d40fd",
+      "bytes": 1557616,
+      "rows": 258742,
+      "first": "2026-04-25T09:24:00+00:00",
+      "last": "2026-10-22T09:23:00+00:00"
+    },
+    "candles/1m/BNBTMN.parquet": {
+      "sha256": "4a595395f7d0a8ba475e3cc7dc8e039e1f8943c8324be75f7dabe6845cc7b3b2",
+      "bytes": 3682731,
+      "rows": 259073,
+      "first": "2026-04-25T09:24:00+00:00",
+      "last": "2026-10-22T09:23:00+00:00"
+    },
+    "candles/1m/BNBUSDT.parquet": {
+      "sha256": "4cfe4095e05978a1c08242b978fb6a006004e244043ee548b8f2df2f4e5f3702",
+      "bytes": 1876985,
+      "rows": 259007,
+      "first": "2026-04-25T09:24:00+00:00",
+      "last": "2026-10-22T09:23:00+00:00"
+    },
+    "candles/1m/BTCTMN.parquet": {
+      "sha256": "ab5431914053f17fdd362e9229ad2f71e6458db86516f025685138a74121cbd4",
+      "bytes": 7235550,
+      "rows": 259104,
+      "first": "2026-04-25T09:24:00+00:00",
+      "last": "2026-10-22T09:23:00+00:00"
+    },
+    "candles/1m/BTCUSDT.parquet": {
+      "sha256": "3eaa2f3dadf0b6dbfdf701443d0d806181e44b63bc37fa1480ab64552a2ab3a2",
+      "bytes": 3894202,
+      "rows": 259064,
+      "first": "2026-04-25T09:24:00+00:00",
+      "last": "2026-10-22T09:23:00+00:00"
+    },
+    "candles/1m/DOGETMN.parquet": {
+      "sha256": "b6d777475e7f7213cf334326c2bfb3b10e1f89701f60f9d1fceb1ca2558d13ca",
+      "bytes": 3067748,
+      "rows": 259094,
+      "first": "2026-04-25T09:24:00+00:00",
+      "last": "2026-10-22T09:23:00+00:00"
+    },
+    "candles/1m/DOGEUSDT.parquet": {
+      "sha256": "97d2fe6ea1e5a99f77db20d7a7e06a336dd802abf916cbb196e5908d0e54ed7f",
+      "bytes": 1686161,
+      "rows": 258906,
+      "first": "2026-04-25T09:24:00+00:00",
+      "last": "2026-10-22T09:23:00+00:00"
+    },
+    "candles/1m/ETHTMN.parquet": {
+      "sha256": "0217f5ba44484f7d2eaa4264810a642f33063276979bb4bbe9aaad5b8b8646d4",
+      "bytes": 5662551,
+      "rows": 259075,
+      "first": "2026-04-25T09:24:00+00:00",
+      "last": "2026-10-22T09:23:00+00:00"
+    },
+    "candles/1m/ETHUSDT.parquet": {
+      "sha256": "1d71d7a131eca51f91e90538affc21a4b30098a1166365a1d1d660621c40da3d",
+      "bytes": 2866091,
+      "rows": 258836,
+      "first": "2026-04-25T09:24:00+00:00",
+      "last": "2026-10-22T09:23:00+00:00"
+    },
+    "candles/1m/LTCTMN.parquet": {
+      "sha256": "9975efbe6f7bcd1e21003571684ff6478aaa28624e9bd796791681e2b4bd959f",
+      "bytes": 2367885,
+      "rows": 258952,
+      "first": "2026-04-25T09:24:00+00:00",
+      "last": "2026-10-22T09:23:00+00:00"
+    },
+    "candles/1m/LTCUSDT.parquet": {
+      "sha256": "12baf0023afb3333e8c7137a1d355a732f90c0a967c2d382865885ad2b1f87bc",
+      "bytes": 1354197,
+      "rows": 258658,
+      "first": "2026-04-25T09:24:00+00:00",
+      "last": "2026-10-22T09:23:00+00:00"
+    },
+    "candles/1m/SHIBTMN.parquet": {
+      "sha256": "3b06b61e6d80a124da0da128dcf3ff57f8cf46aca29d58b84a2384f5b396cf6a",
+      "bytes": 2385252,
+      "rows": 259056,
+      "first": "2026-04-25T09:24:00+00:00",
+      "last": "2026-10-22T09:23:00+00:00"
+    },
+    "candles/1m/SHIBUSDT.parquet": {
+      "sha256": "0c0b6dc5a29b62f7b4234a6e2c90aad3fbe791d94fedac366a812edeebfe08f4",
+      "bytes": 1324651,
+      "rows": 258700,
+      "first": "2026-04-25T09:24:00+00:00",
+      "last": "2026-10-22T09:23:00+00:00"
+    },
+    "candles/1m/SOLTMN.parquet": {
+      "sha256": "5e8d086011c0826c0ba55242cfaf8e0112b669269466b7b53d1b1036633c6c8b",
+      "bytes": 4794226,
+      "rows": 259077,
+      "first": "2026-04-25T09:24:00+00:00",
+      "last": "2026-10-22T09:23:00+00:00"
+    },
+    "candles/1m/SOLUSDT.parquet": {
+      "sha256": "a461fd00cfe9796e9eb5233bd634b91dd4b3e76d5afde9fb8044032b9fb9ba31",
+      "bytes": 2166658,
+      "rows": 258965,
+      "first": "2026-04-25T09:24:00+00:00",
+      "last": "2026-10-22T09:23:00+00:00"
+    },
+    "candles/1m/TRXTMN.parquet": {
+      "sha256": "269182340d5d763dd9d4db802176461d263955c978849c051b4aef65ceddc097",
+      "bytes": 3905399,
+      "rows": 259094,
+      "first": "2026-04-25T09:24:00+00:00",
+      "last": "2026-10-22T09:23:00+00:00"
+    },
+    "candles/1m/TRXUSDT.parquet": {
+      "sha256": "2a77539d9dbeda8db52f0767633072e6ed4d7bb5ee7eba77520f60941146af5b",
+      "bytes": 1510319,
+      "rows": 258212,
+      "first": "2026-04-25T09:24:00+00:00",
+      "last": "2026-10-22T09:23:00+00:00"
+    },
+    "candles/1m/USDTTMN.parquet": {
+      "sha256": "80ce5e9c5c763b9840a57aa79ac441cffaeb59d99073ac5772c30143685130dd",
+      "bytes": 6493328,
+      "rows": 258073,
+      "first": "2026-04-25T09:24:00+00:00",
+      "last": "2026-10-22T09:23:00+00:00"
+    },
+    "candles/1m/XRPTMN.parquet": {
+      "sha256": "c3f198b5eee5a233e7997b55a7f6bf711210bfbbfd395ca54d5fc63b80056c5a",
+      "bytes": 4008180,
+      "rows": 259089,
+      "first": "2026-04-25T09:24:00+00:00",
+      "last": "2026-10-22T09:23:00+00:00"
+    },
+    "candles/1m/XRPUSDT.parquet": {
+      "sha256": "8419c8430d59f8d220c52b5c51c238fb0b06ae53c235a3f1cdc4a9d7a97f4238",
+      "bytes": 2325575,
+      "rows": 258988,
+      "first": "2026-04-25T09:24:00+00:00",
+      "last": "2026-10-22T09:23:00+00:00"
+    },
+    "orderbook/depth/2026-10-22/08.parquet": {
+      "sha256": "74ebc821c19f5dfa76d8f4add6e0b36716b548836dcb01bbe3333ddd22096187",
+      "bytes": 130128,
+      "rows": 42649,
+      "first": "2026-10-22T08:51:18.557000+00:00",
+      "last": "2026-10-22T08:59:53.360000+00:00"
+    },
+    "orderbook/events/2026-10-22/08.parquet": {
+      "sha256": "f938ba985f07fab16caa4196e5e0edd90c144291b79aebdea19ff5f34cec97e8",
+      "bytes": 10962,
+      "rows": 1437,
+      "first": "2026-10-22T08:51:18.557000+00:00",
+      "last": "2026-10-22T08:59:54.530000+00:00"
+    },
+    "orderbook/tickers/2026-10-22/08.parquet": {
+      "sha256": "8834aa87828e5dd6d13acd468e12fb35a269eca3687ebc9cc4894f49b55be590",
+      "bytes": 30588,
+      "rows": 3357,
+      "first": "2026-10-22T08:51:23.217000+00:00",
+      "last": "2026-10-22T08:59:24.722000+00:00"
+    },
+    "orderbook/trades/2026-10-22/08.parquet": {
+      "sha256": "9bcd6a4af4c5b76208a720aa74e24621d6de4ade20c7b7f241185d134919a4f3",
+      "bytes": 25902,
+      "rows": 2333,
+      "first": "2026-10-22T08:51:22.021000+00:00",
+      "last": "2026-10-22T08:59:44.375000+00:00"
+    }
+  }
+}

@@ -76,6 +76,20 @@ polled every 30 s and the bid/ask of every market every 60 s. Every request is
 logged as an event with its latency, the server clock offset and any error. Files:
 `data/orderbook/<stream>/YYYY-MM-DD/HH.parquet` (UTC).
 
+## Data, backtest and evidence (Phase 2)
+
+```bash
+.venv/bin/python manage.py download_history --resolution 1 --days 180   # 21 symbols, ~25 min
+.venv/bin/python manage.py export_candles                                 # data/candles/1m/*.parquet + data/MANIFEST.json
+.venv/bin/python manage.py edge_study                                     # does any signal beat random entries after costs?
+.venv/bin/python manage.py window_study                                   # rolling 3-day windows, selection/holdout, fee stress
+.venv/bin/python manage.py run_backtest --start 2026-10-19T00:00:00Z --end 2026-10-22T00:00:00Z
+```
+
+The backtester reads only the committed `data/` and `config/`, so no network is needed. The
+strategy code (`strategy/`) and the risk caps (`risk/limits.py`) are the same ones the live
+engine will use. Results and their interpretation are in `docs/RESEARCH_P2.md`.
+
 ## Market policy (default-deny)
 
 - `blocked_markets.txt`: markets that must never be traded (BASE/QUOTE, one per line).

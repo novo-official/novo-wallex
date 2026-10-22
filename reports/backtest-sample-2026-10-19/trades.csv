@@ -1,0 +1,2 @@
+symbol,module,entry_time,exit_time,entry_price,exit_price,quantity,fees,pnl,r_multiple,exit_reason,entry_decision
+BTCTMN,trend,2026-10-21T14:05:00+00:00,2026-10-21T23:05:00+00:00,22128930001,22507397016.1326970,0.00004518,6058.56,11040.58,0.552,end_of_window,0

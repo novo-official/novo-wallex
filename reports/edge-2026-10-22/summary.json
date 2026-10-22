@@ -1,0 +1,124 @@
+{
+  "top_selection": [
+    {
+      "entry": "taker",
+      "filled_selection": 167,
+      "holdout": 0.0030427667,
+      "rule": "stop 0.020 tp 0.060 max 864",
+      "selection": -0.0025649253,
+      "signal": "fv_discount_z2"
+    },
+    {
+      "entry": "maker",
+      "filled_selection": 481,
+      "holdout": -0.0017852929,
+      "rule": "stop 0.020 tp 0.060 max 864",
+      "selection": -0.0028335282,
+      "signal": "uptrend_1h_4h"
+    },
+    {
+      "entry": "maker",
+      "filled_selection": 502,
+      "holdout": -0.0022571152,
+      "rule": "stop 0.020 tp 0.060 max 864",
+      "selection": -0.0030432577,
+      "signal": "uptrend_1h"
+    },
+    {
+      "entry": "maker",
+      "filled_selection": 474,
+      "holdout": -0.0019912494,
+      "rule": "stop 0.020 tp 0.060 max 864",
+      "selection": -0.0033110295,
+      "signal": "uptrend_1h_no_premium"
+    },
+    {
+      "entry": "taker",
+      "filled_selection": 207,
+      "holdout": 0.0002620821,
+      "rule": "stop 0.020 tp 0.040 max 576",
+      "selection": -0.0033806967,
+      "signal": "fv_discount_z2"
+    },
+    {
+      "entry": "maker",
+      "filled_selection": 416,
+      "holdout": -0.0035006326,
+      "rule": "stop 0.020 tp 0.060 max 864",
+      "selection": -0.0035524403,
+      "signal": "trend_breakout"
+    },
+    {
+      "entry": "maker",
+      "filled_selection": 404,
+      "holdout": -0.0031068725,
+      "rule": "stop 0.020 tp 0.060 max 864",
+      "selection": -0.0036269616,
+      "signal": "trend_breakout_4h"
+    },
+    {
+      "entry": "taker",
+      "filled_selection": 507,
+      "holdout": -0.0009936955,
+      "rule": "stop 0.020 tp 0.060 max 864",
+      "selection": -0.00386158,
+      "signal": "uptrend_1h_4h"
+    },
+    {
+      "entry": "taker",
+      "filled_selection": 521,
+      "holdout": -0.0020798843,
+      "rule": "stop 0.020 tp 0.060 max 864",
+      "selection": -0.0040373836,
+      "signal": "uptrend_1h"
+    },
+    {
+      "entry": "taker",
+      "filled_selection": 490,
+      "holdout": -0.0019355352,
+      "rule": "stop 0.020 tp 0.060 max 864",
+      "selection": -0.0040710203,
+      "signal": "uptrend_1h_no_premium"
+    },
+    {
+      "entry": "taker",
+      "filled_selection": 226,
+      "holdout": 0.0012903507,
+      "rule": "stop 0.015 tp 0.045 max 576",
+      "selection": -0.0041057657,
+      "signal": "fv_discount_z2"
+    },
+    {
+      "entry": "maker",
+      "filled_selection": 246,
+      "holdout": -0.0055666636,
+      "rule": "stop 0.020 tp 0.060 max 864",
+      "selection": -0.0042250129,
+      "signal": "trend_pullback_breakout"
+    },
+    {
+      "entry": "taker",
+      "filled_selection": 292,
+      "holdout": -0.002624369,
+      "rule": "stop 0.015 tp 0.030 max 288",
+      "selection": -0.0043551919,
+      "signal": "fv_discount_z2"
+    },
+    {
+      "entry": "maker",
+      "filled_selection": 158,
+      "holdout": -0.0014653763,
+      "rule": "stop 0.015 tp 0.045 max 576",
+      "selection": -0.0045899964,
+      "signal": "fv_discount_z2"
+    },
+    {
+      "entry": "maker",
+      "filled_selection": 185,
+      "holdout": -0.0034381215,
+      "rule": "stop 0.015 tp 0.030 max 288",
+      "selection": -0.00492501,
+      "signal": "fv_discount_z2"
+    }
+  ]
+}

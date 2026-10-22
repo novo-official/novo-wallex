@@ -1,0 +1,133 @@
+{
+  "benchmarks": {
+    "buy_and_hold_BTCTMN/holdout": {
+      "mean_return": 0.008455954759357254,
+      "median_fees_share": 0.007,
+      "median_return": 0.0030364729881789954,
+      "median_trades": 1.0,
+      "p10_drawdown": -0.05548679916542809,
+      "p10_return": -0.0380143616225837,
+      "p90_return": 0.058132991133114875,
+      "positive_share": 0.5104166666666666,
+      "windows": 96,
+      "worst_drawdown": -0.09596105887691475,
+      "worst_return": -0.05860681309753957,
+      "zero_trade_share": 0.0
+    },
+    "buy_and_hold_BTCTMN/selection": {
+      "mean_return": -0.00399067929569745,
+      "median_fees_share": 0.007,
+      "median_return": -0.008144206083506411,
+      "median_trades": 1.0,
+      "p10_drawdown": -0.06866468275607082,
+      "p10_return": -0.04692494256171595,
+      "p90_return": 0.03597860677076734,
+      "positive_share": 0.40772532188841204,
+      "windows": 233,
+      "worst_drawdown": -0.17423276476949157,
+      "worst_return": -0.15340233123166847,
+      "zero_trade_share": 0.0
+    },
+    "buy_and_hold_USDTTMN/holdout": {
+      "mean_return": 0.00455935733039338,
+      "median_fees_share": 0.007,
+      "median_return": -7.725944064057577e-05,
+      "median_trades": 1.0,
+      "p10_drawdown": -0.0488335990601661,
+      "p10_return": -0.026172097804035177,
+      "p90_return": 0.04175764164880502,
+      "positive_share": 0.5,
+      "windows": 96,
+      "worst_drawdown": -0.06872672988920958,
+      "worst_return": -0.04810147761577266,
+      "zero_trade_share": 0.0
+    },
+    "buy_and_hold_USDTTMN/selection": {
+      "mean_return": -0.0031324632154471734,
+      "median_fees_share": 0.007,
+      "median_return": -0.0017513840042803208,
+      "median_trades": 1.0,
+      "p10_drawdown": -0.04836122518816254,
+      "p10_return": -0.029803804471321537,
+      "p90_return": 0.02650569644741743,
+      "positive_share": 0.4592274678111588,
+      "windows": 233,
+      "worst_drawdown": -0.11565017261219779,
+      "worst_return": -0.10166449942267664,
+      "zero_trade_share": 0.0
+    }
+  },
+  "chosen_feasible": false,
+  "chosen_params_id": 22,
+  "config_hash": "899129576f1a49f647fa31252ce2a881293f25ea17a9fe571b37a765c918d0e0",
+  "grid_size": 48,
+  "holdout_period": [
+    "2026-09-01T12:00:00+00:00",
+    "2026-10-19T00:00:00+00:00"
+  ],
+  "holdout_windows": 96,
+  "results": {
+    "holdout/base": {
+      "mean_return": 0.0006188588873348273,
+      "median_fees_share": 0.004084762984144024,
+      "median_return": 0.0,
+      "median_trades": 3.5,
+      "p10_drawdown": -0.027166399147668552,
+      "p10_return": -0.01836302826023058,
+      "p90_return": 0.019413078412970575,
+      "positive_share": 0.4270833333333333,
+      "windows": 96,
+      "worst_drawdown": -0.039055365538030684,
+      "worst_return": -0.025078781583064553,
+      "zero_trade_share": 0.10416666666666667
+    },
+    "holdout/fee_stress": {
+      "mean_return": -0.0016261649446809893,
+      "median_fees_share": 0.006119438240215944,
+      "median_return": -0.0007571443132201114,
+      "median_trades": 3.5,
+      "p10_drawdown": -0.030862484396409706,
+      "p10_return": -0.022524823917007813,
+      "p90_return": 0.016869635629532902,
+      "positive_share": 0.3645833333333333,
+      "windows": 96,
+      "worst_drawdown": -0.04303695641580341,
+      "worst_return": -0.02970126223090005,
+      "zero_trade_share": 0.10416666666666667
+    },
+    "selection/base": {
+      "mean_return": 0.001238836121966461,
+      "median_fees_share": 0.0023736658334875997,
+      "median_return": 0.0,
+      "median_trades": 2.0,
+      "p10_drawdown": -0.01933415337891311,
+      "p10_return": -0.009711539382954106,
+      "p90_return": 0.016852430579418737,
+      "positive_share": 0.30042918454935624,
+      "windows": 233,
+      "worst_drawdown": -0.044995140521250754,
+      "worst_return": -0.025532223871947746,
+      "zero_trade_share": 0.296137339055794
+    },
+    "selection/fee_stress": {
+      "mean_return": -0.0002790206492580764,
+      "median_fees_share": 0.0035604987502313996,
+      "median_return": 0.0,
+      "median_trades": 2.0,
+      "p10_drawdown": -0.020848790511756855,
+      "p10_return": -0.011664459527488225,
+      "p90_return": 0.013825524499644836,
+      "positive_share": 0.26180257510729615,
+      "windows": 233,
+      "worst_drawdown": -0.04788404970657034,
+      "worst_return": -0.030789002650352202,
+      "zero_trade_share": 0.296137339055794
+    }
+  },
+  "runtime_seconds": 33.028798,
+  "selection_period": [
+    "2026-05-05T12:00:00+00:00",
+    "2026-08-29T12:00:00+00:00"
+  ],
+  "selection_windows": 233
+}

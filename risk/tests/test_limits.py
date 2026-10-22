@@ -1,6 +1,6 @@
 from decimal import Decimal
 
-from risk.limits import RiskLimits, floor_to_decimals, size_entry
+from risk.limits import RiskLimits, ceil_to_decimals, floor_to_decimals, size_entry
 
 LIMITS = RiskLimits()
 EQUITY = Decimal("5000000")
@@ -62,3 +62,8 @@ def test_size_fraction_scales_and_is_clamped():
 def test_floor_to_decimals_rounds_down():
     assert floor_to_decimals(Decimal("1.23456789"), 4) == Decimal("1.2345")
     assert floor_to_decimals(Decimal("1999.99"), 0) == Decimal("1999")
+
+
+def test_ceil_to_decimals_rounds_up():
+    assert ceil_to_decimals(Decimal("980.686"), 0) == Decimal("981")
+    assert ceil_to_decimals(Decimal("1.23451"), 4) == Decimal("1.2346")

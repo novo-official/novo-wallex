@@ -161,3 +161,11 @@ def test_empty_window_raises(bad_window):
     data = _market([FLAT, FLAT])
     with pytest.raises(ValueError):
         Backtester(data, Scripted({}), NO_SLIP, RiskLimits()).run(START, START)
+
+
+def test_stop_at_exactly_the_cap_survives_price_rounding():
+    # limit 1000.7 floors to 1000 (0 decimals); a 2% stop at 980.686 must round up to 981, not down to 980.
+    bars = [FLAT, (1005, 1006, 999, 1001), FLAT, FLAT]
+    result, _ = _run(bars, {0: [_enter(limit=1000.7, stop=1000.7 * 0.98, tp=2000)]})
+    assert [d["action"] for d in result.decisions][0] == "ENTER"
+    assert len(result.trades) == 1

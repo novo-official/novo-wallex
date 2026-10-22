@@ -88,13 +88,18 @@ Full rules: `docs/CHALLENGE.md`. Ground truth for the API: `docs/wallex_spot_swa
 | `market/parquet_store.py` | hourly Parquet store (zstd, decimal128(38,18)), atomic part files, hourly compaction |
 | `market/recorder.py` | `OrderbookRecorder`: depth top-20 every 10 s, trades round-robin every 30 s, tickers 60 s, events |
 | `market/recorder_status.py` | coverage, error rate, latency, clock offset, spread per symbol |
+| `market/candles_io.py` | candle Parquet export/import, `data/MANIFEST.json` (sha256), `export_candles`/`import_candles` |
+| `strategy/` | pure (no Django): `data.py` (load/resample, 5m clock on close times), `features.py` (causal, as-of joins), `base.py` (`Strategy.on_cycle(ctx, portfolio) -> list[Intent]`), `modules/trend.py`, `modules/mean_reversion.py`, `composite.py` (fair-value filter), `factory.py` |
+| `risk/limits.py` | pure caps: 20%/position, 60% total, 0.5% risk/trade, 2% stop cap, 500k min order, −3% day, −6% kill |
+| `backtest/` | `engine.py` (event-driven, conservative fills), `costs.py` (fees + slippage from recorded book), `event_study.py`, `windows.py` (3-day study), `pipeline.py`, `report.py`; commands `measure_costs`, `edge_study`, `window_study`, `run_backtest` |
+| `config/strategy.toml` | fees, tradable markets, window study settings, canonical `[strategy]`, `[grid]` (≤ 50) |
+| `config/slippage.json` | frozen slippage per symbol (from `measure_costs`); part of the config hash |
 | `scripts/run_recorder.sh` | supervisor: restart on crash, `caffeinate -is`, `logs/recorder.pid` / `logs/recorder.log` |
 | `scripts/probe_api.py` | GET-only probe, both hosts, redacted by default, `--save-dir` |
 | `scripts/capture_fixtures.py` | GET-only, policy-checked capture of public fixtures |
 | `tests/fixtures/wallex/` | real captures only (see its README) |
 
-Planned apps (not built): `strategy/` (features, modules, `Strategy.on_cycle(ctx, portfolio) -> list[Intent]`),
-`backtest/`, `ml/`, `agent/` (LLM Regime/Risk Officer + Trade Agent, `WallexTools`), `risk/` (RiskGuard),
+Planned apps (not built): `ml/`, `agent/` (LLM Regime/Risk Officer + Trade Agent, `WallexTools`), `risk/` (RiskGuard),
 `execution/` (Shadow/Live executors, order state machine, reconcile), `engine/` (`run_engine`, `preflight`),
 `journal/` (DecisionLog), `api/` (DRF) and `dashboard/` (Next.js, Persian RTL).
 
@@ -112,7 +117,10 @@ Planned apps (not built): `strategy/` (features, modules, `Strategy.on_cycle(ctx
 - `GET /depth/all` (Swagger): HTTP 503 text/html on every probe. Not used.
 - `GET /v1/trades?symbol=` (probe-verified): `result.latestTrades[50]`, newest first; strings for price/quantity/sum,
   `isBuyOrder` bool (assumed taker side, UNVERIFIED), ISO timestamp. 50 BTCTMN trades ≈ 13 min.
-- `GET /v1/udf/history?symbol=&resolution=&from=&to=`: resolution in minutes, `t` seconds (bar open), o/h/l/c/v strings.
+- `GET /v1/udf/history?symbol=&resolution=&from=&to=`: `t` seconds (bar open), o/h/l/c/v strings, zero-volume bars
+  for quiet minutes. Valid resolutions only `1, 15, 60, 240, 720, 1D`; **15 returns 1m bars, 240/720 return 1h bars**;
+  `60` returns only the latest 696 bars; a 1m window wider than ~34 h **silently returns one bar** (we use 1440-bar chunks
+  and a truncation guard). 1m history goes back ≥ 500 days.
 - `GET /v1/currencies/stats`: 422, requires a `key` parameter. Unused.
 - Account (all 401 without key, so routes exist but shapes are UNVERIFIED): `/v1/account/openOrders`,
   `/v1/account/orders`, `/v1/account/orders/{client_id}`, `/v1/prop/user/packages/history`,
@@ -134,7 +142,13 @@ Planned apps (not built): `strategy/` (features, modules, `Strategy.on_cycle(ctx
 .venv/bin/python scripts/capture_fixtures.py  # refresh public fixtures
 .venv/bin/python manage.py sync_markets
 .venv/bin/python manage.py sync_orderbook
-.venv/bin/python manage.py download_history --resolution 5 --days 180
+.venv/bin/python manage.py download_history --resolution 1 --days 180   # whole data universe; --resume to top up
+.venv/bin/python manage.py export_candles                                 # DB -> data/candles + MANIFEST + market_rules
+.venv/bin/python manage.py import_candles                                 # verify sha256, load into the DB
+.venv/bin/python manage.py measure_costs                                  # refresh config/slippage.json from the recorder
+.venv/bin/python manage.py edge_study                                     # event study -> reports/edge-*/
+.venv/bin/python manage.py window_study                                   # 3-day windows -> reports/windows-*/
+.venv/bin/python manage.py run_backtest --start ... --end ...             # one run with trades + decision log
 .venv/bin/python manage.py build_universe
 nohup scripts/run_recorder.sh >/dev/null 2>&1 &   # start the recorder (survives the terminal)
 scripts/stop_recorder.sh                          # stop it cleanly
@@ -153,9 +167,13 @@ across adjacent polls. ~2.8 req/s, no rate-limit headers seen; a 429 is retried 
 - **First actions done (2026-10-22):** this file, `docs/CHALLENGE.md`, repo hygiene (scratchpad untracked, probe
   redaction), probe of both hosts + 6 candidate endpoints, real depth/rules/trades fixtures, `/v1/markets` rules
   stored on `Market`, `sync_orderbook` switched to `/v1/depth`. 95 tests green.
-- **P2 in progress (approved 2026-10-22).** Done: data universe, orderbook recorder **running since
-  2026-10-22 08:51 UTC** on the user's Mac (crash-restart verified). Next: candle download (1m 30d, 5m 180d) for the
-  data universe, Parquet export/import + MANIFEST, resampling, features + lookahead test, backtester, 3-day study.
+- **P2 done (2026-10-22), awaiting review.** Recorder running since 08:51 UTC. 180 days of 1m candles for 21
+  symbols in `data/` (64 MB, sha256 manifest). Backtester, event study, 3-day window study. Findings
+  (`docs/RESEARCH_P2.md`): default fees kill short-horizon signals; trend edge only on BTC/ETH/USDT-TMN; chosen
+  params (#22: 1h uptrend + 5m breakout, fixed 2% stop, 6% target, no trail) are about break-even per window
+  (+0.12% sel / +0.06% holdout, worst DD −3.9%); the 60%-positive constraint is not met by any combination;
+  results depend strongly on the real fee. USDTTMN +76% in 180 days: always show buy-and-hold benchmarks.
+- **Next: P3** ML entry filter (triple-barrier labels aligned with the chosen exits, purged walk-forward) + ablation.
 - Later: P3 ML + ablation, P4 LLM agents + WallexTools + RiskGuard, P5 execution/engine/preflight/shadow ≥ 24h,
   P6 DRF + Next.js dashboard, P7 docs, canonical report, `make reproduce`, demo script, final audit.
 - Triage if short on time: keep backtester + 3-day study, RiskGuard, execution + reconcile + end flatten,

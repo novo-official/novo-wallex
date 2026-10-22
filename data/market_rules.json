@@ -1,0 +1,152 @@
+{
+  "source": "GET /v1/markets + /hector/web/v1/markets via sync_markets",
+  "markets": {
+    "ADATMN": {
+      "amount_decimals": 1,
+      "price_decimals": 0,
+      "min_notional": "50000",
+      "min_qty": "0.1",
+      "market_orders_enabled": false
+    },
+    "ADAUSDT": {
+      "amount_decimals": 1,
+      "price_decimals": 4,
+      "min_notional": "1",
+      "min_qty": "0.1",
+      "market_orders_enabled": false
+    },
+    "BNBTMN": {
+      "amount_decimals": 5,
+      "price_decimals": 0,
+      "min_notional": "50000",
+      "min_qty": "0.00001",
+      "market_orders_enabled": false
+    },
+    "BNBUSDT": {
+      "amount_decimals": 5,
+      "price_decimals": 4,
+      "min_notional": "1",
+      "min_qty": "0.00001",
+      "market_orders_enabled": false
+    },
+    "BTCTMN": {
+      "amount_decimals": 8,
+      "price_decimals": 0,
+      "min_notional": "50000",
+      "min_qty": "0.00000001",
+      "market_orders_enabled": true
+    },
+    "BTCUSDT": {
+      "amount_decimals": 8,
+      "price_decimals": 2,
+      "min_notional": "1",
+      "min_qty": "0.00000001",
+      "market_orders_enabled": true
+    },
+    "DOGETMN": {
+      "amount_decimals": 1,
+      "price_decimals": 0,
+      "min_notional": "50000",
+      "min_qty": "0.1",
+      "market_orders_enabled": false
+    },
+    "DOGEUSDT": {
+      "amount_decimals": 1,
+      "price_decimals": 5,
+      "min_notional": "1",
+      "min_qty": "0.1",
+      "market_orders_enabled": false
+    },
+    "ETHTMN": {
+      "amount_decimals": 5,
+      "price_decimals": 0,
+      "min_notional": "50000",
+      "min_qty": "0.00001",
+      "market_orders_enabled": true
+    },
+    "ETHUSDT": {
+      "amount_decimals": 5,
+      "price_decimals": 2,
+      "min_notional": "1",
+      "min_qty": "0.00001",
+      "market_orders_enabled": true
+    },
+    "LTCTMN": {
+      "amount_decimals": 5,
+      "price_decimals": 0,
+      "min_notional": "50000",
+      "min_qty": "0.00001",
+      "market_orders_enabled": false
+    },
+    "LTCUSDT": {
+      "amount_decimals": 5,
+      "price_decimals": 2,
+      "min_notional": "1",
+      "min_qty": "0.00001",
+      "market_orders_enabled": false
+    },
+    "SHIBTMN": {
+      "amount_decimals": 0,
+      "price_decimals": 4,
+      "min_notional": "50000",
+      "min_qty": "1",
+      "market_orders_enabled": false
+    },
+    "SHIBUSDT": {
+      "amount_decimals": 0,
+      "price_decimals": 8,
+      "min_notional": "1",
+      "min_qty": "1",
+      "market_orders_enabled": false
+    },
+    "SOLTMN": {
+      "amount_decimals": 5,
+      "price_decimals": 0,
+      "min_notional": "50000",
+      "min_qty": "0.00001",
+      "market_orders_enabled": false
+    },
+    "SOLUSDT": {
+      "amount_decimals": 5,
+      "price_decimals": 2,
+      "min_notional": "1",
+      "min_qty": "0.00001",
+      "market_orders_enabled": false
+    },
+    "TRXTMN": {
+      "amount_decimals": 1,
+      "price_decimals": 0,
+      "min_notional": "50000",
+      "min_qty": "0.1",
+      "market_orders_enabled": false
+    },
+    "TRXUSDT": {
+      "amount_decimals": 1,
+      "price_decimals": 5,
+      "min_notional": "1",
+      "min_qty": "0.1",
+      "market_orders_enabled": false
+    },
+    "USDTTMN": {
+      "amount_decimals": 2,
+      "price_decimals": 0,
+      "min_notional": "50000",
+      "min_qty": "0.01",
+      "market_orders_enabled": true
+    },
+    "XRPTMN": {
+      "amount_decimals": 1,
+      "price_decimals": 0,
+      "min_notional": "50000",
+      "min_qty": "0.1",
+      "market_orders_enabled": false
+    },
+    "XRPUSDT": {
+      "amount_decimals": 1,
+      "price_decimals": 5,
+      "min_notional": "1",
+      "min_qty": "0.1",
+      "market_orders_enabled": false
+    }
+  }
+}

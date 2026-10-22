@@ -41,6 +41,7 @@ class TrendParams:
     require_4h: bool = False  # also require the 4h close above the 4h EMA50
     regime_exit: str = "1h"  # "1h": exit when the 1h close < 1h EMA50; "4h": same on 4h; "none"
     trigger: str = "pullback_breakout"  # or "breakout" (no pullback needed)
+    trail_after_r: float = 1.0  # start the breakeven/trailing stop at this R; 0 disables it
 
 
 class TrendModule:
@@ -117,7 +118,7 @@ class TrendModule:
         reached_1r = position.highest_close >= entry + risk
         if held >= p.max_hold_bars and not reached_1r:
             return [Intent(kind="EXIT", symbol=symbol, module=self.name, reason=f"time exit after {held} bars < +1R")]
-        if reached_1r:
+        if p.trail_after_r > 0 and position.highest_close >= entry + p.trail_after_r * risk:
             atr = ctx.value(symbol, "atr14_15m")
             trail = position.highest_close - p.trail_atr * atr if math.isfinite(atr) else -math.inf
             new_stop = max(entry * (1 + p.breakeven_buffer), trail)

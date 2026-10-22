@@ -71,7 +71,13 @@ def window_study(config: StudyConfig, data: MarketData, manifest: dict, out_dir:
         ranking.append({"params_id": index, "objective": score, **summary, "params": json.dumps(params)})
     ranking_frame = pd.DataFrame(ranking).sort_values(["objective", "median_return"], ascending=False)
     feasible = ranking_frame[ranking_frame["objective"] > float("-inf")]
-    chosen_id = int((feasible if not feasible.empty else ranking_frame).iloc[0]["params_id"])
+    if not feasible.empty:
+        chosen_id = int(feasible.iloc[0]["params_id"])
+    else:
+        # No combination meets the constraints: take the best mean return among those that keep the
+        # drawdown constraint, and say so in the summary (chosen_feasible = false).
+        safe = ranking_frame[ranking_frame["p10_drawdown"] >= config.min_p10_drawdown]
+        chosen_id = int((safe if not safe.empty else ranking_frame).sort_values("mean_return").iloc[-1]["params_id"])
     chosen = grid[chosen_id]
 
     final_rows = run_windows(

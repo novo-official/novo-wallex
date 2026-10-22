@@ -1,0 +1,31 @@
+{
+  "avg_exposure": 0.025178887684176036,
+  "avg_r": 0.5521478018274728,
+  "by_module": {
+    "trend": {
+      "pnl": 11040.582409921237,
+      "trades": 1,
+      "wins": 1
+    }
+  },
+  "config_hash": "899129576f1a49f647fa31252ce2a881293f25ea17a9fe571b37a765c918d0e0",
+  "days": 3.0,
+  "end": "2026-10-22T00:00:00+00:00",
+  "exit_reasons": {
+    "end_of_window": 1
+  },
+  "fees_paid": 6058.557333774013,
+  "fees_share_of_equity": 0.0012117114667548026,
+  "final_equity": 5011040.582409921,
+  "final_tmn_share": 1.0,
+  "halted": false,
+  "max_drawdown": -0.002452579408463551,
+  "profit_factor": "inf",
+  "return": 0.002208116481984247,
+  "sharpe": 9.293368815951066,
+  "sortino": 8.566306449642338,
+  "start": "2026-10-19T00:00:00+00:00",
+  "trades": 1,
+  "trades_per_day": 0.3333333333333333,
+  "win_rate": 1.0
+}
