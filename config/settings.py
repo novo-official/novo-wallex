@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "exchange",
     "market",
     "backtest",
+    "ml",
 ]
 
 MIDDLEWARE = [

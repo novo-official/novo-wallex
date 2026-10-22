@@ -126,13 +126,15 @@ def window_summary(rows: pd.DataFrame) -> dict:
     }
 
 
-def objective(summary: dict, min_positive: float = 0.60, min_p10_drawdown: float = -0.04) -> float:
-    """Median 3-day return, only if the constraints hold; otherwise −inf."""
+def objective(
+    summary: dict, min_positive: float = 0.60, min_p10_drawdown: float = -0.04, metric: str = "median_return"
+) -> float:
+    """`metric` (median or mean 3-day return), only if the constraints hold; otherwise −inf."""
     if summary.get("windows", 0) == 0:
         return float("-inf")
     if summary["positive_share"] < min_positive or summary["p10_drawdown"] < min_p10_drawdown:
         return float("-inf")
-    return summary["median_return"]
+    return summary[metric]
 
 
 def buy_and_hold_windows(

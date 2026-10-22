@@ -1,0 +1,438 @@
+{
+  "chosen_feasible": true,
+  "chosen_variant": "aligned_3d t=+0.15 tilt",
+  "comparison": {
+    "random_control/holdout/base": {
+      "mean_return": 6.322155351193882e-05,
+      "median_fees_share": 0.002588422357100076,
+      "median_return": 0.0,
+      "median_trades": 3.5,
+      "p10_drawdown": -0.01933090568097341,
+      "p10_return": -0.012643776515140807,
+      "p90_return": 0.012961897169743414,
+      "positive_share": 0.41041666666666665,
+      "windows": 480,
+      "worst_drawdown": -0.030680115323956647,
+      "worst_return": -0.020845570002698734,
+      "zero_trade_share": 0.10416666666666667
+    },
+    "random_control/holdout/fee_stress": {
+      "mean_return": -0.0014187524578517454,
+      "median_fees_share": 0.0038816103627409317,
+      "median_return": -0.0006660801965087238,
+      "median_trades": 3.5,
+      "p10_drawdown": -0.021521313048759826,
+      "p10_return": -0.014872857449822493,
+      "p90_return": 0.01113324851760874,
+      "positive_share": 0.3541666666666667,
+      "windows": 480,
+      "worst_drawdown": -0.033915127344328444,
+      "worst_return": -0.02413430265583818,
+      "zero_trade_share": 0.10416666666666667
+    },
+    "random_control/selection/base": {
+      "mean_return": 0.001982594058985036,
+      "median_fees_share": 0.0025308309230332358,
+      "median_return": 0.0,
+      "median_trades": 3.0,
+      "p10_drawdown": -0.015146591345648639,
+      "p10_return": -0.00688159340170841,
+      "p90_return": 0.016280804502335995,
+      "positive_share": 0.4154929577464789,
+      "windows": 710,
+      "worst_drawdown": -0.03427910475077489,
+      "worst_return": -0.023305695239860445,
+      "zero_trade_share": 0.19014084507042253
+    },
+    "random_control/selection/fee_stress": {
+      "mean_return": 0.0005886568671831469,
+      "median_fees_share": 0.003793823952910975,
+      "median_return": 0.0,
+      "median_trades": 3.0,
+      "p10_drawdown": -0.01668874710918636,
+      "p10_return": -0.009004688853258183,
+      "p90_return": 0.013589880022621117,
+      "positive_share": 0.3591549295774648,
+      "windows": 710,
+      "worst_drawdown": -0.03663963835197681,
+      "worst_return": -0.02753614638893005,
+      "zero_trade_share": 0.19014084507042253
+    },
+    "rules+ml/holdout/base": {
+      "mean_return": 0.0004169046864967169,
+      "median_fees_share": 0.0025977417844366803,
+      "median_return": 0.0,
+      "median_trades": 3.5,
+      "p10_drawdown": -0.019561270282625665,
+      "p10_return": -0.011007297798845109,
+      "p90_return": 0.01259905573160864,
+      "positive_share": 0.4479166666666667,
+      "windows": 96,
+      "worst_drawdown": -0.02609719207881367,
+      "worst_return": -0.020864090141680537,
+      "zero_trade_share": 0.10416666666666667
+    },
+    "rules+ml/holdout/fee_stress": {
+      "mean_return": -0.0010477390012645815,
+      "median_fees_share": 0.0038957900735283523,
+      "median_return": -0.0007656136451326484,
+      "median_trades": 3.5,
+      "p10_drawdown": -0.02124657314477807,
+      "p10_return": -0.013389752688510014,
+      "p90_return": 0.010727344360517265,
+      "positive_share": 0.34375,
+      "windows": 96,
+      "worst_drawdown": -0.028552323214157793,
+      "worst_return": -0.02415153931990793,
+      "zero_trade_share": 0.10416666666666667
+    },
+    "rules+ml/selection/base": {
+      "mean_return": 0.0026189733248038437,
+      "median_fees_share": 0.002632658977101812,
+      "median_return": 0.0,
+      "median_trades": 3.0,
+      "p10_drawdown": -0.0166092468757424,
+      "p10_return": -0.006120552776948077,
+      "p90_return": 0.016514535413531,
+      "positive_share": 0.4084507042253521,
+      "windows": 142,
+      "worst_drawdown": -0.028785263738086986,
+      "worst_return": -0.01404671099243589,
+      "zero_trade_share": 0.19014084507042253
+    },
+    "rules+ml/selection/fee_stress": {
+      "mean_return": 0.001209829386077923,
+      "median_fees_share": 0.003947969138711628,
+      "median_return": 0.0,
+      "median_trades": 3.0,
+      "p10_drawdown": -0.017645059846260157,
+      "p10_return": -0.007958011551646361,
+      "p90_return": 0.014720114012822017,
+      "positive_share": 0.352112676056338,
+      "windows": 142,
+      "worst_drawdown": -0.02877979953042764,
+      "worst_return": -0.01696264886914661,
+      "zero_trade_share": 0.19014084507042253
+    },
+    "rules+ml_hard_filter/holdout/base": {
+      "mean_return": 0.0006718586263607202,
+      "median_fees_share": 0.0,
+      "median_return": 0.0,
+      "median_trades": 0.0,
+      "p10_drawdown": -0.01655154421063121,
+      "p10_return": -0.004800043299983573,
+      "p90_return": 0.005838562428909684,
+      "positive_share": 0.14583333333333334,
+      "windows": 96,
+      "worst_drawdown": -0.024086517698762244,
+      "worst_return": -0.01345014723778223,
+      "zero_trade_share": 0.71875
+    },
+    "rules+ml_hard_filter/holdout/fee_stress": {
+      "mean_return": 6.131104569853489e-05,
+      "median_fees_share": 0.0,
+      "median_return": 0.0,
+      "median_trades": 0.0,
+      "p10_drawdown": -0.017556119767122125,
+      "p10_return": -0.007026678748572563,
+      "p90_return": 0.002829713973504267,
+      "positive_share": 0.13541666666666666,
+      "windows": 96,
+      "worst_drawdown": -0.026696602258593827,
+      "worst_return": -0.01699559310973863,
+      "zero_trade_share": 0.71875
+    },
+    "rules+ml_hard_filter/selection/base": {
+      "mean_return": 0.0019512353906752686,
+      "median_fees_share": 0.0,
+      "median_return": 0.0,
+      "median_trades": 0.0,
+      "p10_drawdown": -0.012060848547044034,
+      "p10_return": 0.0,
+      "p90_return": 0.009679856598646406,
+      "positive_share": 0.22535211267605634,
+      "windows": 142,
+      "worst_drawdown": -0.017690378952483043,
+      "worst_return": -0.011311010940317253,
+      "zero_trade_share": 0.676056338028169
+    },
+    "rules+ml_hard_filter/selection/fee_stress": {
+      "mean_return": 0.0013505727953122743,
+      "median_fees_share": 0.0,
+      "median_return": 0.0,
+      "median_trades": 0.0,
+      "p10_drawdown": -0.012658584575984188,
+      "p10_return": -0.0014818101941249148,
+      "p90_return": 0.00755562734181803,
+      "positive_share": 0.21830985915492956,
+      "windows": 142,
+      "worst_drawdown": -0.018866837667901204,
+      "worst_return": -0.013091310627723646,
+      "zero_trade_share": 0.676056338028169
+    },
+    "rules/holdout/base": {
+      "mean_return": 0.0006188588873348273,
+      "median_fees_share": 0.004084762984144024,
+      "median_return": 0.0,
+      "median_trades": 3.5,
+      "p10_drawdown": -0.027166399147668552,
+      "p10_return": -0.01836302826023058,
+      "p90_return": 0.019413078412970575,
+      "positive_share": 0.4270833333333333,
+      "windows": 96,
+      "worst_drawdown": -0.039055365538030684,
+      "worst_return": -0.025078781583064553,
+      "zero_trade_share": 0.10416666666666667
+    },
+    "rules/holdout/fee_stress": {
+      "mean_return": -0.0016261649446809893,
+      "median_fees_share": 0.006119438240215944,
+      "median_return": -0.0007571443132201114,
+      "median_trades": 3.5,
+      "p10_drawdown": -0.030862484396409706,
+      "p10_return": -0.022524823917007813,
+      "p90_return": 0.016869635629532902,
+      "positive_share": 0.3645833333333333,
+      "windows": 96,
+      "worst_drawdown": -0.04303695641580341,
+      "worst_return": -0.02970126223090005,
+      "zero_trade_share": 0.10416666666666667
+    },
+    "rules/selection/base": {
+      "mean_return": 0.0034177181683736073,
+      "median_fees_share": 0.0036150940523352777,
+      "median_return": 0.0,
+      "median_trades": 3.0,
+      "p10_drawdown": -0.020991752748838455,
+      "p10_return": -0.010354620474701958,
+      "p90_return": 0.025709175736099484,
+      "positive_share": 0.4014084507042254,
+      "windows": 142,
+      "worst_drawdown": -0.044995140521250754,
+      "worst_return": -0.025532223871947746,
+      "zero_trade_share": 0.19014084507042253
+    },
+    "rules/selection/fee_stress": {
+      "mean_return": 0.001304661546746499,
+      "median_fees_share": 0.0054236772648916295,
+      "median_return": 0.0,
+      "median_trades": 3.0,
+      "p10_drawdown": -0.024492413775638953,
+      "p10_return": -0.012669073340329582,
+      "p90_return": 0.019488529530402546,
+      "positive_share": 0.36619718309859156,
+      "windows": 142,
+      "worst_drawdown": -0.04788404970657034,
+      "worst_return": -0.030789002650352202,
+      "zero_trade_share": 0.19014084507042253
+    }
+  },
+  "config_hash": "74c4f22afd0b85d3624472c564296c9b029f71d38ad582a93be58d69a39b7970",
+  "first_prediction": "2026-06-20T00:00:00+00:00",
+  "hard_filter_variant": "timing_4h t=+0.10",
+  "holdout_windows": 96,
+  "labels": {
+    "aligned_3d": {
+      "barrier": {
+        "entry_offset": 0.0005,
+        "horizon": 864,
+        "maker_fee": 0.0025,
+        "stop": 0.02,
+        "take_profit": 0.06,
+        "taker_fee": 0.0035
+      },
+      "oof": {
+        "brier_vs_base": [
+          0.275617663123927,
+          0.24934282836299257
+        ],
+        "calibration": [
+          {
+            "actual": 0.5924324324324325,
+            "predicted": -0.2397651234930396,
+            "rows": 1850
+          },
+          {
+            "actual": 0.5509337860780985,
+            "predicted": -0.07931228646488667,
+            "rows": 2356
+          },
+          {
+            "actual": 0.2017603249830738,
+            "predicted": -0.004863230825112067,
+            "rows": 1477
+          },
+          {
+            "actual": 0.5854441669639672,
+            "predicted": 0.22283042220731922,
+            "rows": 2803
+          },
+          {
+            "actual": 0.75177304964539,
+            "predicted": 0.4522490780296459,
+            "rows": 564
+          }
+        ],
+        "holdout": {
+          "auc": 0.45017057229395824,
+          "base_rate": 0.5144736842105263,
+          "net_all": 0.007304363326864954,
+          "net_top_quintile": 0.011110361423054027,
+          "rows": 3800
+        },
+        "selection": {
+          "auc": 0.5699970521756168,
+          "base_rate": 0.5337142857142857,
+          "net_all": 0.006422783023510444,
+          "net_top_quintile": 0.012640641996056327,
+          "rows": 5250
+        }
+      }
+    },
+    "timing_4h": {
+      "barrier": {
+        "entry_offset": 0.0005,
+        "horizon": 48,
+        "maker_fee": 0.0025,
+        "stop": 0.01,
+        "take_profit": 0.02,
+        "taker_fee": 0.0035
+      },
+      "oof": {
+        "brier_vs_base": [
+          0.18288319879632184,
+          0.1736025307854219
+        ],
+        "calibration": [
+          {
+            "actual": 0.18994114499732478,
+            "predicted": -0.13747152161628085,
+            "rows": 1869
+          },
+          {
+            "actual": 0.19376391982182628,
+            "predicted": -0.05482789694600008,
+            "rows": 1796
+          },
+          {
+            "actual": 0.22547652254765224,
+            "predicted": 0.007602556622587345,
+            "rows": 2151
+          },
+          {
+            "actual": 0.23863636363636365,
+            "predicted": 0.07943088548500787,
+            "rows": 1496
+          },
+          {
+            "actual": 0.2733812949640288,
+            "predicted": 0.20026452022521543,
+            "rows": 1807
+          }
+        ],
+        "holdout": {
+          "auc": 0.5937686388372991,
+          "base_rate": 0.22279658826570173,
+          "net_all": -0.005184220900759549,
+          "net_top_quintile": -0.004676408902504433,
+          "rows": 3869
+        },
+        "selection": {
+          "auc": 0.5270310044742081,
+          "base_rate": 0.2241904761904762,
+          "net_all": -0.00460104082035456,
+          "net_top_quintile": -0.003606043233941785,
+          "rows": 5250
+        }
+      }
+    }
+  },
+  "ml_pass_rate": 0.25902061855670105,
+  "model_dir": "/Users/kardo/Documents/GitHub/novo-wallex/models/aligned_3d",
+  "model_id": "2e214eacd73f9866",
+  "per_trade": {
+    "random_control/holdout/base": {
+      "return_per_trade": 1.644788384050441e-05,
+      "trade_win_rate": 0.43360433604336046,
+      "trades": 1845
+    },
+    "random_control/holdout/fee_stress": {
+      "return_per_trade": -0.00036910633049801504,
+      "trade_win_rate": 0.3902439024390244,
+      "trades": 1845
+    },
+    "random_control/selection/base": {
+      "return_per_trade": 0.0005498600710466311,
+      "trade_win_rate": 0.509765625,
+      "trades": 2560
+    },
+    "random_control/selection/fee_stress": {
+      "return_per_trade": 0.00016326030300782592,
+      "trade_win_rate": 0.470703125,
+      "trades": 2560
+    },
+    "rules+ml/holdout/base": {
+      "return_per_trade": 0.00010846300786906455,
+      "trade_win_rate": 0.43360433604336046,
+      "trades": 369
+    },
+    "rules+ml/holdout/fee_stress": {
+      "return_per_trade": -0.0002725825043940375,
+      "trade_win_rate": 0.3902439024390244,
+      "trades": 369
+    },
+    "rules+ml/selection/base": {
+      "return_per_trade": 0.000726355883051066,
+      "trade_win_rate": 0.509765625,
+      "trades": 512
+    },
+    "rules+ml/selection/fee_stress": {
+      "return_per_trade": 0.00033553861879504897,
+      "trade_win_rate": 0.470703125,
+      "trades": 512
+    },
+    "rules+ml_hard_filter/holdout/base": {
+      "return_per_trade": 0.0006449842813062914,
+      "trade_win_rate": 0.5,
+      "trades": 100
+    },
+    "rules+ml_hard_filter/holdout/fee_stress": {
+      "return_per_trade": 5.8858603870593495e-05,
+      "trade_win_rate": 0.48,
+      "trades": 100
+    },
+    "rules+ml_hard_filter/selection/base": {
+      "return_per_trade": 0.0019241348991381121,
+      "trade_win_rate": 0.6180555555555556,
+      "trades": 144
+    },
+    "rules+ml_hard_filter/selection/fee_stress": {
+      "return_per_trade": 0.0013318148398218262,
+      "trade_win_rate": 0.6111111111111112,
+      "trades": 144
+    },
+    "rules/holdout/base": {
+      "return_per_trade": 0.00016100393816841034,
+      "trade_win_rate": 0.43360433604336046,
+      "trades": 369
+    },
+    "rules/holdout/fee_stress": {
+      "return_per_trade": -0.000423067302681233,
+      "trade_win_rate": 0.3902439024390244,
+      "trades": 369
+    },
+    "rules/selection/base": {
+      "return_per_trade": 0.0009478827732598676,
+      "trade_win_rate": 0.509765625,
+      "trades": 512
+    },
+    "rules/selection/fee_stress": {
+      "return_per_trade": 0.00036183972585547433,
+      "trade_win_rate": 0.470703125,
+      "trades": 512
+    }
+  },
+  "random_controls": 5,
+  "runtime_seconds": 29.605237,
+  "selection_windows": 142
+}

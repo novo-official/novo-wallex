@@ -54,3 +54,31 @@ enabled = false
 "trend.regime_exit" = ["1h", "4h", "none"]
 "trend.tp_r" = [2.0, 3.0]
 "trend.trail_after_r" = [0.0, 2.0]
+
+# Phase 3: ML entry filter and the ablation (ml_study). The ablation objective is relaxed
+# (no combination reaches 60% positive windows, see docs/RESEARCH_P2.md): maximize the mean
+# 3-day return subject to p10 drawdown >= -4% and at least 40% positive windows.
+[ml]
+train_symbols = ["USDTTMN", "BTCTMN", "ETHTMN", "SOLTMN", "XRPTMN", "DOGETMN", "TRXTMN", "ADATMN", "BNBTMN", "LTCTMN", "SHIBTMN"]
+min_train_days = 45.0
+block_days = 14.0
+calibration_share = 0.2
+sample_every = 6
+thresholds = [0.0, 0.05, 0.10, 0.15]  # on ml_edge = P(win) - training base rate
+objective_metric = "mean_return"
+min_positive = 0.40
+min_p10_drawdown = -0.04
+
+# Label definitions to compare. "aligned" uses the trading exits; "timing" asks whether the
+# next 4 h go well (a short horizon has many more independent samples).
+[[ml.labels]]
+name = "aligned_3d"
+stop = 0.02
+take_profit = 0.06
+horizon = 864
+
+[[ml.labels]]
+name = "timing_4h"
+stop = 0.01
+take_profit = 0.02
+horizon = 48

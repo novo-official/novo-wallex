@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import asdict, fields
 
-from .composite import CompositeStrategy, FairValueParams
+from .composite import CompositeStrategy, FairValueParams, MLFilterParams
 from .modules.mean_reversion import MeanReversionModule, MeanReversionParams
 from .modules.trend import TrendModule, TrendParams
 
@@ -30,9 +30,10 @@ def build_strategy(params: dict, symbols: list[str]) -> CompositeStrategy:
         else:
             raise ValueError(f"unknown module {name!r}")
     fair_value = FairValueParams(**_subset(FairValueParams, params.get("fair_value", {"enabled": False})))
+    ml = MLFilterParams(**_subset(MLFilterParams, params.get("ml", {})))
     allowed = params.get("symbols")
     chosen = [symbol for symbol in symbols if allowed is None or symbol in allowed]
-    return CompositeStrategy(modules, chosen, fair_value)
+    return CompositeStrategy(modules, chosen, fair_value, ml)
 
 
 def describe(params: dict) -> dict:
@@ -42,4 +43,5 @@ def describe(params: dict) -> dict:
     for module in strategy.modules:
         out[module.name] = asdict(module.params)
     out["fair_value"] = asdict(strategy.fair_value)
+    out["ml"] = asdict(strategy.ml)
     return out
