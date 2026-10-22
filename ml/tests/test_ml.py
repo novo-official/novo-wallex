@@ -138,3 +138,16 @@ def test_samples_are_time_ordered_with_resolution_after_decision():
     assert isinstance(samples, Samples)
     assert (np.diff(samples.t.asi8) >= 0).all()
     assert (samples.t_end > samples.t).all()
+
+
+def test_module_size_survives_the_composite_when_fair_value_is_off():
+    # Regression: the fair-value step used to reset every module's size_fraction to 1.0.
+    class Small(_Always):
+        def entry(self, ctx, symbol):
+            intent = super().entry(ctx, symbol)
+            from dataclasses import replace
+
+            return replace(intent, size_fraction=0.1)
+
+    (intent,) = CompositeStrategy([Small()], ["AAATMN"]).on_cycle(_ctx(0.0), VIEW)
+    assert intent.size_fraction == pytest.approx(0.1)

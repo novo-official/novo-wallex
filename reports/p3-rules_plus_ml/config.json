@@ -83,9 +83,10 @@
         "full_size_margin": 0.003,
         "hold_bars": 48,
         "min_fraction": 0.55,
+        "size_scale": 1.0,
         "stop": 0.015,
         "take_profit": 0.0,
-        "threshold": 0.0,
+        "threshold": -0.001,
         "timeout_bars": 2
       },
       "modules": [
@@ -124,5 +125,5 @@
       "window_days": 3.0
     }
   },
-  "config_hash": "59111e2f1fb1d9553eb7bd7925fae40b25ac4f886d03980bbfadf9d1534d520c"
+  "config_hash": "630656e0606e942f7d0b5acd71292d0d77517841af56990367c387135e5eef5b"
 }

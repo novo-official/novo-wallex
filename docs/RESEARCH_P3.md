@@ -19,7 +19,7 @@
 - **At most 30 configs per experiment**, enforced in `backtest/experiment.py`.
 - **Holdout:** the selection windows are the first 70% (to 2026-09-01). Holdout windows run only with `--final`, once per model, and every run is logged in `reports/experiments.jsonl`.
 - **Disclosure:** that holdout (2026-09-01 → 10-22) had already been looked at **11 times in P2 and P3a** (see the log), so it is not clean. In P3b each model was chosen on selection windows only and evaluated on the holdout once. The only truly untouched test is the data after 2026-10-22, i.e. the shadow run (P5).
-- **Experiment count so far:** 27 experiments, 1,615 configurations, 16 holdout evaluations (P2: 10 / 1,450 configs; P3a: 3 / 34; P3b: 14 / 131).
+- **Experiment count so far:** 32 experiments, 1,684 configurations, 17 holdout evaluations (P2: 10 / 1,450 configs; P3a: 3 / 34; P3b: 14 / 131; P3c activity and the re-runs after the sizing fix: 5 / 69).
 
 ## 1. Maker entries: what they save (`reports/p3-entry_cost`)
 
@@ -144,7 +144,45 @@ These are the 142 selection windows that start after the first ML prediction (20
 
 The strongest LLM role the evidence points to is **macro/news risk for USDTTMN plus trade approval**, because price data cannot time the devaluation jumps. It can only be evaluated in shadow/live, and the report will say so.
 
-## 7. Re-run
+## 7. What the 3 trades/day rule costs (`reports/p3-activity_cost`)
+
+The user kept the ≥ 3 round trips/day rule and asked for the cheapest way to reach it and its cost. Design:
+- **Main strategy:** the rules keep full size.
+- **Extra trades:** small ML trades on USDT/BTC/ETH. Every one has a real, if weak, signal: the model's E[net] above a threshold, held 2h or 4h.
+- **Size:** 100k, 250k or 500k TMN. Below our 500k default the minimum order is lowered to the exchange's 50k.
+- **Not tested:** pure churn without a signal. It would be cheaper, but it risks being judged "artificial volume", which is grounds for disqualification.
+
+16 configs, chosen on selection windows, holdout run once:
+
+| (base fees) | split | P(>+0.2%) | trades/day | mean | median | p10 DD | worst DD | no-trade | fees/window |
+|---|---|---|---|---|---|---|---|---|---|
+| rules only | selection | 33.8% | 1.20 | +0.34% | 0.00% | −2.1% | −4.5% | 19% | 0.36% |
+| **rules + h24 E[net] > −0.5% at 100k** (chosen, feasible) | selection | 33.8% | 6.52 | +0.15% | −0.13% | −2.1% | −4.0% | 2% | 0.58% |
+| rules only | holdout | 37.5% | 1.28 | +0.06% | 0.00% | −2.7% | −3.9% | 10% | 0.41% |
+| rules + h24 E[net] > −0.5% at 100k | holdout | **26.0%** | 9.47 | **−0.39%** | −0.45% | −3.3% | −4.6% | 0% | 0.80% |
+
+Fee table of the chosen variant, holdout: low −0.08%, base −0.39%, stress −0.75% mean. For the rules alone: +0.25%, +0.06%, −0.16%.
+
+Other results:
+- At 250k the extra trades already make the selection mean negative (−0.11% to −0.20%).
+- The 500k variants are rejected at the minimum-order rounding boundary, so they behave like the rules.
+- Thresholds of −0.3% or higher do not reach 3/day.
+
+Findings:
+- **Cost of the rule:** in the holdout, about **−0.45 pp of mean 3-day return and −11 pp of P(>+0.2%)**. A roughly break-even strategy becomes a losing one, even at the low fees. Since a losing team scores 0 of the 90 return points, the 15 activity points are not worth it.
+- **Activity set by a threshold is unstable.** The model's output distribution shifted in the holdout, and the extra trades rose from about 5 a day to 8 a day.
+  - A daily quota of extra trades would be the robust version.
+  - It has **not** been tested, because tuning it now would mean a second look at this holdout.
+  - If wanted, it can only be judged on forward (shadow) data.
+- **The extra trades have a negative expected net return,** about −0.5% each before sizing. They are signal-driven, but their purpose is activity, and the decision log will say so. The judges could still read them as volume-padding.
+
+**Bug found while doing this:** `CompositeStrategy._apply_fair_value` replaced every module's `size_fraction` with 1.0 when fair value was disabled. Consequences:
+- The ML-only and rules + ML variants in §4 traded at full size instead of confidence-scaled size.
+- After the fix (with a regression test), their selection results changed by ≤ 0.02 pp and the conclusions hold.
+- Their holdout numbers in §4 are from the run before the fix, kept in `reports/p3-*/final_holdout_run_before_sizing_fix.txt`. The holdout was not re-run, to avoid another look.
+- The P2 rules and P3a were not affected: their size was the default 1.0.
+
+## 8. Re-run
 
 ```bash
 brew install libomp     # macOS, for LightGBM

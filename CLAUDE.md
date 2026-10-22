@@ -71,7 +71,8 @@ Full rules: `docs/CHALLENGE.md`. Ground truth for the API: `docs/wallex_spot_swa
 ## 5. Defaults until the organizers confirm
 
 - **Objective (user, 2026-10-22):** maximize P(3-day return > +0.2%) s.t. p10 drawdown ≥ −3.5% and ≥ 3 round trips/day;
-  zero-trade windows are failures; report mean/median too. (No config reaches 3/day; recommendation pending: ≥ 1/day.)
+  zero-trade windows are failures; report mean/median too. User kept 3/day; its cheapest form (rules + 100k ML
+  trades) costs ≈ −0.45 pp mean / −11 pp P(>+0.2%) on holdout (`docs/RESEARCH_P3.md` §7). Decision still open.
 - **Every report has the 3-row fee table:** low 0.15/0.20, base 0.25/0.35, stress ×1.5 (`config/strategy.toml`).
 
 - Fees: TMN maker 0.25% / taker 0.35%; USDT maker 0.15% / taker 0.20%. Always also run fee stress ×1.5.
@@ -195,7 +196,8 @@ across adjacent polls. ~2.8 req/s, no rate-limit headers seen; a 429 is retried 
 - **P3 done (2026-10-22), awaiting review** (`docs/RESEARCH_P3.md`, `docs/RESEARCH_P3a_filter.md`). Per-bar ML has real
   ranking skill (IC 0.12 at 1h) but the predictable move < 0.6% round trip; ML-only, ML gate, USDT allocation (raw and
   detrended) and SOL/XRP are negative or inactive; rules + ML adds activity but not holdout return. Recommendation:
-  live = trend rules (USDT/BTC/ETH, maker entries) only. 27 experiments / 1,615 configs / 16 holdout evaluations.
+  live = trend rules (USDT/BTC/ETH, maker entries) only. 32 experiments / 1,684 configs / 17 holdout evaluations.
+  Fixed: fair-value step reset module sizes to 1.0 (affected P3b ML sizing only).
 - **Next: P4** LLM roles (news/macro risk for USDTTMN + trade approval) on `agent/context.py`, RiskGuard, ablation.
 - Later: P5 execution/engine/preflight/shadow ≥ 24h,
   P6 DRF + Next.js dashboard, P7 docs, canonical report, `make reproduce`, demo script, final audit.

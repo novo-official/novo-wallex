@@ -1,5 +1,5 @@
 {
-  "chosen": "rules + ML h48 >+0.0%",
+  "chosen": "rules + ML h48 >-0.1%",
   "chosen_feasible": false,
   "chosen_params": {
     "fair_value": {
@@ -11,7 +11,7 @@
       "hold_bars": 48,
       "stop": 0.015,
       "take_profit": 0.0,
-      "threshold": 0.0
+      "threshold": -0.001
     },
     "modules": [
       "trend",
@@ -34,16 +34,16 @@
       "trigger": "breakout"
     }
   },
-  "config_hash": "59111e2f1fb1d9553eb7bd7925fae40b25ac4f886d03980bbfadf9d1534d520c",
+  "config_hash": "630656e0606e942f7d0b5acd71292d0d77517841af56990367c387135e5eef5b",
   "experiment": "P3b rules + ML",
-  "holdout_evaluated": true,
-  "holdout_windows": 96,
+  "holdout_evaluated": false,
+  "holdout_windows": 0,
   "objective": {
     "metric": "p_above_target",
     "min_p10_drawdown": -0.035,
     "min_trades_per_day": 3.0
   },
-  "runtime_seconds": 7.643915,
+  "runtime_seconds": 5.45123,
   "selection_windows": 142,
   "variants": 8
 }

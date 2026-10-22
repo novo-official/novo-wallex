@@ -55,14 +55,20 @@ def split_selection_holdout(starts: list[pd.Timestamp], spec: WindowSpec, select
 
 
 def limits_for(limits: RiskLimits, params: dict) -> RiskLimits:
-    """Apply a variant's risk overrides, e.g. {"risk": {"position_caps": {"USDTTMN": 0.40}}}."""
-    caps = params.get("risk", {}).get("position_caps")
-    if not caps:
+    """Apply a variant's risk overrides, e.g. {"risk": {"position_caps": {"USDTTMN": 0.4}, "min_order_tmn": 50000}}."""
+    risk = params.get("risk", {})
+    if not risk:
         return limits
     from dataclasses import replace
     from decimal import Decimal
 
-    return replace(limits, position_caps=tuple((symbol, Decimal(str(cap))) for symbol, cap in sorted(caps.items())))
+    changes = {}
+    if risk.get("position_caps"):
+        caps = risk["position_caps"]
+        changes["position_caps"] = tuple((symbol, Decimal(str(cap))) for symbol, cap in sorted(caps.items()))
+    if "min_order_tmn" in risk:
+        changes["min_order_tmn"] = Decimal(str(risk["min_order_tmn"]))
+    return replace(limits, **changes)
 
 
 # Shared state for forked workers.

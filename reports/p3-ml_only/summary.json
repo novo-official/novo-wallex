@@ -19,16 +19,16 @@
       "ETHTMN"
     ]
   },
-  "config_hash": "3a7d685279a07e6958b20373d5e8ff8f11caff91a7ed857f29f79449280aaa81",
+  "config_hash": "ac2be0a185ac0c185e64d35cb427103ddb78ba3972c8200f7d0bce2937340fe1",
   "experiment": "P3b ML-only",
-  "holdout_evaluated": true,
-  "holdout_windows": 96,
+  "holdout_evaluated": false,
+  "holdout_windows": 0,
   "objective": {
     "metric": "p_above_target",
     "min_p10_drawdown": -0.035,
     "min_trades_per_day": 3.0
   },
-  "runtime_seconds": 7.374006,
+  "runtime_seconds": 5.555718,
   "selection_windows": 142,
   "variants": 13
 }

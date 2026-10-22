@@ -83,6 +83,7 @@
         "full_size_margin": 0.003,
         "hold_bars": 48,
         "min_fraction": 0.55,
+        "size_scale": 1.0,
         "stop": 0.015,
         "take_profit": 0.0,
         "threshold": 0.001,
@@ -103,5 +104,5 @@
       "window_days": 3.0
     }
   },
-  "config_hash": "3a7d685279a07e6958b20373d5e8ff8f11caff91a7ed857f29f79449280aaa81"
+  "config_hash": "ac2be0a185ac0c185e64d35cb427103ddb78ba3972c8200f7d0bce2937340fe1"
 }

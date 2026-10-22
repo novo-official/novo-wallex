@@ -86,24 +86,27 @@ class CompositeStrategy:
         )
 
     def _apply_fair_value(self, ctx: Context, intent: Intent) -> Intent | None:
+        """Scales the module's own size (never replaces it): base_fraction, or discount_fraction at a discount."""
         fv = self.fair_value
-        if not fv.enabled or "fv_valid" not in ctx.features[intent.symbol]:
-            return replace(intent, size_fraction=fv.base_fraction if fv.enabled else 1.0)
+        if not fv.enabled:
+            return intent
+        if "fv_valid" not in ctx.features[intent.symbol]:
+            return replace(intent, size_fraction=intent.size_fraction * fv.base_fraction)
         valid = bool(ctx.features[intent.symbol]["fv_valid"][ctx.index])
         z = ctx.value(intent.symbol, "fv_z")
         if not valid or not math.isfinite(z):
-            return replace(intent, size_fraction=fv.base_fraction)
+            return replace(intent, size_fraction=intent.size_fraction * fv.base_fraction)
         signals = {**intent.signals, "fv_z": z, "fv_premium": ctx.value(intent.symbol, "fv_premium")}
         if z > fv.max_z:
             return None
         if z < fv.discount_z:
             return replace(
                 intent,
-                size_fraction=fv.discount_fraction,
+                size_fraction=intent.size_fraction * fv.discount_fraction,
                 signals=signals,
                 reason=intent.reason + f"; fair-value discount z={z:.2f}: full size",
             )
-        return replace(intent, size_fraction=fv.base_fraction, signals=signals)
+        return replace(intent, size_fraction=intent.size_fraction * fv.base_fraction, signals=signals)
 
     def on_cycle(self, ctx: Context, portfolio: PortfolioView) -> list[Intent]:
         intents: list[Intent] = []

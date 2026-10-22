@@ -1,0 +1,54 @@
+{
+  "chosen": "rules + h24 >-0.5% at 100k",
+  "chosen_feasible": true,
+  "chosen_params": {
+    "fair_value": {
+      "enabled": false
+    },
+    "ml_signal": {
+      "column": "ml_net_h24",
+      "exit_type": "taker",
+      "hold_bars": 24,
+      "min_fraction": 1.0,
+      "size_scale": 0.1,
+      "stop": 0.015,
+      "take_profit": 0.0,
+      "threshold": -0.005
+    },
+    "modules": [
+      "trend",
+      "ml_signal"
+    ],
+    "risk": {
+      "min_order_tmn": 50000
+    },
+    "symbols": [
+      "USDTTMN",
+      "BTCTMN",
+      "ETHTMN"
+    ],
+    "trend": {
+      "max_hold_bars": 864,
+      "max_stop": 0.02,
+      "min_stop": 0.02,
+      "min_tp": 0.0,
+      "regime_exit": "none",
+      "require_4h": false,
+      "tp_r": 3.0,
+      "trail_after_r": 0.0,
+      "trigger": "breakout"
+    }
+  },
+  "config_hash": "e379e03bbd9e18d16f5725db9b35cfac27108609006f44c55d3be556157b6d50",
+  "experiment": "P3c activity cost: rules + small ML-signal trades",
+  "holdout_evaluated": true,
+  "holdout_windows": 96,
+  "objective": {
+    "metric": "p_above_target",
+    "min_p10_drawdown": -0.035,
+    "min_trades_per_day": 3.0
+  },
+  "runtime_seconds": 10.992294,
+  "selection_windows": 142,
+  "variants": 16
+}

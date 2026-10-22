@@ -23,6 +23,7 @@ class MLSignalParams:
     threshold: float = 0.0
     full_size_margin: float = 0.003
     min_fraction: float = 0.55
+    size_scale: float = 1.0  # multiplies the final size; < 1 for small "activity" trades (needs a lower min order)
     hold_bars: int = 48
     stop: float = 0.015
     take_profit: float = 0.0  # 0: none (horizon targets); > 0 for a barrier target
@@ -56,7 +57,7 @@ class MLSignalModule:
             limit_price=limit,
             stop_price=limit * (1 - p.stop),
             take_profit=limit * (1 + p.take_profit) if p.take_profit > 0 else None,
-            size_fraction=p.min_fraction + (1 - p.min_fraction) * confidence,
+            size_fraction=(p.min_fraction + (1 - p.min_fraction) * confidence) * p.size_scale,
             timeout_bars=p.timeout_bars,
         )
 
