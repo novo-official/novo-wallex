@@ -31,7 +31,10 @@ Full rules: `docs/CHALLENGE.md`. Ground truth for the API: `docs/wallex_spot_swa
   `venv/` (Python 3.14) is an old local env; ignore it.
 - Postgres: Homebrew Postgres on localhost:5432, role/db `wallex` (password in `.env`). Docker compose exists but is
   untested and would clash on port 5432.
-- `.env` holds `WALLEX_API_KEY` (currently **empty**: account endpoints answer 401). Never print, log or commit it.
+- `.env` holds `WALLEX_API_KEY` (46 chars, works since 2026-10-23 on `x-api-key`; all balances were 0 then).
+  Never print, log or commit it. Shadow deliberately runs without the key.
+- Background jobs: start detached (`subprocess.Popen(..., start_new_session=True)`); jobs tied to the agent
+  session were all stopped together on 2026-10-22 13:41 UTC.
 - Optional free LLM fallbacks (shadow/live only): `GROQ_API_KEY`, `GEMINI_API_KEY` in `.env`.
 - Shell: `rm` is aliased to interactive; use `/bin/rm -f` in scripts.
 
@@ -149,9 +152,12 @@ Planned (not built): `execution/` (Shadow/Live executors, order state machine, r
   `60` returns only the latest 696 bars; a 1m window wider than ~34 h **silently returns one bar** (we use 1440-bar chunks
   and a truncation guard). 1m history goes back ≥ 500 days.
 - `GET /v1/currencies/stats`: 422, requires a `key` parameter. Unused.
-- Account (all 401 without key, so routes exist but shapes are UNVERIFIED): `/v1/account/openOrders`,
-  `/v1/account/orders`, `/v1/account/orders/{client_id}`, `/v1/prop/user/packages/history`,
-  `/v1/account/balances` (not in Swagger), `/v1/account/fee` (not in Swagger).
+- Account, verified with the key 2026-10-23: `/v1/account/balances` → `result.balances.{ASSET}` with `value`,
+  `locked` (strings; whether `value` includes `locked` is UNVERIFIED until the smoke test), 283 assets.
+  `/v1/account/openOrders` → `result.orders[]`. `/v1/account/fee` → per symbol `makerFeeRate`/`takerFeeRate`:
+  **TMN 0.25% / 0.30%, USDT 0.10% / 0.13%**. `/v1/prop/user/packages/history` → 401 code 1201 «ابتدا وارد شوید»
+  (needs a web login, not the API key). Orders and `/v1/account/orders/{client_id}` still UNVERIFIED.
+- UDF sends no trailing bars for minutes without trades (night, USDTTMN/quiet pairs): the live feed extends them.
 - Orders (Swagger, P5 only): `POST /v1/account/orders` {symbol, side BUY/SELL, type LIMIT/MARKET/STOP_LIMIT/STOP_MARKET,
   price, quantity, `stop_Price`, client_id}; response uses `stopPrice`. Cancel: `DELETE /v1/account/orders`
   {clientOrderId} or `DELETE /v1/account/orders/{client_id}`. OrderResource: status (enum undocumented), executedQty,
