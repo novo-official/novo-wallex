@@ -169,3 +169,36 @@ def test_stop_at_exactly_the_cap_survives_price_rounding():
     result, _ = _run(bars, {0: [_enter(limit=1000.7, stop=1000.7 * 0.98, tp=2000)]})
     assert [d["action"] for d in result.decisions][0] == "ENTER"
     assert len(result.trades) == 1
+
+
+def test_taker_entry_fills_at_the_next_open_with_taker_fee():
+    taker = Intent(
+        kind="ENTER",
+        symbol="AAATMN",
+        module="test",
+        reason="t",
+        limit_price=1000.0,
+        stop_price=985.0,
+        take_profit=5000.0,
+        entry_type="taker",
+    )
+    bars = [FLAT, (1007, 1008, 1006, 1007), FLAT, FLAT]  # never trades below 1000: a maker limit would not fill
+    result, _ = _run(bars, {0: [taker]})
+    (trade,) = result.trades
+    assert trade.entry_price == Decimal("1007")
+    assert trade.fees > trade.quantity * Decimal("1007") * FEES.taker  # taker in + taker out at the end
+
+
+def test_maker_exit_fills_only_when_traded_through_else_falls_back_to_taker():
+    def exit_intent():
+        return Intent(kind="EXIT", symbol="AAATMN", module="test", reason="done", exit_type="maker", timeout_bars=2)
+
+    bars = [FLAT, (1005, 1006, 999, 1001), (1001, 1002, 1000, 1001), (1001, 1003, 1000, 1002), FLAT, FLAT]
+    result, _ = _run(bars, {0: [_enter(tp=5000)], 2: [exit_intent()]})
+    (trade,) = result.trades
+    assert trade.exit_reason == "done (maker)" and trade.exit_price == Decimal("1001")
+
+    flat_after = [FLAT, (1005, 1006, 999, 1001), (1001, 1001, 1000, 1001)] + [(1001, 1001, 1000, 1000)] * 4
+    result, _ = _run(flat_after, {0: [_enter(tp=5000)], 2: [exit_intent()]})
+    (trade,) = result.trades
+    assert trade.exit_reason == "done (maker timeout, taker)"

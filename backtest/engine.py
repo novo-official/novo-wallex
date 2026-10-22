@@ -143,6 +143,7 @@ class Backtester:
         positions: dict[str, Position] = {}
         pending: dict[str, PendingEntry] = {}
         exits: dict[str, str] = {}  # symbol -> reason, filled at the next bar's open
+        maker_exits: dict[str, tuple[Decimal, int, str]] = {}  # symbol -> (sell limit, expiry index, reason)
         trades: list[Trade] = []
         decisions: list[dict] = []
         equity_curve = np.empty(last - first + 1)
@@ -226,11 +227,27 @@ class Backtester:
                 elif position.take_profit is not None and high > float(position.take_profit):
                     close_position(symbol, position.take_profit, fees.maker, "take_profit", index)
 
+            for symbol, (limit, expires, reason) in list(maker_exits.items()):
+                if symbol not in positions:
+                    del maker_exits[symbol]  # stopped out while the sell limit was waiting
+                elif price(symbol, "high", index) > float(limit):
+                    close_position(symbol, limit, fees.maker, reason + " (maker)", index)
+                    del maker_exits[symbol]
+                elif index >= expires:
+                    slip = self.costs.slippage_for(symbol)
+                    fill = to_decimal(price(symbol, "close", index)) * (1 - slip)
+                    close_position(symbol, fill, fees.taker, reason + " (maker timeout, taker)", index)
+                    del maker_exits[symbol]
+
             for symbol, order in list(pending.items()):
                 low = price(symbol, "low", index)
-                if low < float(order.limit) and symbol not in positions:
+                taker = order.intent.entry_type == "taker"
+                if taker and symbol not in positions:
+                    # Marketable entry: pays the ask (open + slippage) and the taker fee.
+                    order.limit = to_decimal(price(symbol, "open", index)) * (1 + self.costs.slippage_for(symbol))
+                if (taker or low < float(order.limit)) and symbol not in positions:
                     cost = order.quantity * order.limit
-                    fee = cost * fees.maker
+                    fee = cost * (fees.taker if taker else fees.maker)
                     cash -= cost + fee
                     fees_paid += fee
                     positions[symbol] = Position(
@@ -287,6 +304,7 @@ class Backtester:
             )
             if flatten:
                 pending.clear()
+                maker_exits.clear()
                 for symbol in positions:
                     exits[symbol] = "kill_switch" if halted else "end_of_window"
             if index == last:
@@ -318,8 +336,13 @@ class Backtester:
             exposure = market_value + sum((o.quantity * o.limit for o in pending.values()), ZERO)
             for intent in self.strategy.on_cycle(ctx, view):
                 symbol = intent.symbol
-                if intent.kind == "EXIT" and symbol in positions:
-                    exits[symbol] = intent.reason
+                if intent.kind == "EXIT" and symbol in positions and symbol not in maker_exits:
+                    if intent.exit_type == "maker":
+                        rules = self.data.rules[symbol]
+                        limit = ceil_to_decimals(to_decimal(price(symbol, "close", index)), rules.price_decimals)
+                        maker_exits[symbol] = (limit, index + intent.timeout_bars, intent.reason)
+                    else:
+                        exits[symbol] = intent.reason
                     log(index, symbol, "EXIT", intent.reason, intent)
                 elif intent.kind == "SET_STOP" and symbol in positions and intent.stop_price is not None:
                     new_stop = to_decimal(intent.stop_price)
@@ -340,6 +363,7 @@ class Backtester:
                         amount_decimals=rules.amount_decimals,
                         exchange_min_notional=rules.min_notional,
                         limits=self.limits,
+                        position_cap=self.limits.position_cap(symbol),
                     )
                     if decision.quantity <= 0:
                         log(index, symbol, "REJECT", intent.reason, intent, decision.reason)

@@ -67,3 +67,10 @@ def test_floor_to_decimals_rounds_down():
 def test_ceil_to_decimals_rounds_up():
     assert ceil_to_decimals(Decimal("980.686"), 0) == Decimal("981")
     assert ceil_to_decimals(Decimal("1.23451"), 4) == Decimal("1.2346")
+
+
+def test_per_symbol_position_cap_override():
+    limits = RiskLimits(position_caps=(("USDTTMN", Decimal("0.40")),))
+    assert limits.position_cap("USDTTMN") == Decimal("0.40") and limits.position_cap("BTCTMN") == Decimal("0.20")
+    decision = _size(stop_price=Decimal("995"), limits=limits, position_cap=limits.position_cap("USDTTMN"))
+    assert decision.notional == Decimal("2000000.0000")  # 40% of 5M; risk sizing (0.5% / 0.5%) allows 5M

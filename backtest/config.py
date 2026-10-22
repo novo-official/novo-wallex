@@ -15,9 +15,9 @@ from risk.limits import RiskLimits
 from strategy.factory import describe
 
 from .costs import CostModel, Fees
-from .windows import WindowSpec
+from .windows import Objective, WindowSpec
 
-MAX_GRID = 50
+MAX_GRID = 30  # at most ~30 configurations per experiment (overfitting guard)
 
 
 @dataclass(frozen=True)
@@ -36,13 +36,16 @@ class StudyConfig:
     min_p10_drawdown: float
     strategy: dict
     grid: dict[str, list]
+    fee_cases: dict[str, Fees]
+    objective: Objective
 
     def costs(self, stressed: bool = False) -> CostModel:
         fees = self.fees.stressed(self.fee_stress) if stressed else self.fees
         return CostModel(fees, self.slippage, self.default_slippage)
 
     def cost_cases(self) -> dict[str, CostModel]:
-        return {"base": self.costs(), "fee_stress": self.costs(stressed=True)}
+        """The 3-row fee table of every report: low (0.15/0.20), base (0.25/0.35), stress (base x 1.5)."""
+        return {name: CostModel(fees, self.slippage, self.default_slippage) for name, fees in self.fee_cases.items()}
 
 
 def load_study_config(path: Path, project_root: Path) -> StudyConfig:
@@ -72,7 +75,20 @@ def load_study_config(path: Path, project_root: Path) -> StudyConfig:
         min_p10_drawdown=float(windows["min_p10_drawdown"]),
         strategy=raw["strategy"],
         grid=raw.get("grid", {}),
+        fee_cases=_fee_cases(backtest),
+        objective=Objective(**raw.get("objective", {})),
     )
+
+
+def _fee_cases(backtest: dict) -> dict[str, Fees]:
+    base = Fees(Decimal(backtest["fee_maker"]), Decimal(backtest["fee_taker"]))
+    cases = {}
+    for name, (maker, taker) in backtest.get("fee_table", {}).items():
+        cases[name] = Fees(Decimal(maker), Decimal(taker))
+    cases.setdefault("base", base)
+    cases["stress"] = base.stressed(Decimal(backtest["fee_stress"]))
+    order = ["low", "base", "stress"]
+    return {name: cases[name] for name in order if name in cases} | {k: v for k, v in cases.items() if k not in order}
 
 
 def _set_dotted(target: dict, dotted: str, value) -> None:
@@ -107,6 +123,8 @@ def config_hash(config: StudyConfig, params: dict, data_manifest: dict | None) -
     }
     payload = {
         "strategy": describe(params),
+        "risk_overrides": params.get("risk"),
+        "module_symbols": params.get("module_symbols"),
         "fees": {"maker": str(config.fees.maker), "taker": str(config.fees.taker), "stress": str(config.fee_stress)},
         "slippage": {symbol: str(value) for symbol, value in sorted(config.slippage.items())},
         "default_slippage": str(config.default_slippage),

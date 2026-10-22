@@ -6,6 +6,8 @@ initial_equity = "5000000"
 fee_maker = "0.0025"
 fee_taker = "0.0035"
 fee_stress = "1.5"              # the fee-stress case multiplies both fees
+# Every report shows these rows plus "stress" (base x fee_stress). Real fee still unconfirmed.
+fee_table = { low = ["0.0015", "0.0020"], base = ["0.0025", "0.0035"] }
 slippage_file = "config/slippage.json"  # frozen taker slippage per symbol, from measure_costs
 default_slippage = "0.002"      # for a symbol with no recorded book
 # TMN markets the strategy may trade (a subset of markets.allowlist in trading.toml).
@@ -13,6 +15,13 @@ tradable = [
   "USDTTMN", "BTCTMN", "ETHTMN", "SOLTMN", "XRPTMN", "DOGETMN",
   "TRXTMN", "ADATMN", "BNBTMN", "LTCTMN", "SHIBTMN",
 ]
+
+# Objective (decided 2026-10-22, replaces the 60%-positive rule): maximize P(3-day return > +0.2%)
+# subject to p10 drawdown >= -3.5% and >= 3 round trips per day on average.
+[objective]
+metric = "p_above_target"
+min_p10_drawdown = -0.035
+min_trades_per_day = 3.0
 
 [windows]
 window_days = 3.0
@@ -47,9 +56,8 @@ max_hold_bars = 864
 enabled = false
 
 # Grid for the window study: dotted keys into [strategy], each a list of values.
-# The cartesian product must stay at or below 50 combinations (here 48).
+# The cartesian product must stay at or below 30 combinations (here 24).
 [grid]
-"symbols" = [["USDTTMN", "BTCTMN", "ETHTMN"], ["USDTTMN", "BTCTMN", "ETHTMN", "SOLTMN", "BNBTMN"]]
 "trend.require_4h" = [true, false]
 "trend.regime_exit" = ["1h", "4h", "none"]
 "trend.tp_r" = [2.0, 3.0]

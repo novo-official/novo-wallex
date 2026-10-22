@@ -24,6 +24,7 @@ Full rules: `docs/CHALLENGE.md`. Ground truth for the API: `docs/wallex_spot_swa
 - Runs locally in Iran. `api.wallex.ir` is reachable (GET verified 2026-10-22). `api.wallex.com` (the Swagger
   host) does **not resolve** from this machine: DNS failure, not a block. If Wallex becomes unreachable, tell the
   user (VPN split tunnel); do not work around it.
+- LightGBM needs `brew install libomp` on macOS (Docker installs `libgomp1`).
 - Python 3.12 in `.venv/` (`python3.12 -m venv .venv && .venv/bin/pip install -r requirements-dev.txt ruff`).
   `venv/` (Python 3.14) is an old local env; ignore it.
 - Postgres: Homebrew Postgres on localhost:5432, role/db `wallex` (password in `.env`). Docker compose exists but is
@@ -38,6 +39,12 @@ Full rules: `docs/CHALLENGE.md`. Ground truth for the API: `docs/wallex_spot_swa
   specific action in chat. Probe/capture scripts send GET only.
 - **Secrets:** never print/log/commit `.env` or the key. The repo will be **public**. Probe output is redacted by
   default (`exchange/redact.py`); `scratchpad/` is gitignored; private-endpoint captures never go into fixtures.
+- **Branch:** work directly on `main` (user decision 2026-10-22). Commit locally; push only when asked.
+- **Overfitting guard:** at most 30 configs per experiment (`backtest/experiment.py` enforces it); choose on
+  selection windows only; holdout only with `--final`, once per model; every run is appended to
+  `reports/experiments.jsonl` (never edit past entries). The Sep–Oct holdout was seen 11× before the guard existed;
+  say so in reports. The truly untouched test is data after 2026-10-22 (shadow).
+- **Recorder output never goes into git** (`data/orderbook/` is ignored); tests use `tests/fixtures/orderbook_sample/`.
 - **Phase checkpoints:** after each phase, stop and report **in Persian** (built, evidence/numbers, how to verify,
   exact commands, decisions needed). Update this file. Wait for approval.
 - Code, comments and docs in English; docs get a short Persian summary at the top. Talk to the user in Persian.
@@ -62,6 +69,10 @@ Full rules: `docs/CHALLENGE.md`. Ground truth for the API: `docs/wallex_spot_swa
   `liquidity_limit`, min order checks, end-of-challenge rules, self-trade guard. The LLM can never exceed it.
 
 ## 5. Defaults until the organizers confirm
+
+- **Objective (user, 2026-10-22):** maximize P(3-day return > +0.2%) s.t. p10 drawdown ≥ −3.5% and ≥ 3 round trips/day;
+  zero-trade windows are failures; report mean/median too. (No config reaches 3/day; recommendation pending: ≥ 1/day.)
+- **Every report has the 3-row fee table:** low 0.15/0.20, base 0.25/0.35, stress ×1.5 (`config/strategy.toml`).
 
 - Fees: TMN maker 0.25% / taker 0.35%; USDT maker 0.15% / taker 0.20%. Always also run fee stress ×1.5.
 - Strategy min order: 500,000 TMN / 5 USDT (exchange minimum is 50,000 TMN / 1 USDT, per `/v1/markets`).
@@ -92,6 +103,13 @@ Full rules: `docs/CHALLENGE.md`. Ground truth for the API: `docs/wallex_spot_swa
 | `strategy/` | pure (no Django): `data.py` (load/resample, 5m clock on close times), `features.py` (causal, as-of joins), `base.py` (`Strategy.on_cycle(ctx, portfolio) -> list[Intent]`), `modules/trend.py`, `modules/mean_reversion.py`, `composite.py` (fair-value filter), `factory.py` |
 | `risk/limits.py` | pure caps: 20%/position, 60% total, 0.5% risk/trade, 2% stop cap, 500k min order, −3% day, −6% kill |
 | `backtest/` | `engine.py` (event-driven, conservative fills), `costs.py` (fees + slippage from recorded book), `event_study.py`, `windows.py` (3-day study), `pipeline.py`, `report.py`; commands `measure_costs`, `edge_study`, `window_study`, `run_backtest` |
+| `backtest/experiment.py` | `run_experiment`: ≤ 30 variants, objective, fee table, holdout guard, logging |
+| `backtest/experiments.py` | append-only experiment log `reports/experiments.jsonl` |
+| `ml/` | P3a: `features.py` (41 causal features), `labels.py` (triple barrier), `model.py` (purged walk-forward, isotonic), `study.py`; P3b: `perbar.py` (per-bar E[net] models, embargo, SHAP), `p3_experiments.py` + `p3_experiment <name> [--final]` |
+| `strategy/modules/ml_signal.py`, `usdt_allocation.py` | ML-only module (E[net] > threshold, confidence sizing); USDT regime allocation |
+| `market/orderbook_features.py` | spread, imbalance, depth, microprice from a snapshot (logged later, not trained on) |
+| `agent/context.py` | P4 preview: LLM context builder with pluggable `NewsFeed` (no LLM yet) |
+| `models/` | `ml_net_h48/` (P3b final, not live), `aligned_3d/` (P3a) |
 | `config/strategy.toml` | fees, tradable markets, window study settings, canonical `[strategy]`, `[grid]` (≤ 50) |
 | `config/slippage.json` | frozen slippage per symbol (from `measure_costs`); part of the config hash |
 | `scripts/run_recorder.sh` | supervisor: restart on crash, `caffeinate -is`, `logs/recorder.pid` / `logs/recorder.log` |
@@ -99,7 +117,7 @@ Full rules: `docs/CHALLENGE.md`. Ground truth for the API: `docs/wallex_spot_swa
 | `scripts/capture_fixtures.py` | GET-only, policy-checked capture of public fixtures |
 | `tests/fixtures/wallex/` | real captures only (see its README) |
 
-Planned apps (not built): `ml/`, `agent/` (LLM Regime/Risk Officer + Trade Agent, `WallexTools`), `risk/` (RiskGuard),
+Planned (not built): `agent/` LLM roles (Regime/Risk Officer + Trade Agent, `WallexTools`), `risk/` (RiskGuard),
 `execution/` (Shadow/Live executors, order state machine, reconcile), `engine/` (`run_engine`, `preflight`),
 `journal/` (DecisionLog), `api/` (DRF) and `dashboard/` (Next.js, Persian RTL).
 
@@ -149,6 +167,7 @@ Planned apps (not built): `ml/`, `agent/` (LLM Regime/Risk Officer + Trade Agent
 .venv/bin/python manage.py edge_study                                     # event study -> reports/edge-*/
 .venv/bin/python manage.py window_study                                   # 3-day windows -> reports/windows-*/
 .venv/bin/python manage.py run_backtest --start ... --end ...             # one run with trades + decision log
+.venv/bin/python manage.py p3_experiment <name> [--final]                 # P3 experiments (see docs/RESEARCH_P3.md)
 .venv/bin/python manage.py build_universe
 nohup scripts/run_recorder.sh >/dev/null 2>&1 &   # start the recorder (survives the terminal)
 scripts/stop_recorder.sh                          # stop it cleanly
@@ -173,8 +192,12 @@ across adjacent polls. ~2.8 req/s, no rate-limit headers seen; a 429 is retried 
   params (#22: 1h uptrend + 5m breakout, fixed 2% stop, 6% target, no trail) are about break-even per window
   (+0.12% sel / +0.06% holdout, worst DD −3.9%); the 60%-positive constraint is not met by any combination;
   results depend strongly on the real fee. USDTTMN +76% in 180 days: always show buy-and-hold benchmarks.
-- **Next: P3** ML entry filter (triple-barrier labels aligned with the chosen exits, purged walk-forward) + ablation.
-- Later: P3 ML + ablation, P4 LLM agents + WallexTools + RiskGuard, P5 execution/engine/preflight/shadow ≥ 24h,
+- **P3 done (2026-10-22), awaiting review** (`docs/RESEARCH_P3.md`, `docs/RESEARCH_P3a_filter.md`). Per-bar ML has real
+  ranking skill (IC 0.12 at 1h) but the predictable move < 0.6% round trip; ML-only, ML gate, USDT allocation (raw and
+  detrended) and SOL/XRP are negative or inactive; rules + ML adds activity but not holdout return. Recommendation:
+  live = trend rules (USDT/BTC/ETH, maker entries) only. 27 experiments / 1,615 configs / 16 holdout evaluations.
+- **Next: P4** LLM roles (news/macro risk for USDTTMN + trade approval) on `agent/context.py`, RiskGuard, ablation.
+- Later: P5 execution/engine/preflight/shadow ≥ 24h,
   P6 DRF + Next.js dashboard, P7 docs, canonical report, `make reproduce`, demo script, final audit.
 - Triage if short on time: keep backtester + 3-day study, RiskGuard, execution + reconcile + end flatten,
   DecisionLog, LLM agent with ablation, docs + reproduce. Cut first: triarb, ML polish, dashboard polish, Telegram.

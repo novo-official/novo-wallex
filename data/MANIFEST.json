@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-10-22T09:53:52+00:00",
-  "source": "Wallex public API (api.wallex.ir): GET /v1/udf/history resolution 1; recorder: /v1/depth, /v1/trades, /v1/markets",
+  "generated_at": "2026-10-22T10:26:10+00:00",
+  "source": "Wallex public API (api.wallex.ir): GET /v1/udf/history resolution 1",
   "files": {
     "candles/1m/ADATMN.parquet": {
       "sha256": "8e27ba041257051603b003b6963953fb1187da83bfc56a18946d422125385291",
@@ -148,34 +148,6 @@
       "rows": 258988,
       "first": "2026-04-25T09:24:00+00:00",
       "last": "2026-10-22T09:23:00+00:00"
-    },
-    "orderbook/depth/2026-10-22/08.parquet": {
-      "sha256": "74ebc821c19f5dfa76d8f4add6e0b36716b548836dcb01bbe3333ddd22096187",
-      "bytes": 130128,
-      "rows": 42649,
-      "first": "2026-10-22T08:51:18.557000+00:00",
-      "last": "2026-10-22T08:59:53.360000+00:00"
-    },
-    "orderbook/events/2026-10-22/08.parquet": {
-      "sha256": "f938ba985f07fab16caa4196e5e0edd90c144291b79aebdea19ff5f34cec97e8",
-      "bytes": 10962,
-      "rows": 1437,
-      "first": "2026-10-22T08:51:18.557000+00:00",
-      "last": "2026-10-22T08:59:54.530000+00:00"
-    },
-    "orderbook/tickers/2026-10-22/08.parquet": {
-      "sha256": "8834aa87828e5dd6d13acd468e12fb35a269eca3687ebc9cc4894f49b55be590",
-      "bytes": 30588,
-      "rows": 3357,
-      "first": "2026-10-22T08:51:23.217000+00:00",
-      "last": "2026-10-22T08:59:24.722000+00:00"
-    },
-    "orderbook/trades/2026-10-22/08.parquet": {
-      "sha256": "9bcd6a4af4c5b76208a720aa74e24621d6de4ade20c7b7f241185d134919a4f3",
-      "bytes": 25902,
-      "rows": 2333,
-      "first": "2026-10-22T08:51:22.021000+00:00",
-      "last": "2026-10-22T08:59:44.375000+00:00"
     }
   }
 }

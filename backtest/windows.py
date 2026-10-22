@@ -54,6 +54,17 @@ def split_selection_holdout(starts: list[pd.Timestamp], spec: WindowSpec, select
     return selection, [start for start in starts if start >= boundary]
 
 
+def limits_for(limits: RiskLimits, params: dict) -> RiskLimits:
+    """Apply a variant's risk overrides, e.g. {"risk": {"position_caps": {"USDTTMN": 0.40}}}."""
+    caps = params.get("risk", {}).get("position_caps")
+    if not caps:
+        return limits
+    from dataclasses import replace
+    from decimal import Decimal
+
+    return replace(limits, position_caps=tuple((symbol, Decimal(str(cap))) for symbol, cap in sorted(caps.items())))
+
+
 # Shared state for forked workers.
 _STATE: dict = {}
 
@@ -66,6 +77,7 @@ def _run_one(task: tuple) -> dict:
     limits: RiskLimits = _STATE["limits"]
     spec: WindowSpec = _STATE["spec"]
     params = _STATE["params"][params_key[0]]
+    limits = limits_for(limits, params)
     strategy = factory(params, data.symbols)
     end = start + pd.Timedelta(days=spec.window_days)
     result = Backtester(data, strategy, costs, limits, record_decisions=False).run(start, end)
@@ -106,12 +118,17 @@ def run_windows(
     return pd.DataFrame(rows)
 
 
-def window_summary(rows: pd.DataFrame) -> dict:
+TARGET_RETURN = 0.002  # a window "succeeds" when it returns more than +0.2%
+
+
+def window_summary(rows: pd.DataFrame, window_days: float = 3.0, target_return: float = TARGET_RETURN) -> dict:
     returns, drawdowns = rows["return"].to_numpy(), rows["max_drawdown"].to_numpy()
     if returns.size == 0:
         return {"windows": 0}
     return {
         "windows": int(returns.size),
+        "p_above_target": float((returns > target_return).mean()),  # zero-trade windows count as failures
+        "trades_per_day": float(rows["trades"].mean() / window_days),
         "positive_share": float((returns > 0).mean()),
         "median_return": float(np.median(returns)),
         "mean_return": float(returns.mean()),
@@ -124,6 +141,29 @@ def window_summary(rows: pd.DataFrame) -> dict:
         "zero_trade_share": float((rows["trades"] == 0).mean()),
         "median_fees_share": float(np.median(rows["fees_share"])),
     }
+
+
+@dataclass(frozen=True)
+class Objective:
+    """The user's objective (2026-10-22): maximize P(3-day return > +0.2%) subject to p10 drawdown
+    >= -3.5% and at least 3 round trips per day on average. Zero-trade windows count as failures."""
+
+    metric: str = "p_above_target"
+    min_p10_drawdown: float = -0.035
+    min_trades_per_day: float = 3.0
+
+    def score(self, summary: dict) -> float:
+        if summary.get("windows", 0) == 0:
+            return float("-inf")
+        if summary["p10_drawdown"] < self.min_p10_drawdown or summary["trades_per_day"] < self.min_trades_per_day:
+            return float("-inf")
+        return summary[self.metric]
+
+    def feasible(self, summary: dict) -> dict:
+        return {
+            "drawdown_ok": summary.get("p10_drawdown", -1) >= self.min_p10_drawdown,
+            "activity_ok": summary.get("trades_per_day", 0) >= self.min_trades_per_day,
+        }
 
 
 def objective(

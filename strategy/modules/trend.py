@@ -42,6 +42,7 @@ class TrendParams:
     regime_exit: str = "1h"  # "1h": exit when the 1h close < 1h EMA50; "4h": same on 4h; "none"
     trigger: str = "pullback_breakout"  # or "breakout" (no pullback needed)
     trail_after_r: float = 1.0  # start the breakeven/trailing stop at this R; 0 disables it
+    entry_type: str = "maker"  # "maker": limit at the bid with timeout; "taker": at the next open
 
 
 class TrendModule:
@@ -102,6 +103,7 @@ class TrendModule:
             stop_price=stop,
             take_profit=take_profit,
             timeout_bars=p.timeout_bars,
+            entry_type=p.entry_type,
         )
 
     def manage(self, ctx: Context, symbol: str, position) -> list[Intent]:

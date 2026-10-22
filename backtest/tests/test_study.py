@@ -5,7 +5,7 @@ from django.conf import settings
 
 from backtest.config import MAX_GRID, config_hash, expand_grid, load_study_config
 from backtest.event_study import ExitRule, simulate
-from backtest.windows import WindowSpec, objective, split_selection_holdout, window_starts, window_summary
+from backtest.windows import Objective, WindowSpec, objective, split_selection_holdout, window_starts, window_summary
 
 
 def test_grid_expands_dotted_keys_and_enforces_the_limit():
@@ -70,3 +70,36 @@ def test_event_simulation_take_profit_and_stop_with_costs():
     high_both = np.array([100.0, 100, 103, 100, 100, 100])
     (net,) = simulate(open_, high_both, low_stop, close, signal, rule, maker_fee=0.0025, taker_fee=0.0035, slippage=0.0)
     assert net < -0.01  # stop first when both are in one bar
+
+
+def test_new_objective_counts_zero_trade_windows_as_failures_and_requires_activity():
+    rows = pd.DataFrame(
+        {
+            "return": [0.003, 0.0, 0.01, -0.001],
+            "max_drawdown": [-0.01] * 4,
+            "trades": [10, 0, 12, 14],
+            "fees_share": [0.001] * 4,
+        }
+    )
+    summary = window_summary(rows)
+    assert summary["p_above_target"] == pytest.approx(0.5)  # the zero-trade window is a failure
+    assert summary["trades_per_day"] == pytest.approx(36 / 4 / 3)
+    assert Objective().score(summary) == pytest.approx(0.5)
+    assert Objective(min_trades_per_day=4).score(summary) == float("-inf")
+    assert Objective().score({**summary, "p10_drawdown": -0.036}) == float("-inf")
+
+
+def test_fee_table_has_low_base_and_stress_rows():
+    config = load_study_config(settings.BASE_DIR / "config" / "strategy.toml", settings.BASE_DIR)
+    cases = config.cost_cases()
+    assert list(cases) == ["low", "base", "stress"]
+    assert str(cases["low"].fees.maker) == "0.0015" and str(cases["base"].fees.taker) == "0.0035"
+    assert cases["stress"].fees.taker == cases["base"].fees.taker * 3 / 2
+
+
+def test_experiment_refuses_more_than_30_configs(tmp_path):
+    from backtest.experiment import MAX_CONFIGS, run_experiment
+
+    config = load_study_config(settings.BASE_DIR / "config" / "strategy.toml", settings.BASE_DIR)
+    with pytest.raises(ValueError, match="at most"):
+        run_experiment("too big", config, None, {}, [("v", {})] * (MAX_CONFIGS + 1), tmp_path, tmp_path)

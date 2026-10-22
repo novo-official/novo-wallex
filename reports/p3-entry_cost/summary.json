@@ -1,0 +1,41 @@
+{
+  "chosen": "rules maker entry",
+  "chosen_feasible": false,
+  "chosen_params": {
+    "fair_value": {
+      "enabled": false
+    },
+    "modules": [
+      "trend"
+    ],
+    "symbols": [
+      "USDTTMN",
+      "BTCTMN",
+      "ETHTMN"
+    ],
+    "trend": {
+      "entry_type": "maker",
+      "max_hold_bars": 864,
+      "max_stop": 0.02,
+      "min_stop": 0.02,
+      "min_tp": 0.0,
+      "regime_exit": "none",
+      "require_4h": false,
+      "tp_r": 3.0,
+      "trail_after_r": 0.0,
+      "trigger": "breakout"
+    }
+  },
+  "config_hash": "dc31a2762fd6b437bf39e93302324b225b58cbf91398bcdaedf6acd645169433",
+  "experiment": "P3b entry cost: maker vs taker entries",
+  "holdout_evaluated": false,
+  "holdout_windows": 0,
+  "objective": {
+    "metric": "p_above_target",
+    "min_p10_drawdown": -0.035,
+    "min_trades_per_day": 3.0
+  },
+  "runtime_seconds": 4.35662,
+  "selection_windows": 233,
+  "variants": 2
+}

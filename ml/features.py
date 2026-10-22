@@ -14,6 +14,7 @@ TEHRAN = "Asia/Tehran"
 
 FEATURES = [
     "ret_1h",
+    "ret_2h",
     "ret_4h",
     "ret_1d",
     "ret_3d",
@@ -40,9 +41,12 @@ FEATURES = [
     "volume_surge_1h",
     "fv_z",
     "fv_premium",
+    "usdt_ret_1h",
     "usdt_ret_4h",
     "usdt_ret_1d",
     "usdt_dist_ema200_1h",
+    "usdt_regime_4h",
+    "usdt_vol_1d",
     "btc_ret_4h",
     "btc_ret_1d",
     "breadth_up_1h",
@@ -81,6 +85,7 @@ def build_ml_features(features: dict[str, pd.DataFrame], symbol: str, breadth_sy
     log_close = np.log(close)
     out = pd.DataFrame(index=frame.index)
     out["ret_1h"] = frame["ret_1h"]
+    out["ret_2h"] = log_close.diff(24)
     out["ret_4h"] = log_close.diff(48)
     out["ret_1d"] = log_close.diff(288)
     out["ret_3d"] = log_close.diff(864)
@@ -108,9 +113,13 @@ def build_ml_features(features: dict[str, pd.DataFrame], symbol: str, breadth_sy
     out["fv_premium"] = frame["fv_premium"] if "fv_premium" in frame else np.nan
 
     usdt_close = _context(features, "USDTTMN", "close", frame.index)
+    out["usdt_ret_1h"] = np.log(usdt_close).diff(12)
     out["usdt_ret_4h"] = np.log(usdt_close).diff(48)
     out["usdt_ret_1d"] = np.log(usdt_close).diff(288)
     out["usdt_dist_ema200_1h"] = usdt_close / _context(features, "USDTTMN", "ema200_1h", frame.index) - 1
+    usdt_close_4h = _context(features, "USDTTMN", "close_4h", frame.index)
+    out["usdt_regime_4h"] = (usdt_close_4h > _context(features, "USDTTMN", "ema50_4h", frame.index)).astype(float)
+    out["usdt_vol_1d"] = _context(features, "USDTTMN", "vol_1d", frame.index)
     btc_close = _context(features, "BTCTMN", "close", frame.index)
     out["btc_ret_4h"] = np.log(btc_close).diff(48)
     out["btc_ret_1d"] = np.log(btc_close).diff(288)

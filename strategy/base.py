@@ -32,6 +32,8 @@ class Intent:
     take_profit: float | None = None  # ENTER: maker sell limit
     size_fraction: float = 1.0  # ENTER: share of the maximum position the risk layer allows
     timeout_bars: int = 3  # ENTER: cancel the limit after this many 5m bars
+    entry_type: str = "maker"  # ENTER: "maker" limit that must be traded through, or "taker" at the next open
+    exit_type: str = "taker"  # EXIT: "taker" at the next open, or "maker" limit at the close (+offset), then taker
 
 
 @dataclass(frozen=True)

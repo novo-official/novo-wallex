@@ -1,0 +1,80 @@
+{
+  "h12": {
+    "daily_ic_mean": 0.20526381406822702,
+    "daily_ic_positive_share": 1.0,
+    "mean_net_all": -0.005517721094231143,
+    "mean_net_bottom_decile": -0.006132096543623791,
+    "mean_net_pred_positive": -0.0021399065786640303,
+    "mean_net_top_decile": -0.0042376358125721944,
+    "rows": 63504,
+    "share_pred_positive": 3.1494079113126735e-05,
+    "spearman_ic": 0.11793520568264776,
+    "target": {
+      "horizon": 12,
+      "kind": "horizon",
+      "name": "h12",
+      "stop": 0.0,
+      "take_profit": 0.0
+    }
+  },
+  "h24": {
+    "daily_ic_mean": 0.18437522693310598,
+    "daily_ic_positive_share": 0.972972972972973,
+    "mean_net_all": -0.005243645119828298,
+    "mean_net_bottom_decile": -0.006096086697459846,
+    "mean_net_pred_positive": -0.0019219364049148356,
+    "mean_net_top_decile": -0.003786929397258375,
+    "rows": 63504,
+    "share_pred_positive": 0.000645628621819098,
+    "spearman_ic": 0.06526584512556687,
+    "target": {
+      "horizon": 24,
+      "kind": "horizon",
+      "name": "h24",
+      "stop": 0.0,
+      "take_profit": 0.0
+    }
+  },
+  "h48": {
+    "daily_ic_mean": 0.17595942019621452,
+    "daily_ic_positive_share": 0.8243243243243243,
+    "mean_net_all": -0.004700610086775171,
+    "mean_net_bottom_decile": -0.005860359469103582,
+    "mean_net_pred_positive": 0.00012890644922464682,
+    "mean_net_top_decile": -0.0028529596622020835,
+    "rows": 63504,
+    "share_pred_positive": 0.0017006802721088435,
+    "spearman_ic": 0.031198592126272275,
+    "target": {
+      "horizon": 48,
+      "kind": "horizon",
+      "name": "h48",
+      "stop": 0.0,
+      "take_profit": 0.0
+    }
+  },
+  "selection_until": "2026-09-01T12:00:00+00:00",
+  "symbols": [
+    "USDTTMN",
+    "BTCTMN",
+    "ETHTMN"
+  ],
+  "tb48": {
+    "daily_ic_mean": 0.1443063611925464,
+    "daily_ic_positive_share": 0.7972972972972973,
+    "mean_net_all": -0.0049063537179388,
+    "mean_net_bottom_decile": -0.005637600485707263,
+    "mean_net_pred_positive": -0.001590237126937808,
+    "mean_net_top_decile": -0.003803377358376943,
+    "rows": 63504,
+    "share_pred_positive": 0.0015747039556563366,
+    "spearman_ic": 0.05430761515103602,
+    "target": {
+      "horizon": 48,
+      "kind": "barrier",
+      "name": "tb48",
+      "stop": 0.01,
+      "take_profit": 0.02
+    }
+  }
+}

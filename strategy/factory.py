@@ -6,7 +6,9 @@ from dataclasses import asdict, fields
 
 from .composite import CompositeStrategy, FairValueParams, MLFilterParams
 from .modules.mean_reversion import MeanReversionModule, MeanReversionParams
+from .modules.ml_signal import MLSignalModule, MLSignalParams
 from .modules.trend import TrendModule, TrendParams
+from .modules.usdt_allocation import USDTAllocationModule, USDTAllocationParams
 
 
 def _subset(cls, values: dict) -> dict:
@@ -27,8 +29,17 @@ def build_strategy(params: dict, symbols: list[str]) -> CompositeStrategy:
         elif name == "mean_reversion":
             values = _subset(MeanReversionParams, params.get("mean_reversion", {}))
             modules.append(MeanReversionModule(MeanReversionParams(**values)))
+        elif name == "ml_signal":
+            modules.append(MLSignalModule(MLSignalParams(**_subset(MLSignalParams, params.get("ml_signal", {})))))
+        elif name == "usdt_allocation":
+            values = _subset(USDTAllocationParams, params.get("usdt_allocation", {}))
+            modules.append(USDTAllocationModule(USDTAllocationParams(**values)))
         else:
             raise ValueError(f"unknown module {name!r}")
+        # Optional per-module symbol list, e.g. {"trend": ["BTCTMN", "ETHTMN"]}.
+        restricted = params.get("module_symbols", {}).get(name)
+        if restricted is not None:
+            modules[-1].symbols = list(restricted)
     fair_value = FairValueParams(**_subset(FairValueParams, params.get("fair_value", {"enabled": False})))
     ml = MLFilterParams(**_subset(MLFilterParams, params.get("ml", {})))
     allowed = params.get("symbols")

@@ -117,6 +117,9 @@ class CompositeStrategy:
             if symbol in portfolio.positions or symbol in portfolio.pending_entries:
                 continue
             for module in self.modules:
+                allowed = getattr(module, "symbols", None)
+                if allowed is not None and symbol not in allowed:
+                    continue
                 intent = module.entry(ctx, symbol)
                 if intent is None:
                     continue

@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import json
-from datetime import UTC, datetime
 from pathlib import Path
 
 import pandas as pd
@@ -14,16 +13,9 @@ from strategy.factory import build_strategy
 from .config import StudyConfig, config_hash, expand_grid
 from .dataset import build_features, build_market_data, load_rules
 from .engine import Backtester, MarketData
+from .experiment import run_experiment
 from .metrics import compute_metrics
-from .report import write_json, write_run, write_window_charts
-from .windows import (
-    buy_and_hold_windows,
-    objective,
-    run_windows,
-    split_selection_holdout,
-    window_starts,
-    window_summary,
-)
+from .report import write_run
 
 
 def load_market(config: StudyConfig, data_dir: Path) -> tuple[MarketData, dict]:
@@ -55,74 +47,18 @@ def run_single(
     return {"config_hash": digest, **metrics}
 
 
-def window_study(config: StudyConfig, data: MarketData, manifest: dict, out_dir: Path, processes: int | None = None):
-    """Grid on selection windows, then the chosen parameters (and benchmarks) on the holdout, both cost cases."""
-    starts = window_starts(data.clock, config.windows)
-    selection, holdout = split_selection_holdout(starts, config.windows, config.selection_share)
+def window_study(
+    config: StudyConfig,
+    data: MarketData,
+    manifest: dict,
+    out_dir: Path,
+    reports_dir: Path,
+    processes: int | None = None,
+    final: bool = False,
+) -> dict:
+    """The [grid] of config/strategy.toml as one experiment (at most 30 combinations)."""
     grid = expand_grid(config.strategy, config.grid)
-    base_costs = {"base": config.costs()}
-
-    started = datetime.now(UTC)
-    grid_rows = run_windows(data, build_strategy, grid, base_costs, RiskLimits(), config.windows, selection, processes)
-    ranking = []
-    for index, params in enumerate(grid):
-        summary = window_summary(grid_rows[grid_rows["params_id"] == index])
-        score = objective(summary, config.min_positive, config.min_p10_drawdown)
-        ranking.append({"params_id": index, "objective": score, **summary, "params": json.dumps(params)})
-    ranking_frame = pd.DataFrame(ranking).sort_values(["objective", "median_return"], ascending=False)
-    feasible = ranking_frame[ranking_frame["objective"] > float("-inf")]
-    if not feasible.empty:
-        chosen_id = int(feasible.iloc[0]["params_id"])
-    else:
-        # No combination meets the constraints: take the best mean return among those that keep the
-        # drawdown constraint, and say so in the summary (chosen_feasible = false).
-        safe = ranking_frame[ranking_frame["p10_drawdown"] >= config.min_p10_drawdown]
-        chosen_id = int((safe if not safe.empty else ranking_frame).sort_values("mean_return").iloc[-1]["params_id"])
-    chosen = grid[chosen_id]
-
-    final_rows = run_windows(
-        data,
-        build_strategy,
-        [chosen],
-        config.cost_cases(),
-        RiskLimits(),
-        config.windows,
-        selection + holdout,
-        processes,
+    variants = [(f"grid#{index}", params) for index, params in enumerate(grid)]
+    return run_experiment(
+        "window_study grid", config, data, manifest, variants, out_dir, reports_dir, final=final, processes=processes
     )
-    holdout_set = {start.isoformat() for start in holdout}
-    final_rows["split"] = final_rows["start"].map(lambda s: "holdout" if s in holdout_set else "selection")
-
-    summaries: dict[str, dict] = {}
-    for (case, split), part in final_rows.groupby(["cost_case", "split"]):
-        summaries[f"{split}/{case}"] = window_summary(part)
-    benchmarks = {}
-    for symbol in ("USDTTMN", "BTCTMN"):
-        if symbol in data.features:
-            bench = buy_and_hold_windows(data, symbol, selection + holdout, config.windows, config.costs())
-            bench["split"] = bench["start"].map(lambda s: "holdout" if s in holdout_set else "selection")
-            for split, part in bench.groupby("split"):
-                benchmarks[f"buy_and_hold_{symbol}/{split}"] = window_summary(part)
-
-    digest, payload = config_hash(config, chosen, manifest)
-    out_dir.mkdir(parents=True, exist_ok=True)
-    ranking_frame.to_csv(out_dir / "grid.csv", index=False)
-    final_rows.to_csv(out_dir / "windows.csv", index=False)
-    summary = {
-        "config_hash": digest,
-        "chosen_params_id": chosen_id,
-        "chosen_feasible": not feasible.empty,
-        "grid_size": len(grid),
-        "selection_windows": len(selection),
-        "holdout_windows": len(holdout),
-        "selection_period": [selection[0].isoformat(), selection[-1].isoformat()] if selection else None,
-        "holdout_period": [holdout[0].isoformat(), holdout[-1].isoformat()] if holdout else None,
-        "results": summaries,
-        "benchmarks": benchmarks,
-        "runtime_seconds": (datetime.now(UTC) - started).total_seconds(),
-    }
-    write_json(out_dir / "summary.json", summary)
-    write_json(out_dir / "config.json", {"config_hash": digest, "config": payload})
-    base = final_rows[final_rows["cost_case"] == "base"]
-    write_window_charts(out_dir, base, f"3-day windows, chosen params #{chosen_id} (base fees)")
-    return summary, chosen

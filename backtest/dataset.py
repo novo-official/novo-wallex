@@ -3,9 +3,11 @@
 from __future__ import annotations
 
 import json
+from collections.abc import Callable
 from decimal import Decimal
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 
 from strategy.base import FeatureFrame
@@ -29,13 +31,30 @@ def load_rules(data_dir: Path) -> dict[str, SymbolRules]:
     }
 
 
-def build_features(data_dir: Path, symbols: list[str]) -> dict[str, pd.DataFrame]:
+def detrend(bars: pd.DataFrame) -> pd.DataFrame:
+    """Remove the average log drift of the whole sample (prices × exp(−μ·t)), keeping the path's shape.
+
+    Used to ask whether a USDTTMN strategy times the market or only rides the devaluation drift.
+    """
+    elapsed = (bars.index - bars.index[0]).total_seconds().to_numpy()
+    drift = np.log(bars["close"].iloc[-1] / bars["close"].iloc[0]) / elapsed[-1]
+    factor = np.exp(-drift * elapsed)
+    out = bars.copy()
+    for name in ("open", "high", "low", "close"):
+        out[name] = bars[name].to_numpy() * factor
+    return out
+
+
+def build_features(
+    data_dir: Path, symbols: list[str], transform: Callable[[str, pd.DataFrame], pd.DataFrame] | None = None
+) -> dict[str, pd.DataFrame]:
     """Per-symbol 5m features (index = close_time) for every symbol with a candle file."""
     features: dict[str, pd.DataFrame] = {}
     for symbol in symbols:
         path = data_dir / "candles" / "1m" / f"{symbol}.parquet"
         if path.exists():
-            features[symbol] = symbol_features(load_1m(data_dir, symbol))
+            bars = load_1m(data_dir, symbol)
+            features[symbol] = symbol_features(transform(symbol, bars) if transform else bars)
     add_fair_value(features)
     return features
 

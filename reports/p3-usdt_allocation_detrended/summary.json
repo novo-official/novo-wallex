@@ -1,0 +1,33 @@
+{
+  "chosen": "USDT 4h stop 3xATR cap 40%",
+  "chosen_feasible": false,
+  "chosen_params": {
+    "modules": [
+      "usdt_allocation"
+    ],
+    "risk": {
+      "position_caps": {
+        "USDTTMN": 0.4
+      }
+    },
+    "symbols": [
+      "USDTTMN"
+    ],
+    "usdt_allocation": {
+      "regime": "4h",
+      "stop_atr": 3.0
+    }
+  },
+  "config_hash": "a08014ea30fa1298d5e40731645eb2cc34b89673d4a20c7bcd02713564c1a7b1",
+  "experiment": "P3b USDT regime allocation (detrended USDTTMN)",
+  "holdout_evaluated": true,
+  "holdout_windows": 96,
+  "objective": {
+    "metric": "p_above_target",
+    "min_p10_drawdown": -0.035,
+    "min_trades_per_day": 3.0
+  },
+  "runtime_seconds": 8.020513,
+  "selection_windows": 233,
+  "variants": 12
+}

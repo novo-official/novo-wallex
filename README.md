@@ -4,7 +4,7 @@ Spot-only, long-only algorithmic trading for the Wallex hackathon challenge.
 Django 5.2 + DRF + PostgreSQL. The trading engine is a set of management
 commands that share the same ORM and code path as the backtester.
 
-Status: **Phase 2 (data, recorder, backtest) in progress**. Strategy, ML, agent, execution and the dashboard
+Status: **Phase 3 done (ML + ablation); Phase 4 (LLM) next**. Strategy, ML, agent, execution and the dashboard
 are not implemented yet.
 
 ## Setup
@@ -89,6 +89,18 @@ logged as an event with its latency, the server clock offset and any error. File
 The backtester reads only the committed `data/` and `config/`, so no network is needed. The
 strategy code (`strategy/`) and the risk caps (`risk/limits.py`) are the same ones the live
 engine will use. Results and their interpretation are in `docs/RESEARCH_P2.md`.
+
+## ML and the ablation (Phase 3)
+
+```bash
+brew install libomp                                    # macOS only (LightGBM)
+.venv/bin/python manage.py p3_experiment ml_targets    # which ML target has skill net of costs (selection only)
+.venv/bin/python manage.py p3_experiment rules_plus_ml # rules vs rules + ML on 3-day windows
+.venv/bin/python manage.py p3_experiment rules_plus_ml --final   # holdout, logged once per model
+```
+
+Every experiment has at most 30 configurations, reports a 3-row fee table and is appended to
+`reports/experiments.jsonl`. Findings: `docs/RESEARCH_P3.md`.
 
 ## Market policy (default-deny)
 

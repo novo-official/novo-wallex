@@ -1,0 +1,39 @@
+{
+  "chosen": "rules SOL/XRP taker exits",
+  "chosen_feasible": false,
+  "chosen_params": {
+    "fair_value": {
+      "enabled": false
+    },
+    "modules": [
+      "trend"
+    ],
+    "symbols": [
+      "SOLTMN",
+      "XRPTMN"
+    ],
+    "trend": {
+      "max_hold_bars": 864,
+      "max_stop": 0.02,
+      "min_stop": 0.02,
+      "min_tp": 0.0,
+      "regime_exit": "none",
+      "require_4h": false,
+      "tp_r": 3.0,
+      "trail_after_r": 0.0,
+      "trigger": "breakout"
+    }
+  },
+  "config_hash": "f41543159b172d449e935ae9b513ad6e6914eefc7700b44c1a82db6217acb34a",
+  "experiment": "P3b SOL/XRP maker-only execution",
+  "holdout_evaluated": true,
+  "holdout_windows": 96,
+  "objective": {
+    "metric": "p_above_target",
+    "min_p10_drawdown": -0.035,
+    "min_trades_per_day": 3.0
+  },
+  "runtime_seconds": 3.426935,
+  "selection_windows": 142,
+  "variants": 5
+}

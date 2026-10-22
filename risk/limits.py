@@ -21,6 +21,12 @@ class RiskLimits:
     kill_switch: Decimal = Decimal("-0.06")  # from the starting equity: flatten everything and halt
     no_entry_before_end_minutes: int = 120
     flatten_before_end_minutes: int = 60
+    # Per-symbol position caps that replace max_position_fraction, e.g. (("USDTTMN", Decimal("0.40")),).
+    # Empty by default: the 20% rule holds everywhere unless the user approves an override.
+    position_caps: tuple[tuple[str, Decimal], ...] = ()
+
+    def position_cap(self, symbol: str) -> Decimal:
+        return dict(self.position_caps).get(symbol, self.max_position_fraction)
 
 
 @dataclass(frozen=True)
@@ -49,6 +55,7 @@ def size_entry(
     amount_decimals: int,
     exchange_min_notional: Decimal,
     limits: RiskLimits,
+    position_cap: Decimal | None = None,
 ) -> SizeDecision:
     """Risk-based size, capped by position and total exposure limits, floored to the amount precision."""
     if entry_price <= 0 or stop_price <= 0 or stop_price >= entry_price:
@@ -58,7 +65,7 @@ def size_entry(
         return SizeDecision(Decimal(0), Decimal(0), f"rejected: stop {stop_fraction:.4f} wider than the cap")
     fraction = min(max(size_fraction, Decimal(0)), Decimal(1))
     by_risk = equity * limits.risk_per_trade / stop_fraction
-    by_position = equity * limits.max_position_fraction
+    by_position = equity * (limits.max_position_fraction if position_cap is None else position_cap)
     by_exposure = equity * limits.max_total_exposure - exposure
     notional = min(by_risk, by_position, by_exposure) * fraction
     binding = min(

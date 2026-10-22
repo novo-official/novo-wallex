@@ -14,8 +14,10 @@ scratchpad/
 *.log
 logs/
 
-# Recorder: uncompacted part files and interrupted writes (compacted hours are kept)
-data/orderbook/**/part-*.parquet
+# Recorder output never goes into git (grows ~40 MB/day). Tests use tests/fixtures/orderbook_sample/;
+# the backtest uses the frozen config/slippage.json, so reproduce needs no orderbook data.
+data/orderbook/
+.cache/
 *.parquet.tmp
 
 # Node (dashboard, later phase)

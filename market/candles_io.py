@@ -88,9 +88,8 @@ def _time_range(path: Path) -> tuple[str | None, str | None]:
 
 
 def data_files(data_dir: Path) -> list[Path]:
-    """Every committed data file: candles and compacted recorder hours (never part files)."""
-    files = sorted(data_dir.glob("candles/*/*.parquet")) + sorted(data_dir.glob("orderbook/*/*/*.parquet"))
-    return [path for path in files if not path.name.startswith("part-")]
+    """Every committed data file: the candles. Recorder output is not committed (see .gitignore)."""
+    return sorted(data_dir.glob("candles/*/*.parquet"))
 
 
 def write_manifest(data_dir: Path) -> dict:
@@ -106,8 +105,7 @@ def write_manifest(data_dir: Path) -> dict:
         }
     manifest = {
         "generated_at": datetime.now(UTC).replace(microsecond=0).isoformat(),
-        "source": "Wallex public API (api.wallex.ir): GET /v1/udf/history resolution 1; recorder: /v1/depth, "
-        "/v1/trades, /v1/markets",
+        "source": "Wallex public API (api.wallex.ir): GET /v1/udf/history resolution 1",
         "files": entries,
     }
     (data_dir / MANIFEST_NAME).write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
