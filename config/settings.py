@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "ml",
     "agent",
     "execution",
+    "api",
 ]
 
 MIDDLEWARE = [

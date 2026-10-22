@@ -39,3 +39,14 @@ recorder-start:
 
 recorder-stop:
 	scripts/stop_recorder.sh
+
+# Dashboard: read-only DRF API on 127.0.0.1:8000 + Next.js (Persian, RTL) on http://localhost:3000.
+.PHONY: api dashboard dashboard-install
+api:
+	$(PY) manage.py runserver 127.0.0.1:8000
+
+dashboard-install:
+	npm --prefix dashboard ci
+
+dashboard:
+	npm --prefix dashboard run dev

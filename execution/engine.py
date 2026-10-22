@@ -117,6 +117,7 @@ class Engine:
         self.errors = 0
         self.error_halt = False  # entries halted by consecutive errors (lifts itself); reconcile halts do not
         self.clean_loops = 0
+        self.agent_logged = 0
         self.last_cycle_bar: pd.Timestamp | None = None
         self.last_refresh: datetime | None = None
         self.last_reconcile: datetime | None = None
@@ -549,7 +550,17 @@ class Engine:
                     stop_fraction=str(1 - decision.stop / decision.limit),
                     tp_fraction=str(decision.take_profit / decision.limit - 1) if decision.take_profit else None,
                 )
+        self._journal_agent()
         self.last_cycle_bar = bar
+
+    def _journal_agent(self) -> None:
+        """Copy the agent layer's new role decisions (officer, trade agent) into the decision log."""
+        log = getattr(self.agent, "log", None)
+        if not log:
+            return
+        for entry in log[self.agent_logged :]:
+            self.journal.decision("LLM", **{k: v for k, v in entry.items() if k != "time"}, decided_at=entry["time"])
+        self.agent_logged = len(log)
 
     # --- reconcile -----------------------------------------------------------------------------------
 

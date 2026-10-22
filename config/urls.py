@@ -1,3 +1,10 @@
-"""URL routes. Empty in Phase 0; the API phase adds the read-only endpoints here."""
+"""URL routes: the read-only dashboard API (no write endpoints, nothing reaches Wallex from here)."""
 
-urlpatterns: list = []
+from django.urls import path
+
+from api import views
+
+urlpatterns = [
+    path("api/overview", views.overview),
+    path("api/decisions", views.decisions),
+]
