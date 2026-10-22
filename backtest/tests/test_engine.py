@@ -6,7 +6,8 @@ import pandas as pd
 import pytest
 
 from backtest.costs import CostModel, Fees
-from backtest.engine import Backtester, MarketData, SymbolRules
+from backtest.engine import Backtester, MarketData
+from risk.guard import SymbolRules
 from risk.limits import RiskLimits
 from strategy.base import FeatureFrame, Intent
 

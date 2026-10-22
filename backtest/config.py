@@ -38,6 +38,7 @@ class StudyConfig:
     grid: dict[str, list]
     fee_cases: dict[str, Fees]
     objective: Objective
+    shadow_variants: dict[str, dict]
 
     def costs(self, stressed: bool = False) -> CostModel:
         fees = self.fees.stressed(self.fee_stress) if stressed else self.fees
@@ -77,6 +78,10 @@ def load_study_config(path: Path, project_root: Path) -> StudyConfig:
         grid=raw.get("grid", {}),
         fee_cases=_fee_cases(backtest),
         objective=Objective(**raw.get("objective", {})),
+        shadow_variants={
+            name: expand_grid(raw["strategy"], {key: [value] for key, value in overrides.items()})[0]
+            for name, overrides in raw.get("shadow_variants", {}).items()
+        },
     )
 
 

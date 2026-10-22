@@ -92,6 +92,10 @@ def run_experiment(
     """Run `variants` on the selection windows, choose one, then the fee table (and holdout if `final`)."""
     if len(variants) > MAX_CONFIGS:
         raise ValueError(f"{name}: {len(variants)} variants; at most {MAX_CONFIGS} per experiment")
+    for variant_name, variant_params in variants:
+        if variant_params.get("ml_signal", {}).get("max_entries_per_day", 0) > 0:
+            # User decision 2026-10-22: the daily-quota version is judged on forward (shadow) data only.
+            raise ValueError(f"{name}: variant {variant_name!r} uses the activity quota, which is shadow-only")
     started = datetime.now(UTC)
     names = [variant_name for variant_name, _ in variants]
     params = [variant_params for _, variant_params in variants]

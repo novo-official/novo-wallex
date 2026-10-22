@@ -10,11 +10,12 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+from risk.guard import SymbolRules
 from strategy.base import FeatureFrame
 from strategy.data import load_1m
 from strategy.features import add_fair_value, symbol_features
 
-from .engine import MarketData, SymbolRules
+from .engine import MarketData
 
 RULES_FILE = "market_rules.json"
 

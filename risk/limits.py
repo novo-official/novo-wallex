@@ -24,6 +24,7 @@ class RiskLimits:
     # Per-symbol position caps that replace max_position_fraction, e.g. (("USDTTMN", Decimal("0.40")),).
     # Empty by default: the 20% rule holds everywhere unless the user approves an override.
     position_caps: tuple[tuple[str, Decimal], ...] = ()
+    liquidity_buffer: Decimal = Decimal("0.20")  # stay 20% above the prop account's liquidity_limit
 
     def position_cap(self, symbol: str) -> Decimal:
         return dict(self.position_caps).get(symbol, self.max_position_fraction)

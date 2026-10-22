@@ -144,6 +144,9 @@ def _rules(config: StudyConfig, **trend) -> dict:
     import copy
 
     params = copy.deepcopy(config.strategy)
+    params["modules"] = ["trend"]  # the rules alone, as in P2/P3 (the canonical config now adds activity trades)
+    params.pop("ml_signal", None)
+    params.pop("risk", None)
     params["trend"] = {**params.get("trend", {}), **trend}
     return params
 
@@ -365,8 +368,8 @@ def solxrp_maker(config, data_dir, out_dir, reports_dir, final=False):
     )
 
 
-def explain_h48(config, data_dir, out_dir, reports_dir, final=False):
-    """Fit the h48 model on all labels (for live use later), save it, and write the SHAP summary."""
+def fit_final(config, data_dir, out_dir, reports_dir, target_name: str):
+    """Fit `target_name` on all labels (the model live trading loads), save it, and write the SHAP summary."""
     import matplotlib
 
     matplotlib.use("Agg")
@@ -377,7 +380,7 @@ def explain_h48(config, data_dir, out_dir, reports_dir, final=False):
     from .study import _manifest_digest
 
     features, frames = load_features(config, data_dir)
-    target = next(t for t in ML_TARGETS if t.name == "h48")
+    target = next(t for t in TARGETS if t.name == target_name)
     slippage = {s: float(v) for s, v in config.slippage.items()}
     spec = PerBarSpec()
     table = build_table(features, frames, TRADED, target, slippage, spec, int(config.windows.warmup_days * 288))
@@ -390,15 +393,15 @@ def explain_h48(config, data_dir, out_dir, reports_dir, final=False):
     axis.barh(
         top["feature"], top["mean_abs_shap"] * 100, color=["#E45756" if d < 0 else "#4C78A8" for d in top["direction"]]
     )
-    axis.set_xlabel("mean |SHAP|, % of predicted 4h return (blue: higher value -> higher prediction)")
-    axis.set_title("ML h48: what drives the prediction (TreeSHAP)")
+    axis.set_xlabel(f"mean |SHAP|, % of predicted {target_name} net return (blue: higher value -> higher)")
+    axis.set_title(f"ML {target_name}: what drives the prediction (TreeSHAP)")
     figure.tight_layout()
     figure.savefig(out_dir / "shap_summary.png", dpi=120)
     plt.close(figure)
     wrapped = CalibratedModel(model.booster, model.calibrator, FEATURES, {"base_rate": None})
     model_id = save(
         wrapped,
-        Path(__file__).resolve().parent.parent / "models" / "ml_net_h48",
+        Path(__file__).resolve().parent.parent / "models" / f"ml_net_{target_name}",
         {
             "target": target.__dict__,
             "symbols": TRADED,
@@ -406,12 +409,12 @@ def explain_h48(config, data_dir, out_dir, reports_dir, final=False):
             "output": "calibrated E[net return]",
             "trained_until": pd.Timestamp(table["t_end"].max()).isoformat(),
             "data_manifest_sha256": _manifest_digest(data_dir),
-            "status": "not live: see docs/RESEARCH_P3.md",
+            "status": "live (activity trades)" if target_name == "h24" else "not live: see docs/RESEARCH_P3.md",
         },
     )
     log_experiment(
         reports_dir,
-        "P3b final h48 model fit + SHAP (no evaluation)",
+        f"P3 final {target_name} model fit + SHAP (no evaluation)",
         1,
         False,
         report=str(out_dir.relative_to(reports_dir.parent)),
@@ -420,41 +423,9 @@ def explain_h48(config, data_dir, out_dir, reports_dir, final=False):
     return {"model_id": model_id, "shap": shap}
 
 
-def activity_cost(config, data_dir, out_dir, reports_dir, final=False):
-    """Cheapest way to reach >= 3 round trips/day: the rules at full size plus small ML-signal trades.
+def explain_h48(config, data_dir, out_dir, reports_dir, final=False):
+    return fit_final(config, data_dir, out_dir, reports_dir, "h48")
 
-    Every extra trade has a real (if weak) signal: the h48/h24 model's E[net] above a threshold.
-    Pure churn (buy and sell without a signal) is not tested: it risks counting as artificial volume.
-    Size is the main cost driver, so the activity trades are 100k / 250k / 500k TMN; below our 500k
-    default minimum the variant sets min_order_tmn to the exchange minimum of 50k TMN.
-    """
-    from backtest.experiment import run_experiment
 
-    targets = [t for t in ML_TARGETS if t.name in ("h24", "h48")]
-    data, first = build_market(config, data_dir, targets, TRADED)
-    variants = [("rules only (reference)", _rules(config))]
-    for target_name, hold in (("h48", 48), ("h24", 24)):
-        thresholds = (-0.005, -0.004, -0.003) if target_name == "h48" else (-0.005, -0.004)
-        for threshold in thresholds:
-            for notional in (100_000, 250_000, 500_000):
-                params = _rules(config)
-                params["modules"] = ["trend", "ml_signal"]
-                probe = _ml_only(f"ml_net_{target_name}", threshold, hold, TRADED)["ml_signal"]
-                probe.update({"min_fraction": 1.0, "size_scale": notional / 1_000_000})  # fixed size
-                params["ml_signal"] = probe
-                if notional < 500_000:
-                    params["risk"] = {"min_order_tmn": 50_000}
-                variants.append((f"rules + {target_name} >{threshold * 100:+.1f}% at {notional // 1000}k", params))
-    return run_experiment(
-        "P3c activity cost: rules + small ML-signal trades",
-        config,
-        data,
-        _manifest(data_dir),
-        variants,
-        out_dir,
-        reports_dir,
-        references=("rules only (reference)",),
-        final=final,
-        since=first,
-        notes="cheapest way to reach >= 3 round trips/day",
-    )
+def fit_h24(config, data_dir, out_dir, reports_dir, final=False):
+    return fit_final(config, data_dir, out_dir, reports_dir, "h24")

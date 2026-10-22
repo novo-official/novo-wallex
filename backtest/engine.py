@@ -27,7 +27,8 @@ from zoneinfo import ZoneInfo
 import numpy as np
 import pandas as pd
 
-from risk.limits import RiskLimits, ceil_to_decimals, floor_to_decimals, size_entry
+from risk.guard import AccountState, RiskGuard, SymbolRules
+from risk.limits import RiskLimits, ceil_to_decimals
 from strategy.base import Context, FeatureFrame, Intent, PortfolioView, PositionView, Strategy
 
 from .costs import CostModel
@@ -38,13 +39,6 @@ ZERO = Decimal(0)
 
 def to_decimal(value: float) -> Decimal:
     return Decimal(repr(float(value)))
-
-
-@dataclass(frozen=True)
-class SymbolRules:
-    amount_decimals: int
-    price_decimals: int
-    min_notional: Decimal
 
 
 @dataclass
@@ -122,11 +116,17 @@ class Backtester:
         limits: RiskLimits,
         initial_equity: Decimal = Decimal("5000000"),
         record_decisions: bool = True,
+        policy=None,
+        agent=None,
     ) -> None:
+        """`agent` (optional, the LLM layer): risk_mode(ctx, view) -> str and review(intent, ctx, view) ->
+        LLMAdjustment | None. RiskGuard clamps whatever it returns."""
         self.data = data
         self.strategy = strategy
         self.costs = costs
         self.limits = limits
+        self.guard = RiskGuard(limits, policy)
+        self.agent = agent
         self.initial_equity = initial_equity
         self.record_decisions = record_decisions
 
@@ -283,25 +283,36 @@ class Backtester:
             equity_curve[step] = float(equity)
             exposure_curve[step] = float(market_value / equity) if equity > 0 else 0.0
 
-            # 3. Loss limits.
+            # 3. Loss limits and end-of-window rules: RiskGuard decides.
             tehran_day = now.tz_convert(TEHRAN).date()
             if tehran_day != day_key:
                 day_key, day_start_equity = tehran_day, equity
-            if not halted and equity / self.initial_equity - 1 <= self.limits.kill_switch:
+            minutes_left = (end - now).total_seconds() / 60
+            account = AccountState(
+                now=now.to_pydatetime(),
+                equity=equity,
+                initial_equity=self.initial_equity,
+                day_start_equity=day_start_equity,
+                exposure=market_value + sum((o.quantity * o.limit for o in pending.values()), ZERO),
+                open_symbols=frozenset(positions),
+                pending_symbols=frozenset(pending),
+                minutes_to_end=minutes_left,
+                daily_blocked=blocked_day == tehran_day,
+                halted=halted,
+            )
+            status = self.guard.status(account)
+            if status.trigger_kill:
                 halted = True
                 notes.append(f"kill switch at {now.isoformat()}: equity {equity:.0f}")
                 log(index, "*", "KILL", f"equity {equity:.0f} breached the kill switch; flatten and halt")
-            if blocked_day != tehran_day and equity / day_start_equity - 1 <= self.limits.daily_loss_limit:
+            if status.trigger_daily_block:
                 blocked_day = tehran_day
                 log(
                     index, "*", "BLOCK", f"daily loss limit hit ({equity / day_start_equity - 1:.4f}); no entries today"
                 )
-
-            minutes_left = (end - now).total_seconds() / 60
-            flatten = halted or minutes_left <= self.limits.flatten_before_end_minutes
-            entries_allowed = (
-                not halted and blocked_day != tehran_day and minutes_left > self.limits.no_entry_before_end_minutes
-            )
+            flatten = status.flatten_required
+            entries_allowed = status.entries_allowed
+            risk_mode = "NORMAL"
             if flatten:
                 pending.clear()
                 maker_exits.clear()
@@ -333,6 +344,10 @@ class Backtester:
             )
             if flatten:
                 continue
+            if self.agent is not None:
+                risk_mode = self.agent.risk_mode(ctx, view)
+                if risk_mode == "OFF":
+                    entries_allowed = False
             exposure = market_value + sum((o.quantity * o.limit for o in pending.values()), ZERO)
             for intent in self.strategy.on_cycle(ctx, view):
                 symbol = intent.symbol
@@ -351,35 +366,31 @@ class Backtester:
                 elif intent.kind == "ENTER":
                     if not entries_allowed or symbol in positions or symbol in pending:
                         continue  # one position per symbol, no averaging down
-                    rules = self.data.rules[symbol]
-                    limit = floor_to_decimals(to_decimal(intent.limit_price), rules.price_decimals)
-                    stop = ceil_to_decimals(to_decimal(intent.stop_price), rules.price_decimals)
-                    decision = size_entry(
+                    adjustment = self.agent.review(intent, ctx, view) if self.agent is not None else None
+                    state = AccountState(
+                        now=now.to_pydatetime(),
                         equity=equity,
+                        initial_equity=self.initial_equity,
+                        day_start_equity=day_start_equity,
                         exposure=exposure,
-                        entry_price=limit,
-                        stop_price=stop,
-                        size_fraction=to_decimal(intent.size_fraction),
-                        amount_decimals=rules.amount_decimals,
-                        exchange_min_notional=rules.min_notional,
-                        limits=self.limits,
-                        position_cap=self.limits.position_cap(symbol),
+                        open_symbols=frozenset(positions),
+                        pending_symbols=frozenset(pending),
+                        minutes_to_end=minutes_left,
+                        daily_blocked=blocked_day == tehran_day,
+                        halted=halted,
+                        risk_mode=risk_mode,
                     )
-                    if decision.quantity <= 0:
+                    decision = self.guard.check_entry(intent, state, self.data.rules[symbol], adjustment)
+                    if not decision.approved:
                         log(index, symbol, "REJECT", intent.reason, intent, decision.reason)
                         continue
-                    take_profit = (
-                        floor_to_decimals(to_decimal(intent.take_profit), rules.price_decimals)
-                        if intent.take_profit
-                        else None
-                    )
                     decision_id = log(index, symbol, "ENTER", intent.reason, intent, decision.reason)
                     pending[symbol] = PendingEntry(
                         intent=intent,
                         quantity=decision.quantity,
-                        limit=limit,
-                        stop=stop,
-                        take_profit=take_profit,
+                        limit=decision.limit,
+                        stop=decision.stop,
+                        take_profit=decision.take_profit,
                         expires_index=index + intent.timeout_bars,
                         decision_id=decision_id,
                     )

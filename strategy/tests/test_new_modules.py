@@ -52,3 +52,11 @@ def test_detrend_removes_the_average_drift():
     flat = detrend(bars)
     assert flat["close"].iloc[-1] == pytest.approx(flat["close"].iloc[0])
     assert (flat["volume"] == 1.0).all()
+
+
+def test_activity_quota_caps_entries_per_tehran_day():
+    module = MLSignalModule(MLSignalParams(column="ml_net_h24", threshold=-0.005, max_entries_per_day=2))
+    ctx = _ctx("BTCTMN", ml_net_h24=-0.001)
+    assert module.entry(ctx, "BTCTMN") is not None
+    assert module.entry(ctx, "BTCTMN") is not None
+    assert module.entry(ctx, "BTCTMN") is None  # third entry the same Tehran day

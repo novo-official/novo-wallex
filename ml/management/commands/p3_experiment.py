@@ -25,8 +25,8 @@ class Command(BaseCommand):
             results = p3_experiments.ml_targets(config, data, out, reports)
         elif name == "ml_targets_solxrp":
             results = p3_experiments.ml_targets(config, data, out, reports, symbols=["SOLTMN", "XRPTMN"])
-        elif name == "explain_h48":
-            result = p3_experiments.explain_h48(config, data, out, reports)
+        elif name in ("explain_h48", "fit_h24"):
+            result = getattr(p3_experiments, name)(config, data, out, reports)
             self.stdout.write(f"model {result['model_id']}")
             self.stdout.write(result["shap"].head(15).round(6).to_string())
             return

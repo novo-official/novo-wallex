@@ -30,6 +30,7 @@ class MLSignalParams:
     entry_offset: float = 0.0005
     timeout_bars: int = 2
     exit_type: str = "taker"
+    max_entries_per_day: int = 0  # 0 = no quota; > 0 caps entry intents per Tehran day (shadow-only variant)
 
 
 class MLSignalModule:
@@ -37,6 +38,8 @@ class MLSignalModule:
 
     def __init__(self, params: MLSignalParams | None = None) -> None:
         self.params = params or MLSignalParams()
+        self._day = None
+        self._entries_today = 0
 
     def entry(self, ctx: Context, symbol: str) -> Intent | None:
         p = self.params
@@ -45,6 +48,13 @@ class MLSignalModule:
         edge = ctx.value(symbol, p.column)
         if not math.isfinite(edge) or edge <= p.threshold or not ctx.value(symbol, "volume") > 0:
             return None
+        if p.max_entries_per_day > 0:
+            day = ctx.now.tz_convert("Asia/Tehran").date()
+            if day != self._day:
+                self._day, self._entries_today = day, 0
+            if self._entries_today >= p.max_entries_per_day:
+                return None
+            self._entries_today += 1  # counts intents; an unfilled entry still uses the quota
         close = ctx.value(symbol, "close")
         limit = close * (1 - p.entry_offset)
         confidence = min(1.0, (edge - p.threshold) / p.full_size_margin)
