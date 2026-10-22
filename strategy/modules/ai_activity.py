@@ -39,6 +39,8 @@ class AIActivityParams:
     max_hold_bars: int = 24  # 2 h of 5m bars
     entry_timeout_minutes: float = 3.0
     reprices: int = 1
+    min_edge: float | None = None  # only candidates with E[net] (already net of costs) above this
+    skip_15m_down: bool = False  # no entry while close_15m < ema20_15m (bid fills in falling markets)
 
 
 class AIActivityModule:
@@ -75,8 +77,11 @@ class AIActivityModule:
             if symbol in open_symbols or symbol not in ctx.features or p.column not in ctx.features[symbol]:
                 continue
             edge = ctx.value(symbol, p.column)
-            if math.isfinite(edge) and ctx.value(symbol, "volume") >= 0:
-                ranked.append((edge, symbol))
+            if not math.isfinite(edge) or (p.min_edge is not None and edge <= p.min_edge):
+                continue
+            if p.skip_15m_down and not ctx.value(symbol, "close_15m") >= ctx.value(symbol, "ema20_15m"):
+                continue  # also skips while the 15m EMA is not yet defined
+            ranked.append((edge, symbol))
         ranked.sort(reverse=True)
         intents = []
         for rank, (edge, symbol) in enumerate(ranked, start=1):

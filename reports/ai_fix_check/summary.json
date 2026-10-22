@@ -1,0 +1,116 @@
+{
+  "end": "2026-10-22 12:20:00+00:00",
+  "label": "AI activity fix check (user, 2026-10-23): three pre-specified variants, 14 days, MEASURED fees.\n\nTUNED ON RECENT DATA: the variants were chosen after seeing the 14-day result of (a), on the same 14 days, so\ntheir numbers are optimistic. ML-ONLY PROXY: no LLM approvals in the historical run. Walk-forward h24 predictions.\n  (a) current live config\n  (b) only candidates with E[net] > 0 (the model's E[net] is already net of costs)\n  (c) (b) and no entry while close_15m < ema20_15m\nFee rows: measured (GET /v1/account/fee 2026-10-23, TMN maker 0.25% / taker 0.30%), measured x1.5, low 0.15/0.20.\n",
+  "results": {
+    "a_current/low": {
+      "fees_paid": 29030.202544436997,
+      "max_drawdown": -0.010332888982438448,
+      "mean_pnl_per_trade_tmn": -1377.4634693318994,
+      "return": -0.009917736979189677,
+      "trades": 36,
+      "trades_per_day": 2.5714285714285716,
+      "win_rate": 0.19444444444444445,
+      "worst_3d": -0.003306263760113781,
+      "worst_day": -0.0018202325415542786
+    },
+    "a_current/measured": {
+      "fees_paid": 46683.7479900347,
+      "max_drawdown": -0.013852523738965172,
+      "mean_pnl_per_trade_tmn": -1866.5602106781391,
+      "return": -0.013439233516882601,
+      "trades": 36,
+      "trades_per_day": 2.5714285714285716,
+      "win_rate": 0.19444444444444445,
+      "worst_3d": -0.0038977345205316594,
+      "worst_day": -0.002407820981391584
+    },
+    "a_current/measured_x1.5": {
+      "fees_paid": 69916.54853346557,
+      "max_drawdown": -0.01851631062120196,
+      "mean_pnl_per_trade_tmn": -2512.9266536267364,
+      "return": -0.0180930719061125,
+      "trades": 36,
+      "trades_per_day": 2.5714285714285716,
+      "win_rate": 0.16666666666666666,
+      "worst_3d": -0.00521687786665459,
+      "worst_day": -0.003192544366908967
+    },
+    "b_edge_positive/low": {
+      "fees_paid": 1478.08628721,
+      "max_drawdown": -0.000602510675167256,
+      "mean_pnl_per_trade_tmn": 1223.886916395,
+      "return": 0.000489554766558,
+      "trades": 2,
+      "trades_per_day": 0.14285714285714285,
+      "win_rate": 1.0,
+      "worst_3d": -0.00028303999337964125,
+      "worst_day": 0.0
+    },
+    "b_edge_positive/measured": {
+      "fees_paid": 2463.47714535,
+      "max_drawdown": -0.0006999268730532027,
+      "mean_pnl_per_trade_tmn": 731.191487325,
+      "return": 0.00029247659493,
+      "trades": 2,
+      "trades_per_day": 0.14285714285714285,
+      "win_rate": 1.0,
+      "worst_3d": -0.0003814188053090639,
+      "worst_day": 0.0
+    },
+    "b_edge_positive/measured_x1.5": {
+      "fees_paid": 3695.215718025,
+      "max_drawdown": -0.0008338412502294501,
+      "mean_pnl_per_trade_tmn": 115.3222009875,
+      "return": 4.6128880395e-05,
+      "trades": 2,
+      "trades_per_day": 0.14285714285714285,
+      "win_rate": 1.0,
+      "worst_3d": -0.0005468113805650043,
+      "worst_day": 0.0
+    },
+    "c_edge_positive_15m_up/low": {
+      "fees_paid": 0.0,
+      "max_drawdown": 0.0,
+      "mean_pnl_per_trade_tmn": 0.0,
+      "return": 0.0,
+      "trades": 0,
+      "trades_per_day": 0.0,
+      "win_rate": 0.0,
+      "worst_3d": 0.0,
+      "worst_day": 0.0
+    },
+    "c_edge_positive_15m_up/measured": {
+      "fees_paid": 0.0,
+      "max_drawdown": 0.0,
+      "mean_pnl_per_trade_tmn": 0.0,
+      "return": 0.0,
+      "trades": 0,
+      "trades_per_day": 0.0,
+      "win_rate": 0.0,
+      "worst_3d": 0.0,
+      "worst_day": 0.0
+    },
+    "c_edge_positive_15m_up/measured_x1.5": {
+      "fees_paid": 0.0,
+      "max_drawdown": 0.0,
+      "mean_pnl_per_trade_tmn": 0.0,
+      "return": 0.0,
+      "trades": 0,
+      "trades_per_day": 0.0,
+      "win_rate": 0.0,
+      "worst_3d": 0.0,
+      "worst_day": 0.0
+    }
+  },
+  "start": "2026-10-08 12:20:00+00:00",
+  "variants": {
+    "a_current": {},
+    "b_edge_positive": {
+      "min_edge": 0.0
+    },
+    "c_edge_positive_15m_up": {
+      "min_edge": 0.0,
+      "skip_15m_down": true
+    }
+  }
+}

@@ -7,9 +7,13 @@ CLOCK = pd.date_range("2026-10-22T06:00:00Z", periods=40, freq="5min", tz="UTC")
 EDGES = {"BTCTMN": 0.001, "ETHTMN": 0.003, "USDTTMN": -0.002}
 
 
-def _ctx(index: int) -> Context:
+def _ctx(index: int, extra=None) -> Context:
     features = {
-        symbol: FeatureFrame(pd.DataFrame({"close": 100.0, "volume": 1.0, "ml_net_h24": edge}, index=CLOCK))
+        symbol: FeatureFrame(
+            pd.DataFrame(
+                {"close": 100.0, "volume": 1.0, "ml_net_h24": edge, **((extra or {}).get(symbol, {}))}, index=CLOCK
+            )
+        )
         for symbol, edge in EDGES.items()
     }
     ctx = Context(CLOCK, features, list(EDGES))
@@ -49,3 +53,12 @@ def test_max_hold_exits_with_a_maker_limit():
     assert module.manage(_ctx(23), "BTCTMN", Held()) == []
     (exit_intent,) = module.manage(_ctx(24), "BTCTMN", Held())
     assert exit_intent.kind == "EXIT" and exit_intent.exit_type == "maker"
+
+
+def test_edge_floor_and_15m_trend_filter():
+    module = AIActivityModule(AIActivityParams(min_edge=0.0))
+    assert [i.symbol for i in module.candidates(_ctx(0), set(), 0)] == ["ETHTMN", "BTCTMN"]
+    extra = {s: {"close_15m": 99.0 if s == "ETHTMN" else 101.0, "ema20_15m": 100.0} for s in EDGES}
+    ctx = _ctx(0, extra)
+    module = AIActivityModule(AIActivityParams(min_edge=0.0, skip_15m_down=True))
+    assert [i.symbol for i in module.candidates(ctx, set(), 0)] == ["BTCTMN"]
