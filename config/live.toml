@@ -26,8 +26,23 @@ entry_timeout_minutes = 15     # maker entry limit: cancel if not filled
 flatten_limit_timeout_seconds = 120   # flatten: limit at best ask first, then market
 max_consecutive_errors = 5     # then: halt new entries, keep managing exits
 
-[activity]                     # live only (user): rules + at most 2 small maker ML trades per Tehran day
-enabled = true
+[ai_activity]                  # user decision 2026-10-22: trend OFF; the only live module. Every entry = ML rank +
+enabled = true                 # Officer risk_mode != OFF + Trade Agent approval + RiskGuard
+column = "ml_net_h24"
+symbols = ["BTCTMN", "ETHTMN", "USDTTMN"]
+notional_tmn = "250000"        # per trade (or the exchange minimum if higher); sized against the 15% cap
+slot_minutes = 60
+min_spacing_minutes = 45
+max_per_day = 12
+max_concurrent = 2
+take_profit = 0.008            # resting maker limit
+stop = 0.010                   # engine-side, against the best bid
+max_hold_bars = 24             # 2 h of 5m bars, then limit at best -> market
+entry_timeout_minutes = 3.0    # maker limit at the best bid, one reprice, then cancel
+reprices = 1
+
+[activity]                     # superseded by [ai_activity] (kept for the record; off)
+enabled = false
 module_name = "activity"
 column = "ml_net_h24"
 threshold = -0.005

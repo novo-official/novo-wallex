@@ -218,7 +218,7 @@ class TradeAgent:
 
 @dataclass
 class AgentLayer:
-    """The engine's `agent` hook. Officer once per hour; trade agent for core (trend) entries."""
+    """The engine's `agent` hook. Officer once per hour; trade agent for core (trend) and AI activity entries."""
 
     officer: RegimeOfficer | None
     trade_agent: TradeAgent | None
@@ -226,7 +226,7 @@ class AgentLayer:
     blind: bool = True
     tools_factory: object = None  # callable(ctx) -> ToolSet | None
     news: NewsFeed | None = None
-    reviewed_modules: tuple[str, ...] = ("trend",)
+    reviewed_modules: tuple[str, ...] = ("trend", "ai_activity")
     officer_hours: int = 1  # live/shadow: 1; historical replay: 4 (config/llm.toml [cadence])
     log: list[dict] = field(default_factory=list)
     _hour = None

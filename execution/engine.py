@@ -74,6 +74,7 @@ class EngineSettings:
     entry_timeout_minutes: int = 15
     flatten_limit_timeout_seconds: int = 120
     max_consecutive_errors: int = 5
+    resume_after_clean_loops: int = 40  # an error halt (e.g. a DNS outage) lifts after ~10 min of clean loops
     ramp_hours: float = 2.0
     ramp_factor: Decimal = Decimal("0.5")
     taker_fee: Decimal = Decimal("0.0035")
@@ -114,6 +115,8 @@ class Engine:
         self.day_key = None
         self.day_start_equity: Decimal | None = None
         self.errors = 0
+        self.error_halt = False  # entries halted by consecutive errors (lifts itself); reconcile halts do not
+        self.clean_loops = 0
         self.last_cycle_bar: pd.Timestamp | None = None
         self.last_refresh: datetime | None = None
         self.last_reconcile: datetime | None = None
@@ -261,6 +264,32 @@ class Engine:
             tp = OrderState(new_client_id("T"), order.symbol, "SELL", "LIMIT", position.take_profit, quantity)
             position.tp_client_id = self._track(tp, "take_profit", symbol_role="tp").order.client_id
 
+    def _reprice(self, tracked: TrackedOrder, now: datetime) -> None:
+        """Re-place an unfilled maker entry at the current best bid (same quantity, same stop/TP distances)."""
+        old, meta = tracked.order, dict(tracked.meta)
+        minutes_left = self._minutes_to_end(now)
+        if old.symbol in self.positions or (minutes_left is not None and minutes_left < 120):
+            return
+        bid, _ = self.feed.best_bid_ask(old.symbol)
+        if bid is None:
+            return
+        price = floor_decimals(bid, self._rules(old.symbol).price_decimals)
+        meta.update(
+            reprices=int(meta["reprices"]) - 1,
+            stop=str(price * (1 - Decimal(meta["stop_fraction"]))),
+            reprice_of=old.client_id,
+        )
+        if meta.get("tp_fraction"):
+            meta["take_profit"] = str(price * (1 + Decimal(meta["tp_fraction"])))
+        if self.exposure() + old.quantity * price > self.equity * self.guard.limits.max_total_exposure:
+            return
+        order = OrderState(new_client_id("E"), old.symbol, "BUY", "LIMIT", price, old.quantity)
+        expires = now + timedelta(minutes=float(meta.get("timeout_minutes") or self.s.entry_timeout_minutes))
+        self.journal.decision(
+            "REPRICE", symbol=old.symbol, module=meta.get("module"), old_client_id=old.client_id, price=price
+        )
+        self._track(order, "entry", expires, **meta)
+
     def refresh_orders(self, now: datetime) -> None:
         """Act on every order's state exactly once, including orders that filled the moment they were placed."""
         for client_id, tracked in list(self.orders.items()):
@@ -291,6 +320,8 @@ class Engine:
                     )
                     if order.executed_qty > 0:
                         self._open_position(tracked)
+                    elif int(tracked.meta.get("reprices") or 0) > 0 and not self.halted and not self.entries_halted:
+                        self._reprice(tracked, now)
                 continue
             position = self.positions.get(order.symbol)
             if order.status == "FILLED":
@@ -414,8 +445,11 @@ class Engine:
             risk_mode = self.agent.risk_mode(ctx, view)
             if risk_mode == "OFF":
                 entries = False
+        approved_groups: set[str] = set()
         for intent in self.strategy.on_cycle(ctx, view):
             position = self.positions.get(intent.symbol)
+            if intent.kind == "ENTER" and intent.group and intent.group in approved_groups:
+                continue  # one entry per ranked group: the best candidate that was approved
             if intent.kind == "EXIT" and position is not None:
                 self.exit_position(position, intent.reason, market=intent.exit_type != "maker")
             elif intent.kind == "SET_STOP" and position is not None and intent.stop_price is not None:
@@ -426,6 +460,20 @@ class Engine:
                 if intent.symbol in self.positions or intent.symbol in state.pending_symbols:
                     continue
                 intent = replace(intent, size_fraction=intent.size_fraction * float(self.ramp(now)))
+                if intent.limit_at_bid:
+                    bid, _ = self.feed.best_bid_ask(intent.symbol)
+                    if bid is None:
+                        self.journal.decision(
+                            "REJECT", symbol=intent.symbol, module=intent.module, reason=intent.reason, risk="no bid"
+                        )
+                        continue
+                    ratio = float(bid) / intent.limit_price  # keep the stop/TP distances, re-anchored at the bid
+                    intent = replace(
+                        intent,
+                        limit_price=float(bid),
+                        stop_price=intent.stop_price * ratio if intent.stop_price else None,
+                        take_profit=intent.take_profit * ratio if intent.take_profit else None,
+                    )
                 adjustment = self.agent.review(intent, ctx, view) if self.agent is not None else None
                 entry_state = replace(state, exposure=self.exposure(), risk_mode=risk_mode)
                 decision = self.guard.check_entry(intent, entry_state, self._rules(intent.symbol), adjustment)
@@ -443,7 +491,12 @@ class Engine:
                     self.journal.decision("REJECT", **record)
                     continue
                 order = OrderState(new_client_id("E"), intent.symbol, "BUY", "LIMIT", decision.limit, decision.quantity)
-                expires = now + timedelta(minutes=self.s.entry_timeout_minutes)
+                timeout = intent.entry_timeout_minutes or self.s.entry_timeout_minutes
+                expires = now + timedelta(minutes=timeout)
+                if intent.group:
+                    approved_groups.add(intent.group)
+                if hasattr(self.strategy, "notify_entry"):
+                    self.strategy.notify_entry(intent, pd.Timestamp(now))
                 self.journal.decision(
                     "ENTER",
                     **record,
@@ -461,6 +514,10 @@ class Engine:
                     stop=str(decision.stop),
                     take_profit=str(decision.take_profit) if decision.take_profit else None,
                     bar_index=ctx.index,
+                    reprices=intent.reprices,
+                    timeout_minutes=timeout,
+                    stop_fraction=str(1 - decision.stop / decision.limit),
+                    tp_fraction=str(decision.take_profit / decision.limit - 1) if decision.take_profit else None,
                 )
         self.last_cycle_bar = bar
 
@@ -534,11 +591,17 @@ class Engine:
             if minutes is not None and minutes <= 0 and not self.final_checked:
                 self.final_check()
             self.errors = 0
+            if self.error_halt:
+                self.clean_loops += 1
+                if self.clean_loops >= self.s.resume_after_clean_loops:
+                    self.error_halt = self.entries_halted = False
+                    self.journal.decision("RESUME_ENTRIES", reason=f"{self.clean_loops} clean loops after errors")
         except Exception as exc:  # noqa: BLE001 - the loop must survive; repeated errors halt new entries
             self.errors += 1
+            self.clean_loops = 0
             self.journal.decision("ERROR", error=repr(exc), trace=traceback.format_exc()[-1500:], count=self.errors)
             if self.errors >= self.s.max_consecutive_errors and not self.entries_halted:
-                self.entries_halted = True
+                self.entries_halted = self.error_halt = True
                 self.journal.decision("HALT_ENTRIES", reason=f"{self.errors} consecutive errors")
         self.persist(now)
 

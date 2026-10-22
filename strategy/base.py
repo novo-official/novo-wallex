@@ -34,6 +34,10 @@ class Intent:
     timeout_bars: int = 3  # ENTER: cancel the limit after this many 5m bars
     entry_type: str = "maker"  # ENTER: "maker" limit that must be traded through, or "taker" at the next open
     exit_type: str = "taker"  # EXIT: "taker" at the next open, or "maker" limit at the close (+offset), then taker
+    group: str | None = None  # ENTER: at most one approved entry per group per cycle (ranked candidates)
+    limit_at_bid: bool = False  # ENTER (live): price the maker limit at the best bid instead of limit_price
+    entry_timeout_minutes: float | None = None  # ENTER (live): overrides the engine's entry timeout
+    reprices: int = 0  # ENTER (live): re-price at the best bid this many times before cancelling
 
 
 @dataclass(frozen=True)

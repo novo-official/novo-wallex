@@ -349,8 +349,11 @@ class Backtester:
                 if risk_mode == "OFF":
                     entries_allowed = False
             exposure = market_value + sum((o.quantity * o.limit for o in pending.values()), ZERO)
+            approved_groups: set[str] = set()
             for intent in self.strategy.on_cycle(ctx, view):
                 symbol = intent.symbol
+                if intent.kind == "ENTER" and intent.group and intent.group in approved_groups:
+                    continue  # one entry per ranked group (the best approved candidate)
                 if intent.kind == "EXIT" and symbol in positions and symbol not in maker_exits:
                     if intent.exit_type == "maker":
                         rules = self.data.rules[symbol]
@@ -385,6 +388,10 @@ class Backtester:
                         log(index, symbol, "REJECT", intent.reason, intent, decision.reason)
                         continue
                     decision_id = log(index, symbol, "ENTER", intent.reason, intent, decision.reason)
+                    if intent.group:
+                        approved_groups.add(intent.group)
+                    if hasattr(self.strategy, "notify_entry"):
+                        self.strategy.notify_entry(intent, now)
                     pending[symbol] = PendingEntry(
                         intent=intent,
                         quantity=decision.quantity,

@@ -281,3 +281,68 @@ def test_balance_parser_accepts_value_or_available_plus_locked():
     assert parse_balances({"result": {"BTC": {"available": "0.1", "locked": "0.2"}}}) == {"BTC": Decimal("0.3")}
     with pytest.raises(Exception, match="unrecognized"):
         parse_balances({"result": {}})
+
+
+def _ai_entry(symbol="BTCTMN", group="ai_activity:slot") -> Intent:
+    return Intent(
+        kind="ENTER",
+        symbol=symbol,
+        module="ai_activity",
+        reason="test ai entry",
+        limit_price=99000.0,
+        stop_price=99000.0 * 0.99,
+        take_profit=99000.0 * 1.008,
+        size_fraction=1.0,
+        group=group,
+        limit_at_bid=True,
+        entry_timeout_minutes=3.0,
+        reprices=1,
+    )
+
+
+def test_ai_entry_is_priced_at_the_best_bid_one_per_group_and_repriced_once(tmp_path):
+    engine, feed, broker, strategy, clock = _engine(tmp_path)
+    engine.step()
+    second = _ai_entry()
+    strategy.queue = [_ai_entry(), second]  # same group: only the first approved one becomes an order
+    _cycle(engine, feed, clock)
+    entries = [t for t in engine.orders.values() if t.role == "entry"]
+    assert len(entries) == 1 and entries[0].order.price == Decimal("100000")  # the best bid, not 99000
+    assert Decimal(entries[0].meta["take_profit"]) == Decimal("100800")
+    feed.bid, feed.ask = Decimal("100500"), Decimal("100600")
+    clock.advance(minutes=3, seconds=5)
+    engine.step()  # timeout: cancel, then one reprice at the new bid
+    entries = [t for t in engine.orders.values() if t.role == "entry"]
+    assert len(entries) == 2 and entries[1].order.price == Decimal("100500") and not entries[1].order.done
+    assert Decimal(entries[1].meta["stop"]) == Decimal("100500") * Decimal("0.99")
+    clock.advance(minutes=3, seconds=5)
+    engine.step()  # second timeout: cancel, no more reprices
+    entries = [t for t in engine.orders.values() if t.role == "entry"]
+    assert len(entries) == 2 and all(t.order.status == "CANCELED" for t in entries)
+    assert [d["kind"] for d in _decisions(tmp_path)].count("REPRICE") == 1
+
+
+def test_error_halt_lifts_after_clean_loops_but_a_reconcile_halt_does_not(tmp_path):
+    engine, feed, broker, strategy, clock = _engine(tmp_path)
+    engine.step()
+    healthy = feed.refresh
+
+    def down(now):
+        raise OSError("nodename nor servname provided")
+
+    feed.refresh = down
+    for _ in range(5):
+        clock.advance(seconds=61)
+        engine.step()
+    assert engine.entries_halted
+    feed.refresh = healthy
+    for _ in range(engine.s.resume_after_clean_loops):
+        clock.advance(seconds=15)
+        engine.step()
+    assert not engine.entries_halted
+    assert "RESUME_ENTRIES" in [d["kind"] for d in _decisions(tmp_path)]
+    broker.orders["foreign"] = OrderState("foreign", "BTCTMN", "BUY", "LIMIT", Decimal("1"), Decimal("1"))
+    for _ in range(engine.s.resume_after_clean_loops + 5):
+        clock.advance(seconds=31)
+        engine.step()
+    assert engine.entries_halted  # unknown orders on the account: stays halted

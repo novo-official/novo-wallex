@@ -1,0 +1,102 @@
+{
+  "end": "2026-10-22 12:20:00+00:00",
+  "label": "ML-only proxy (no LLM approvals), walk-forward h24",
+  "params": {
+    "ai_activity": {
+      "column": "ml_net_h24",
+      "entry_timeout_minutes": 3.0,
+      "max_concurrent": 2,
+      "max_hold_bars": 24,
+      "max_per_day": 12,
+      "min_spacing_minutes": 45,
+      "reprices": 1,
+      "size_fraction": 0.3333333333333333,
+      "slot_minutes": 60,
+      "stop": 0.01,
+      "symbols": [
+        "BTCTMN",
+        "ETHTMN",
+        "USDTTMN"
+      ],
+      "take_profit": 0.008
+    },
+    "fair_value": {
+      "enabled": false
+    },
+    "modules": [
+      "ai_activity"
+    ],
+    "symbols": [
+      "USDTTMN",
+      "BTCTMN",
+      "ETHTMN"
+    ],
+    "trend": {
+      "max_hold_bars": 864,
+      "max_stop": 0.02,
+      "min_stop": 0.02,
+      "min_tp": 0.0,
+      "regime_exit": "none",
+      "require_4h": false,
+      "tp_r": 3.0,
+      "trail_after_r": 0.0,
+      "trigger": "breakout"
+    }
+  },
+  "results": {
+    "14d/base": {
+      "fees_paid": 49127.003900702875,
+      "max_drawdown": -0.01436553627897208,
+      "mean_pnl_per_trade_tmn": -1934.4419970622532,
+      "return": -0.013927982378848222,
+      "trades": 36,
+      "trades_per_day": 2.5714285714285716,
+      "win_rate": 0.16666666666666666
+    },
+    "14d/low": {
+      "fees_paid": 29030.202544436997,
+      "max_drawdown": -0.010332888982438448,
+      "mean_pnl_per_trade_tmn": -1377.4634693318994,
+      "return": -0.009917736979189677,
+      "trades": 36,
+      "trades_per_day": 2.5714285714285716,
+      "win_rate": 0.19444444444444445
+    },
+    "14d/stress": {
+      "fees_paid": 73554.61260915297,
+      "max_drawdown": -0.019280429655612052,
+      "mean_pnl_per_trade_tmn": -2613.9981403599977,
+      "return": -0.018820786610591982,
+      "trades": 36,
+      "trades_per_day": 2.5714285714285716,
+      "win_rate": 0.16666666666666666
+    },
+    "7d/base": {
+      "fees_paid": 27957.22537719296,
+      "max_drawdown": -0.007623892275626876,
+      "mean_pnl_per_trade_tmn": -1758.844463288188,
+      "return": -0.007035377853152752,
+      "trades": 20,
+      "trades_per_day": 2.857142857142857,
+      "win_rate": 0.1
+    },
+    "7d/low": {
+      "fees_paid": 16460.668394231943,
+      "max_drawdown": -0.005400877629443079,
+      "mean_pnl_per_trade_tmn": -1183.8747073368036,
+      "return": -0.0047354988293472145,
+      "trades": 20,
+      "trades_per_day": 2.857142857142857,
+      "win_rate": 0.15
+    },
+    "7d/stress": {
+      "fees_paid": 41856.11472033129,
+      "max_drawdown": -0.010298306714119576,
+      "mean_pnl_per_trade_tmn": -2452.8244038500243,
+      "return": -0.009811297615400097,
+      "trades": 20,
+      "trades_per_day": 2.857142857142857,
+      "win_rate": 0.1
+    }
+  }
+}

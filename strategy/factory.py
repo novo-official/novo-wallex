@@ -5,6 +5,7 @@ from __future__ import annotations
 from dataclasses import asdict, fields
 
 from .composite import CompositeStrategy, FairValueParams, MLFilterParams
+from .modules.ai_activity import AIActivityModule, AIActivityParams
 from .modules.mean_reversion import MeanReversionModule, MeanReversionParams
 from .modules.ml_signal import MLSignalModule, MLSignalParams
 from .modules.trend import TrendModule, TrendParams
@@ -31,6 +32,11 @@ def build_strategy(params: dict, symbols: list[str]) -> CompositeStrategy:
             modules.append(MeanReversionModule(MeanReversionParams(**values)))
         elif name == "ml_signal":
             modules.append(MLSignalModule(MLSignalParams(**_subset(MLSignalParams, params.get("ml_signal", {})))))
+        elif name == "ai_activity":
+            values = dict(_subset(AIActivityParams, params.get("ai_activity", {})))
+            if "symbols" in values:
+                values["symbols"] = tuple(values["symbols"])
+            modules.append(AIActivityModule(AIActivityParams(**values)))
         elif name == "usdt_allocation":
             values = _subset(USDTAllocationParams, params.get("usdt_allocation", {}))
             modules.append(USDTAllocationModule(USDTAllocationParams(**values)))

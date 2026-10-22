@@ -57,6 +57,11 @@ class CompositeStrategy:
         self.fair_value = fair_value or FairValueParams(enabled=False)
         self.ml = ml or MLFilterParams()
 
+    def notify_entry(self, intent: Intent, now) -> None:
+        module = self.by_name.get(intent.module)
+        if module is not None and hasattr(module, "note_entry"):
+            module.note_entry(now)
+
     def _apply_ml(self, ctx: Context, intent: Intent) -> Intent | None:
         ml = self.ml
         if not ml.enabled:
@@ -116,6 +121,11 @@ class CompositeStrategy:
                 intents.extend(module.manage(ctx, symbol, position))
         if not portfolio.entries_allowed:
             return intents
+        busy = set(portfolio.positions) | set(portfolio.pending_entries)
+        for module in self.modules:
+            if hasattr(module, "candidates"):  # ranked, exclusive-group proposals (AI activity)
+                count = sum(1 for p in portfolio.positions.values() if p.module == module.name)
+                intents.extend(module.candidates(ctx, busy, count))
         for symbol in self.symbols:
             if symbol in portfolio.positions or symbol in portfolio.pending_entries:
                 continue

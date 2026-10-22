@@ -58,6 +58,16 @@ def live_limits(live: dict) -> RiskLimits:
 
 def live_strategy_params(study, live: dict) -> dict:
     params = json.loads(json.dumps(study.strategy))
+    ai = live.get("ai_activity", {})
+    if ai.get("enabled"):
+        # User decision 2026-10-22: trend OFF in live; every trade is an ML-ranked, LLM-approved AI activity trade.
+        cap = Decimal(live["challenge"]["start_equity_tmn"]) * Decimal(live["risk"]["max_position_fraction"])
+        notional = max(Decimal(ai["notional_tmn"]), Decimal(live["risk"]["min_order_tmn"]))
+        params["modules"] = ["ai_activity"]
+        params["ai_activity"] = {key: ai[key] for key in ai if key not in ("enabled", "notional_tmn")} | {
+            "size_fraction": float(notional / cap)
+        }
+        return params
     activity = live["activity"]
     if activity.get("enabled"):
         cap = Decimal(live["challenge"]["start_equity_tmn"]) * Decimal(live["risk"]["max_position_fraction"])
@@ -127,7 +137,10 @@ def build_engine(mode: str) -> Engine:
         if module.name == "ml_signal":
             module.name = live["activity"]["module_name"]  # decision logs show "activity"
     strategy.by_name = {module.name: module for module in strategy.modules}
-    extra = _ml_columns(study) if live["activity"].get("enabled") else None
+    ai_on = bool(live.get("ai_activity", {}).get("enabled"))
+    if ai_on and not (live["llm"]["officer"] and live["llm"]["trade_agent"]):
+        raise ValueError("ai_activity needs both LLM roles: every trade is an ML + LLM decision")
+    extra = _ml_columns(study) if (ai_on or live["activity"].get("enabled")) else None
     agent = _agent(live, client, policy, feed) if (live["llm"]["officer"] or live["llm"]["trade_agent"]) else None
     engine_cfg = live["engine"]
     settings_obj = EngineSettings(
