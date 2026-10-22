@@ -30,6 +30,7 @@ class MarketFeed:
         tradable: list[str],
         history_days: int,
         book_ttl: float = 10.0,
+        max_quiet_minutes: int = 120,
     ) -> None:
         self.client = client
         self.policy = policy
@@ -38,6 +39,7 @@ class MarketFeed:
         self.tradable = tradable
         self.history_days = history_days
         self.book_ttl = book_ttl
+        self.max_quiet_minutes = max_quiet_minutes
         self.bars: dict[str, pd.DataFrame] = {}
         self.rules = load_rules(data_dir)
         self._books: dict[str, tuple[float, Decimal | None, Decimal | None]] = {}
@@ -82,15 +84,38 @@ class MarketFeed:
                 added += len(rows)
         return added
 
+    def _frontier(self) -> pd.Timestamp | None:
+        """Open time of the newest 1m bar of any symbol, unless some symbol is staler than `max_quiet_minutes`.
+
+        The UDF does not send bars for minutes without trades at the end of the series (seen at night on
+        USDTTMN and quiet USDT pairs), so a minimum over symbols would freeze the clock. Quiet symbols are
+        extended with flat zero-volume bars up to the frontier (as `fill_gaps` does inside the series); a
+        symbol older than the limit makes the frontier its own last bar, so the cycle waits (fail safe)."""
+        lasts = [frame.index[-1] for frame in self.bars.values() if not frame.empty]
+        if not lasts:
+            return None
+        newest, oldest = max(lasts), min(lasts)
+        return oldest if newest - oldest > pd.Timedelta(minutes=self.max_quiet_minutes) else newest
+
+    def _extended(self, frame: pd.DataFrame, frontier: pd.Timestamp) -> pd.DataFrame:
+        if frame.empty or frame.index[-1] >= frontier:
+            return frame
+        index = pd.date_range(frame.index[-1] + pd.Timedelta(minutes=1), frontier, freq="1min", tz="UTC")
+        close = frame["close"].iloc[-1]
+        flat = pd.DataFrame({"open": close, "high": close, "low": close, "close": close, "volume": 0.0}, index=index)
+        return pd.concat([frame, flat])
+
     def last_bar_close(self) -> pd.Timestamp | None:
-        closes = [frame.index[-1] for frame in self.bars.values() if not frame.empty]
-        return (min(closes) + pd.Timedelta(minutes=1)) if closes else None
+        frontier = self._frontier()
+        return frontier + pd.Timedelta(minutes=1) if frontier is not None else None
 
     def market_data(self, extra_columns=None):
         """MarketData on the 5m clock, from the same feature code as the backtest.
 
         `extra_columns(features) -> {symbol: {column: series}}` adds live-only columns (the ML predictions)."""
-        features = {symbol: symbol_features(frame) for symbol, frame in self.bars.items() if len(frame) > 3000}
+        frontier = self._frontier()
+        bars = {symbol: self._extended(frame, frontier) for symbol, frame in self.bars.items()}
+        features = {symbol: symbol_features(frame) for symbol, frame in bars.items() if len(frame) > 3000}
         add_fair_value(features)
         for symbol, columns in (extra_columns(features) if extra_columns else {}).items():
             for name, series in columns.items():
