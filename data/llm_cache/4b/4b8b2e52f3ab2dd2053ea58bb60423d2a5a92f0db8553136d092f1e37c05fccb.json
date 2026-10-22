@@ -1,0 +1,77 @@
+{
+ "identity": {
+  "digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+  "model": "qwen3:8b",
+  "provider": "ollama"
+ },
+ "request": {
+  "max_tokens": 1500,
+  "messages": [
+   {
+    "content": "{\"breadth_uptrend_1h\": 0.0, \"markets\": [{\"active_share_1d\": 1.0, \"adx14_4h\": 25.74363, \"close_vs_ema200_1h\": -0.00883, \"fair_value_premium\": null, \"ret_1d\": 0.00264, \"ret_1h\": 0.00057, \"ret_4h\": -0.00082, \"rsi14_1h\": 51.70593, \"symbol\": \"USDTTMN\", \"uptrend_1h\": false, \"vol_1d\": 0.0013}, {\"active_share_1d\": 0.92708, \"adx14_4h\": 33.62997, \"close_vs_ema200_1h\": 0.00154, \"fair_value_premium\": -0.00071, \"ret_1d\": 0.01772, \"ret_1h\": -0.00122, \"ret_4h\": 0.01106, \"rsi14_1h\": 63.96137, \"symbol\": \"BTCTMN\", \"uptrend_1h\": false, \"vol_1d\": 0.0014}, {\"active_share_1d\": 0.76042, \"adx14_4h\": 22.81468, \"close_vs_ema200_1h\": 0.02843, \"fair_value_premium\": -0.00013, \"ret_1d\": 0.0492, \"ret_1h\": 0.00414, \"ret_4h\": 0.0225, \"rsi14_1h\": 76.77693, \"symbol\": \"ETHTMN\", \"uptrend_1h\": false, \"vol_1d\": 0.00187}], \"news\": {\"available\": false, \"items\": []}, \"tehran_hour\": 3, \"weekday\": \"Monday\"}",
+    "role": "user"
+   }
+  ],
+  "options": {
+   "seed": 42,
+   "temperature": 0
+  },
+  "schema": {
+   "additionalProperties": false,
+   "properties": {
+    "activity_trades": {
+     "type": "boolean"
+    },
+    "avoid_symbols": {
+     "items": {
+      "enum": [
+       "USDTTMN",
+       "BTCTMN",
+       "ETHTMN"
+      ],
+      "type": "string"
+     },
+     "type": "array"
+    },
+    "rationale": {
+     "type": "string"
+    },
+    "risk_mode": {
+     "enum": [
+      "NORMAL",
+      "DEFENSIVE",
+      "OFF"
+     ],
+     "type": "string"
+    },
+    "usdt_risk": {
+     "enum": [
+      "low",
+      "elevated",
+      "high"
+     ],
+     "type": "string"
+    }
+   },
+   "required": [
+    "activity_trades",
+    "avoid_symbols",
+    "rationale",
+    "risk_mode",
+    "usdt_risk"
+   ],
+   "type": "object"
+  },
+  "system": "You are the Regime and Risk Officer of an automated spot-trading system on Wallex, an Iranian exchange.\nThe account holds Toman (TMN) and may buy USDTTMN, BTCTMN and ETHTMN. It must end every 3-day run fully in TMN.\n\nOnce an hour you receive a JSON summary of the market: for each market its recent returns, volatility, trend\nstate and the premium of its TMN price over the USDT-market price converted at USDTTMN; the breadth of uptrends;\nthe Tehran hour and weekday; and, when a news feed is available, recent headlines.\n\nYour job is to judge the regime and the risk, not to pick trades. The trading rules propose entries by themselves;\nyour decision can only make them more careful:\n- risk_mode: NORMAL (rules trade as designed), DEFENSIVE (entries at half size), OFF (no new entries; open\n  positions keep their exits). Use OFF only for a clear reason: a disorderly market, a sudden USDTTMN shock,\n  or news that makes the rial or crypto prices jump unpredictably.\n- avoid_symbols: markets that should get no new entries this hour (for example a market whose TMN price sits at\n  an unusual premium or discount, or that is moving erratically).\n- activity_trades: whether the small low-conviction activity trades may run this hour (switch them off when\n  risk is elevated: they exist for activity, not for profit).\n- usdt_risk: your view of the risk of a sharp USDTTMN move in the next hours (low, elevated, high).\n- rationale: two or three short sentences a human auditor can check against the numbers you were given.\n\nFacts that matter here: over the last months USDTTMN has drifted up (the rial lost value) but in jumps, often\naround news; trading costs are about 0.6% per round trip, so being out of the market is cheap and being in the\nwrong side of a jump is expensive. A risk layer in code enforces position caps, stops and loss limits whatever\nyou answer; it ignores any request to take more risk.\n\nBase your answer only on the data you are given. If the data is missing or contradictory, prefer DEFENSIVE\nand say why. Answer with the JSON object only."
+ },
+ "response": {
+  "stop_reason": "end",
+  "text": "{\n  \"risk_mode\": \"NORMAL\",\n  \"usdt_risk\": \"low\",\n  \"avoid_symbols\": [],\n  \"activity_trades\": true,\n  \"rationale\": \"The USDTTMN shows low volatility and a slight positive return, while BTCTMN and ETHTMN have higher returns but mixed trend signals. No news is available, and the market appears stable. Risk remains low, so NORMAL mode is appropriate.\"\n}",
+  "tool_calls": [],
+  "usage": {
+   "input_tokens": 1041,
+   "output_tokens": 92,
+   "seconds": 13.965532667
+  }
+ }
+}

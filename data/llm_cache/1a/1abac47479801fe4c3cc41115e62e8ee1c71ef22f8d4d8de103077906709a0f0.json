@@ -1,0 +1,127 @@
+{
+ "identity": {
+  "digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+  "model": "qwen3:8b",
+  "provider": "ollama"
+ },
+ "request": {
+  "max_tokens": 1500,
+  "messages": [
+   {
+    "content": "{\"candidate\": {\"atr_15m_fraction\": 0.00102, \"breakout_strength\": 1e-05, \"ema50_slope_1h\": 0.00082, \"module\": \"trend\", \"rsi14_15m_min_1h\": 69.01098, \"stop_distance\": 0.02, \"stop_fraction\": 0.02, \"symbol\": \"USDTTMN\", \"take_profit_fraction\": 0.06}, \"market\": {\"as_of\": \"2026-10-22T12:35:00+00:00\", \"breadth_uptrend_1h\": 1.0, \"markets\": [{\"active_share_1d\": 0.50694, \"adx14_4h\": 33.62566, \"close_vs_ema200_1h\": 0.02937, \"fair_value_premium\": null, \"last_price\": 270818.0, \"ret_1d\": 0.02555, \"ret_1h\": 0.001, \"ret_4h\": 0.00191, \"rsi14_1h\": 82.21387, \"symbol\": \"USDTTMN\", \"uptrend_1h\": true, \"vol_1d\": 0.00072}, {\"active_share_1d\": 0.98611, \"adx14_4h\": 29.48749, \"close_vs_ema200_1h\": 0.01925, \"fair_value_premium\": 4e-05, \"last_price\": 22126687728.0, \"ret_1d\": 0.00482, \"ret_1h\": -0.00108, \"ret_4h\": -0.00106, \"rsi14_1h\": 49.89007, \"symbol\": \"BTCTMN\", \"uptrend_1h\": true, \"vol_1d\": 0.00137}, {\"active_share_1d\": 0.89583, \"adx14_4h\": 26.70621, \"close_vs_ema200_1h\": 0.01003, \"fair_value_premium\": -0.00053, \"last_price\": 650284672.0, \"ret_1d\": -0.0011, \"ret_1h\": -0.00042, \"ret_4h\": -0.00303, \"rsi14_1h\": 44.93791, \"symbol\": \"ETHTMN\", \"uptrend_1h\": true, \"vol_1d\": 0.00186}], \"news\": {\"available\": false, \"items\": []}, \"tehran_hour\": 16, \"weekday\": \"Thursday\"}, \"tools_available\": true}",
+    "role": "user"
+   }
+  ],
+  "options": {
+   "seed": 42,
+   "temperature": 0
+  },
+  "schema": {
+   "additionalProperties": false,
+   "properties": {
+    "approve": {
+     "type": "boolean"
+    },
+    "rationale": {
+     "type": "string"
+    },
+    "size_fraction": {
+     "type": "number"
+    },
+    "stop_fraction": {
+     "type": "number"
+    },
+    "take_profit_fraction": {
+     "type": "number"
+    }
+   },
+   "required": [
+    "approve",
+    "rationale",
+    "size_fraction",
+    "stop_fraction",
+    "take_profit_fraction"
+   ],
+   "type": "object"
+  },
+  "system": "You are the Trade Agent of an automated spot-trading system on Wallex, an Iranian exchange. The trading rules\nhave proposed one long entry. You approve or reject it, and you may make it more careful.\n\nYou receive a JSON object with the candidate (market, the rule that fired, stop and take-profit distances as\nfractions of the entry price, and the rule's own signal values as ratios) and a summary of the market. When the\nread-only tools are available you may call them, at most three times in total, to look at the order book, the\nrecent trades or the market's rules; when they are unavailable, decide from the summary.\n\nDecide:\n- approve: false when the entry looks poor right now: for example a thin or one-sided order book, a wide spread,\n  the TMN price at a premium to its USDT value, a sharp move against the trade in the last minutes, or a regime\n  that contradicts the signal.\n- size_fraction: between 0 and 1, the share of the size the risk layer would allow (1 = full). Use less than 1\n  when you see a reason for caution but not for a rejection.\n- stop_fraction: 0 to keep the rule's stop, or a smaller distance (for example 0.012 for 1.2%) to tighten it.\n- take_profit_fraction: 0 to keep the rule's target, or a smaller distance to bring it closer (at least 0.007,\n  so that it still pays the fees).\n- rationale: two or three short sentences an auditor can check against the data.\n\nA risk layer in code enforces every limit: it ignores a larger size, a wider stop or a farther target. Costs are\nabout 0.6% per round trip. Base your answer only on the data you are given. Answer with the JSON object only.",
+  "tools": [
+   {
+    "description": "Top of the order book of one market: spread, depth within 0.5% of mid, top-5 imbalance, and the best 5 levels per side.",
+    "input_schema": {
+     "additionalProperties": false,
+     "properties": {
+      "symbol": {
+       "enum": [
+        "USDTTMN",
+        "BTCTMN",
+        "ETHTMN"
+       ],
+       "type": "string"
+      }
+     },
+     "required": [
+      "symbol"
+     ],
+     "type": "object"
+    },
+    "name": "get_orderbook",
+    "strict": true
+   },
+   {
+    "description": "The last public trades of one market (up to 50): count, buy share, volume and the price change across them.",
+    "input_schema": {
+     "additionalProperties": false,
+     "properties": {
+      "symbol": {
+       "enum": [
+        "USDTTMN",
+        "BTCTMN",
+        "ETHTMN"
+       ],
+       "type": "string"
+      }
+     },
+     "required": [
+      "symbol"
+     ],
+     "type": "object"
+    },
+    "name": "get_recent_trades",
+    "strict": true
+   },
+   {
+    "description": "Exchange rules of one market: price and amount decimals, minimum order value, whether market orders are enabled.",
+    "input_schema": {
+     "additionalProperties": false,
+     "properties": {
+      "symbol": {
+       "enum": [
+        "USDTTMN",
+        "BTCTMN",
+        "ETHTMN"
+       ],
+       "type": "string"
+      }
+     },
+     "required": [
+      "symbol"
+     ],
+     "type": "object"
+    },
+    "name": "get_market_info",
+    "strict": true
+   }
+  ]
+ },
+ "response": {
+  "stop_reason": "end",
+  "text": "{\n  \"approve\": true,\n  \"size_fraction\": 0.8,\n  \"stop_fraction\": 0.02,\n  \"take_profit_fraction\": 0.06,\n  \"rationale\": [\n    \"The market shows an uptrend (uptrend_1h: true) and the RSI is within a neutral to overbought range (RSI14_1h: 82.21).\",\n    \"The breakout strength is very low (1e-05), suggesting a weak signal, but the overall trend is positive.\",\n    \"The stop distance is reasonable relative to the last price, and the take-profit target is set at 6%.\"\n  ]\n}",
+  "tool_calls": [],
+  "usage": {
+   "input_tokens": 1471,
+   "output_tokens": 149,
+   "seconds": 28.663334583
+  }
+ }
+}
