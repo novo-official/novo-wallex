@@ -1,0 +1,6 @@
+{
+  "code": 1201,
+  "message": "authorization header is missing",
+  "result": {},
+  "success": false
+}

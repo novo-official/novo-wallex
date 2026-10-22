@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 import httpx
 import pytest
 
@@ -106,6 +108,16 @@ def test_transport_errors_are_retried_then_raised():
     with pytest.raises(WallexTransportError):
         client.get("/x")
     assert sleeps == [0.5]
+
+
+def test_json_numbers_are_parsed_as_decimal_not_float():
+    def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(200, text='{"price": 0.1, "qty": 2}')
+
+    client, _ = make_client(handler)
+    body = client.get_json("/x")
+    assert body["price"] == Decimal("0.1") and isinstance(body["price"], Decimal)
+    assert body["qty"] == 2 and isinstance(body["qty"], int)
 
 
 def test_non_json_success_body_raises_response_error():

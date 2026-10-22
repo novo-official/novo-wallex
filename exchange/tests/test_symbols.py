@@ -94,10 +94,26 @@ def test_load_policy_rejects_non_list_allowlist(tmp_path: Path):
         load_market_policy(config, blocked)
 
 
-def test_repository_config_is_default_deny():
+def test_repository_config_allowlist_is_default_deny():
     policy = load_market_policy(settings.TRADING_CONFIG_FILE, settings.BLOCKED_MARKETS_FILE)
-    assert policy.allowlist == frozenset()
-    assert not policy.is_tradable("BTC/TMN")
+    assert policy.allowlist == frozenset(
+        {
+            "USDTTMN",
+            "BTCTMN",
+            "ETHTMN",
+            "SOLTMN",
+            "XRPTMN",
+            "DOGETMN",
+            "TRXTMN",
+            "ADATMN",
+            "BNBTMN",
+            "LTCTMN",
+            "SHIBTMN",
+        }
+    )
+    assert policy.is_tradable("BTC/TMN")
+    assert not policy.is_tradable("ZECTMN")  # blocked
+    assert not policy.is_tradable("ETHUSDT")  # not allowlisted
 
 
 def test_startup_check_reports_missing_blocklist(settings, tmp_path: Path):
@@ -108,6 +124,12 @@ def test_startup_check_reports_missing_blocklist(settings, tmp_path: Path):
     assert errors[0].level == checks.ERROR
 
 
-def test_startup_check_warns_on_empty_allowlist():
-    errors = check_market_policy(app_configs=None)
-    assert [message.id for message in errors] == ["exchange.W001"]
+def test_startup_check_is_clean_for_repository_config():
+    assert check_market_policy(app_configs=None) == []
+
+
+def test_startup_check_warns_on_empty_allowlist(settings, tmp_path: Path):
+    config = tmp_path / "trading.toml"
+    config.write_text("[markets]\nallowlist = []\n", encoding="utf-8")
+    settings.TRADING_CONFIG_FILE = config
+    assert [message.id for message in check_market_policy(app_configs=None)] == ["exchange.W001"]

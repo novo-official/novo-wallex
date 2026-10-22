@@ -22,6 +22,9 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
 
+# The official Swagger uses api.wallex.com; the public docs use api.wallex.ir. Probe both.
+DEFAULT_BASE_URLS = ["https://api.wallex.ir", "https://api.wallex.com"]
+
 
 def parse_args(argv: list[str]) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -30,7 +33,16 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     parser.add_argument("--days", type=float, default=2.0, help="history window in days, ending now")
     parser.add_argument("--client-id", default=None, help="clientOrderId for GET /v1/account/orders/{client_id}")
     parser.add_argument("--out", type=Path, default=None, help="also write the full output to this file")
-    return parser.parse_args(argv)
+    parser.add_argument(
+        "--base-url",
+        action="append",
+        default=None,
+        help="API host to probe; repeat for several. Default: api.wallex.ir and api.wallex.com",
+    )
+    args = parser.parse_args(argv)
+    if not args.base_url:
+        args.base_url = list(DEFAULT_BASE_URLS)
+    return args
 
 
 def build_targets(args: argparse.Namespace) -> list[tuple[str, str, dict | None]]:
@@ -83,28 +95,32 @@ def main(argv: list[str]) -> int:
         emit("NOTE: WALLEX_API_KEY is empty; account endpoints will probably answer 401/403.")
 
     failures = 0
-    with WallexClient(
-        base_url=settings.WALLEX_BASE_URL,
-        api_key=settings.WALLEX_API_KEY,
-        timeout_seconds=settings.WALLEX_TIMEOUT_SECONDS,
-        max_retries=settings.WALLEX_MAX_RETRIES,
-        rate_limiter=RateLimiter(settings.WALLEX_REQUESTS_PER_SECOND),
-    ) as client:
-        for label, path, params in build_targets(args):
-            emit("=" * 80)
-            emit(f"{label} | GET {path} | params={params}")
-            started = time.monotonic()
-            try:
-                response = client.get(path, params)
-            except WallexError as exc:
-                failures += 1
-                emit(f"ERROR: {exc}")
-                continue
-            elapsed = time.monotonic() - started
-            emit(f"HTTP {response.status_code} in {elapsed:.2f}s | content-type={response.headers.get('content-type')}")
-            emit(format_body(response.text))
-            if not response.is_success:
-                failures += 1
+    for base_url in args.base_url:
+        emit("#" * 80)
+        emit(f"BASE URL: {base_url}")
+        with WallexClient(
+            base_url=base_url,
+            api_key=settings.WALLEX_API_KEY,
+            timeout_seconds=settings.WALLEX_TIMEOUT_SECONDS,
+            max_retries=settings.WALLEX_MAX_RETRIES,
+            rate_limiter=RateLimiter(settings.WALLEX_REQUESTS_PER_SECOND),
+        ) as client:
+            for label, path, params in build_targets(args):
+                emit("=" * 80)
+                emit(f"[{base_url}] {label} | GET {path} | params={params}")
+                started = time.monotonic()
+                try:
+                    response = client.get(path, params)
+                except WallexError as exc:
+                    failures += 1
+                    emit(f"ERROR: {exc}")
+                    continue
+                elapsed = time.monotonic() - started
+                content_type = response.headers.get("content-type")
+                emit(f"HTTP {response.status_code} in {elapsed:.2f}s | content-type={content_type}")
+                emit(format_body(response.text))
+                if not response.is_success:
+                    failures += 1
 
     if args.out:
         args.out.parent.mkdir(parents=True, exist_ok=True)

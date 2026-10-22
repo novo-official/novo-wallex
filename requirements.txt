@@ -3,3 +3,4 @@ djangorestframework==3.18.3
 psycopg[binary]==3.3.6
 httpx==0.28.1
 python-dotenv==1.2.4
+pydantic==2.12.5

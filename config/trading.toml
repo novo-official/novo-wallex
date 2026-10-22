@@ -1,7 +1,22 @@
-# Trading universe. Default-deny: a symbol is tradable only if it is listed in
-# `allowlist` AND is not in blocked_markets.txt. An empty list means nothing is tradable.
+# Trading universe and market data settings.
 #
-# Entries may be written as BASE/QUOTE or as the API symbol (OP/TMN or OPTMN).
+# Default-deny: a symbol is tradable only if it is listed in `allowlist` AND is not
+# in blocked_markets.txt. Entries may be BASE/QUOTE or API symbols (OP/TMN or OPTMN).
 
 [markets]
-allowlist = []
+# Proposed allowlist. Checked against the real markets capture: all 11 are spot,
+# TMN-quoted, and absent from blocked_markets.txt.
+allowlist = [
+  "USDTTMN", "BTCTMN", "ETHTMN", "SOLTMN", "XRPTMN", "DOGETMN",
+  "TRXTMN", "ADATMN", "BNBTMN", "LTCTMN", "SHIBTMN",
+]
+
+[universe]
+# Proposed thresholds, not yet calibrated. Volume is in the quote asset (TMN).
+quote_asset = "TMN"
+min_quote_volume_24h = "1000000000"  # 1e9 TMN over 24h
+max_spread_fraction = "0.005"        # 0.5% of mid price
+
+[history]
+# Proposed. The maximum number of bars per udf/history request is not documented yet.
+chunk_bars = 500

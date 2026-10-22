@@ -9,9 +9,11 @@ Responses are returned as parsed JSON (`Any`). Typed models are added after
 
 from __future__ import annotations
 
+import json
 import logging
 import time
 from collections.abc import Callable
+from decimal import Decimal
 from typing import Any
 from urllib.parse import quote
 
@@ -111,9 +113,7 @@ class WallexClient:
                 return response
             reason = f"HTTP {response.status_code}"
         if response is None:
-            raise WallexTransportError(
-                f"GET {path} failed after {self._max_retries + 1} attempts ({reason})"
-            )
+            raise WallexTransportError(f"GET {path} failed after {self._max_retries + 1} attempts ({reason})")
         return response
 
     def get_json(self, path: str, params: dict[str, Any] | None = None) -> Any:
@@ -122,7 +122,8 @@ class WallexClient:
         if not response.is_success:
             raise WallexAPIError(response.status_code, response.text)
         try:
-            return response.json()
+            # parse_float=Decimal: every JSON number becomes an exact Decimal, never a float.
+            return json.loads(response.text, parse_float=Decimal)
         except ValueError as exc:
             raise WallexResponseError(f"GET {path} returned non-JSON body: {response.text[:300]}") from exc
 

@@ -1,0 +1,1140 @@
+{
+  "result": {
+    "markets": [
+      {
+        "symbol": "USDTTMN",
+        "base_asset": "USDT",
+        "quote_asset": "TMN",
+        "fa_base_asset": "تتر",
+        "fa_quote_asset": "تومان",
+        "en_base_asset": "Tether",
+        "en_quote_asset": "Toman",
+        "categories": [
+          1
+        ],
+        "price": "266721",
+        "is_new": false,
+        "is_spot": true,
+        "is_otc": true,
+        "is_margin": false,
+        "is_tmn_based": true,
+        "is_usdt_based": false,
+        "is_zero_fee": false,
+        "leverage_step": null,
+        "max_leverage": null,
+        "created_at": "2020-01-01T00:00:00Z",
+        "amount_precision": 2,
+        "price_precision": 0,
+        "flags": [],
+        "is_market_type_enable": true,
+        "otc_min_notional": 1,
+        "otc_max_notional": 2,
+        "otc_buy_enabled": true,
+        "otc_sell_enabled": true,
+        "fair_price": {
+          "ask": "267072",
+          "bid": "268596",
+          "spot": {
+            "threshold": "2",
+            "max_acceptable_buy": "3",
+            "max_acceptable_sell": "3"
+          },
+          "margin_market": {
+            "threshold": "0",
+            "max_acceptable_buy": "0",
+            "max_acceptable_sell": "0"
+          },
+          "margin_limit": {
+            "threshold": "0",
+            "max_acceptable_buy": "0",
+            "max_acceptable_sell": "0"
+          },
+          "sakoo": {
+            "threshold": "2",
+            "max_acceptable_buy": "3",
+            "max_acceptable_sell": "3"
+          },
+          "market_maker": {
+            "threshold": "3",
+            "max_acceptable_buy": "4",
+            "max_acceptable_sell": "4"
+          }
+        },
+        "change_24h": 2.44,
+        "volume_24h": 215325.6719022275,
+        "change_7D": 0.75,
+        "quote_volume_24h": 56928161117.57221,
+        "spot_is_new": false,
+        "otc_is_new": false,
+        "highest_24h_price": "266758",
+        "lowest_24h_price": "260360"
+      },
+      {
+        "symbol": "BTCTMN",
+        "base_asset": "BTC",
+        "quote_asset": "TMN",
+        "fa_base_asset": "بیت کوین",
+        "fa_quote_asset": "تومان",
+        "en_base_asset": "Bitcoin",
+        "en_quote_asset": "Toman",
+        "categories": [
+          44
+        ],
+        "price": "22075698199",
+        "is_new": false,
+        "is_spot": true,
+        "is_otc": true,
+        "is_margin": true,
+        "is_tmn_based": true,
+        "is_usdt_based": false,
+        "is_zero_fee": false,
+        "leverage_step": 0.5,
+        "max_leverage": 10,
+        "created_at": "2020-04-01T00:00:00Z",
+        "amount_precision": 8,
+        "price_precision": 0,
+        "flags": [],
+        "is_market_type_enable": true,
+        "otc_min_notional": 90000,
+        "otc_max_notional": 400000000,
+        "otc_buy_enabled": true,
+        "otc_sell_enabled": true,
+        "fair_price": {
+          "ask": "22197614143.93953181826004",
+          "bid": "22197614143.93953181826004",
+          "spot": {
+            "threshold": "4",
+            "max_acceptable_buy": "8",
+            "max_acceptable_sell": "8"
+          },
+          "margin_market": {
+            "threshold": null,
+            "max_acceptable_buy": null,
+            "max_acceptable_sell": null
+          },
+          "margin_limit": {
+            "threshold": "5",
+            "max_acceptable_buy": null,
+            "max_acceptable_sell": null
+          },
+          "sakoo": {
+            "threshold": "4",
+            "max_acceptable_buy": "8",
+            "max_acceptable_sell": "8"
+          },
+          "market_maker": {
+            "threshold": "5",
+            "max_acceptable_buy": "10",
+            "max_acceptable_sell": "10"
+          }
+        },
+        "change_24h": 2.56,
+        "volume_24h": 5.18955456,
+        "change_7D": 2.44,
+        "quote_volume_24h": 115081803533.29965,
+        "spot_is_new": false,
+        "otc_is_new": false,
+        "highest_24h_price": "22619999994",
+        "lowest_24h_price": "21521502006"
+      },
+      {
+        "symbol": "ETHTMN",
+        "base_asset": "ETH",
+        "quote_asset": "TMN",
+        "fa_base_asset": "اتریوم",
+        "fa_quote_asset": "تومان",
+        "en_base_asset": "Ethereum",
+        "en_quote_asset": "Toman",
+        "categories": [
+          13,
+          16,
+          44,
+          53
+        ],
+        "price": "650754089",
+        "is_new": false,
+        "is_spot": true,
+        "is_otc": true,
+        "is_margin": true,
+        "is_tmn_based": true,
+        "is_usdt_based": false,
+        "is_zero_fee": false,
+        "leverage_step": 0.5,
+        "max_leverage": 10,
+        "created_at": "2020-05-01T00:00:00Z",
+        "amount_precision": 5,
+        "price_precision": 0,
+        "flags": [],
+        "is_market_type_enable": true,
+        "otc_min_notional": 90000,
+        "otc_max_notional": 200000000,
+        "otc_buy_enabled": true,
+        "otc_sell_enabled": true,
+        "fair_price": {
+          "ask": "654934855.54160248964274",
+          "bid": "654934855.54160248964274",
+          "spot": {
+            "threshold": "4.00",
+            "max_acceptable_buy": "8.00",
+            "max_acceptable_sell": "8.00"
+          },
+          "margin_market": {
+            "threshold": null,
+            "max_acceptable_buy": null,
+            "max_acceptable_sell": null
+          },
+          "margin_limit": {
+            "threshold": "5.00",
+            "max_acceptable_buy": null,
+            "max_acceptable_sell": null
+          },
+          "sakoo": {
+            "threshold": "4.00",
+            "max_acceptable_buy": "8.00",
+            "max_acceptable_sell": "8.00"
+          },
+          "market_maker": {
+            "threshold": "5.00",
+            "max_acceptable_buy": "10.00",
+            "max_acceptable_sell": "10.00"
+          }
+        },
+        "change_24h": 2.56,
+        "volume_24h": 108.24453015,
+        "change_7D": 3.34,
+        "quote_volume_24h": 70994891627.2664,
+        "spot_is_new": false,
+        "otc_is_new": false,
+        "highest_24h_price": "670899989",
+        "lowest_24h_price": "634500003"
+      },
+      {
+        "symbol": "SOLTMN",
+        "base_asset": "SOL",
+        "quote_asset": "TMN",
+        "fa_base_asset": "سولانا",
+        "fa_quote_asset": "تومان",
+        "en_base_asset": "Solana",
+        "en_quote_asset": "Toman",
+        "categories": [
+          16,
+          44
+        ],
+        "price": "28087281",
+        "is_new": false,
+        "is_spot": true,
+        "is_otc": true,
+        "is_margin": true,
+        "is_tmn_based": true,
+        "is_usdt_based": false,
+        "is_zero_fee": false,
+        "leverage_step": 0.5,
+        "max_leverage": 10,
+        "created_at": "2022-03-16T00:00:00Z",
+        "amount_precision": 5,
+        "price_precision": 0,
+        "flags": [],
+        "is_market_type_enable": false,
+        "otc_min_notional": 90000,
+        "otc_max_notional": 40000000,
+        "otc_buy_enabled": true,
+        "otc_sell_enabled": true,
+        "fair_price": {
+          "ask": "28256040.60999999910722",
+          "bid": "28256040.60999999910722",
+          "spot": {
+            "threshold": "4.00",
+            "max_acceptable_buy": "8.00",
+            "max_acceptable_sell": "8.00"
+          },
+          "margin_market": {
+            "threshold": null,
+            "max_acceptable_buy": null,
+            "max_acceptable_sell": null
+          },
+          "margin_limit": {
+            "threshold": "5.00",
+            "max_acceptable_buy": null,
+            "max_acceptable_sell": null
+          },
+          "sakoo": {
+            "threshold": "4.00",
+            "max_acceptable_buy": "8.00",
+            "max_acceptable_sell": "8.00"
+          },
+          "market_maker": {
+            "threshold": "5.00",
+            "max_acceptable_buy": "10.00",
+            "max_acceptable_sell": "10.00"
+          }
+        },
+        "change_24h": 1.75,
+        "volume_24h": 963.07651,
+        "change_7D": 1.84,
+        "quote_volume_24h": 27344389041.7413,
+        "spot_is_new": false,
+        "otc_is_new": false,
+        "highest_24h_price": "29062348",
+        "lowest_24h_price": "27508899"
+      },
+      {
+        "symbol": "XRPTMN",
+        "base_asset": "XRP",
+        "quote_asset": "TMN",
+        "fa_base_asset": "ریپل",
+        "fa_quote_asset": "تومان",
+        "en_base_asset": "Ripple",
+        "en_quote_asset": "Toman",
+        "categories": [
+          13,
+          44,
+          53
+        ],
+        "price": "358794",
+        "is_new": false,
+        "is_spot": true,
+        "is_otc": true,
+        "is_margin": true,
+        "is_tmn_based": true,
+        "is_usdt_based": false,
+        "is_zero_fee": false,
+        "leverage_step": 0.5,
+        "max_leverage": 10,
+        "created_at": "2020-11-01T00:00:00Z",
+        "amount_precision": 1,
+        "price_precision": 0,
+        "flags": [],
+        "is_market_type_enable": false,
+        "otc_min_notional": 90000,
+        "otc_max_notional": 50000000,
+        "otc_buy_enabled": true,
+        "otc_sell_enabled": true,
+        "fair_price": {
+          "ask": "361062.13674896883546",
+          "bid": "361062.13674896883546",
+          "spot": {
+            "threshold": "4.00",
+            "max_acceptable_buy": "8.00",
+            "max_acceptable_sell": "8.00"
+          },
+          "margin_market": {
+            "threshold": null,
+            "max_acceptable_buy": null,
+            "max_acceptable_sell": null
+          },
+          "margin_limit": {
+            "threshold": "5.00",
+            "max_acceptable_buy": null,
+            "max_acceptable_sell": null
+          },
+          "sakoo": {
+            "threshold": "4.00",
+            "max_acceptable_buy": "8.00",
+            "max_acceptable_sell": "8.00"
+          },
+          "market_maker": {
+            "threshold": "5.00",
+            "max_acceptable_buy": "10.00",
+            "max_acceptable_sell": "10.00"
+          }
+        },
+        "change_24h": 3.43,
+        "volume_24h": 112162.4,
+        "change_7D": 2.64,
+        "quote_volume_24h": 40556855740.6,
+        "spot_is_new": false,
+        "otc_is_new": false,
+        "highest_24h_price": "372402",
+        "lowest_24h_price": "345007"
+      },
+      {
+        "symbol": "DOGETMN",
+        "base_asset": "DOGE",
+        "quote_asset": "TMN",
+        "fa_base_asset": "دوج کوین",
+        "fa_quote_asset": "تومان",
+        "en_base_asset": "Dogecoin",
+        "en_quote_asset": "Toman",
+        "categories": [
+          4
+        ],
+        "price": "21392",
+        "is_new": false,
+        "is_spot": true,
+        "is_otc": true,
+        "is_margin": true,
+        "is_tmn_based": true,
+        "is_usdt_based": false,
+        "is_zero_fee": false,
+        "leverage_step": 0.5,
+        "max_leverage": 10,
+        "created_at": "2022-12-18T00:00:00Z",
+        "amount_precision": 1,
+        "price_precision": 0,
+        "flags": [],
+        "is_market_type_enable": false,
+        "otc_min_notional": 90000,
+        "otc_max_notional": 50000000,
+        "otc_buy_enabled": true,
+        "otc_sell_enabled": true,
+        "fair_price": {
+          "ask": "21477.95659192683822",
+          "bid": "21477.95659192683822",
+          "spot": {
+            "threshold": "4.00",
+            "max_acceptable_buy": "8.00",
+            "max_acceptable_sell": "8.00"
+          },
+          "margin_market": {
+            "threshold": null,
+            "max_acceptable_buy": null,
+            "max_acceptable_sell": null
+          },
+          "margin_limit": {
+            "threshold": "5.00",
+            "max_acceptable_buy": null,
+            "max_acceptable_sell": null
+          },
+          "sakoo": {
+            "threshold": "4.00",
+            "max_acceptable_buy": "8.00",
+            "max_acceptable_sell": "8.00"
+          },
+          "market_maker": {
+            "threshold": "5.00",
+            "max_acceptable_buy": "10.00",
+            "max_acceptable_sell": "10.00"
+          }
+        },
+        "change_24h": 0.78,
+        "volume_24h": 1860620.3,
+        "change_7D": -0.14,
+        "quote_volume_24h": 40463835675.4,
+        "spot_is_new": false,
+        "otc_is_new": false,
+        "highest_24h_price": "22296",
+        "lowest_24h_price": "21179"
+      },
+      {
+        "symbol": "TRXTMN",
+        "base_asset": "TRX",
+        "quote_asset": "TMN",
+        "fa_base_asset": "ترون",
+        "fa_quote_asset": "تومان",
+        "en_base_asset": "TRON",
+        "en_quote_asset": "Toman",
+        "categories": [
+          13,
+          16,
+          44
+        ],
+        "price": "88359",
+        "is_new": false,
+        "is_spot": true,
+        "is_otc": true,
+        "is_margin": false,
+        "is_tmn_based": true,
+        "is_usdt_based": false,
+        "is_zero_fee": false,
+        "leverage_step": null,
+        "max_leverage": null,
+        "created_at": "2021-02-01T00:00:00Z",
+        "amount_precision": 1,
+        "price_precision": 0,
+        "flags": [],
+        "is_market_type_enable": false,
+        "otc_min_notional": 90000,
+        "otc_max_notional": 200000000,
+        "otc_buy_enabled": true,
+        "otc_sell_enabled": true,
+        "fair_price": {
+          "ask": "88532.5287",
+          "bid": "88532.5287",
+          "spot": {
+            "threshold": "4.00",
+            "max_acceptable_buy": "8.00",
+            "max_acceptable_sell": "8.00"
+          },
+          "margin_market": {
+            "threshold": null,
+            "max_acceptable_buy": null,
+            "max_acceptable_sell": null
+          },
+          "margin_limit": {
+            "threshold": "5.00",
+            "max_acceptable_buy": null,
+            "max_acceptable_sell": null
+          },
+          "sakoo": {
+            "threshold": "4.00",
+            "max_acceptable_buy": "8.00",
+            "max_acceptable_sell": "8.00"
+          },
+          "market_maker": {
+            "threshold": "5.00",
+            "max_acceptable_buy": "10.00",
+            "max_acceptable_sell": "10.00"
+          }
+        },
+        "change_24h": 2.15,
+        "volume_24h": 148708.8,
+        "change_7D": 0.69,
+        "quote_volume_24h": 13113399228.4,
+        "spot_is_new": false,
+        "otc_is_new": false,
+        "highest_24h_price": "90050",
+        "lowest_24h_price": "86137"
+      },
+      {
+        "symbol": "ADATMN",
+        "base_asset": "ADA",
+        "quote_asset": "TMN",
+        "fa_base_asset": "کاردانو",
+        "fa_quote_asset": "تومان",
+        "en_base_asset": "Cardano",
+        "en_quote_asset": "Toman",
+        "categories": [
+          13,
+          16,
+          44
+        ],
+        "price": "58676",
+        "is_new": false,
+        "is_spot": true,
+        "is_otc": true,
+        "is_margin": true,
+        "is_tmn_based": true,
+        "is_usdt_based": false,
+        "is_zero_fee": false,
+        "leverage_step": 0.5,
+        "max_leverage": 10,
+        "created_at": "2021-05-01T00:00:00Z",
+        "amount_precision": 1,
+        "price_precision": 0,
+        "flags": [],
+        "is_market_type_enable": false,
+        "otc_min_notional": 90000,
+        "otc_max_notional": 40000000,
+        "otc_buy_enabled": true,
+        "otc_sell_enabled": true,
+        "fair_price": {
+          "ask": "59035.07355898696152",
+          "bid": "59035.07355898696152",
+          "spot": {
+            "threshold": "4.00",
+            "max_acceptable_buy": "8.00",
+            "max_acceptable_sell": "8.00"
+          },
+          "margin_market": {
+            "threshold": null,
+            "max_acceptable_buy": null,
+            "max_acceptable_sell": null
+          },
+          "margin_limit": {
+            "threshold": "5.00",
+            "max_acceptable_buy": null,
+            "max_acceptable_sell": null
+          },
+          "sakoo": {
+            "threshold": "4.00",
+            "max_acceptable_buy": "8.00",
+            "max_acceptable_sell": "8.00"
+          },
+          "market_maker": {
+            "threshold": "5.00",
+            "max_acceptable_buy": "10.00",
+            "max_acceptable_sell": "10.00"
+          }
+        },
+        "change_24h": 1.1,
+        "volume_24h": 123205.1,
+        "change_7D": -2.11,
+        "quote_volume_24h": 7384541702.9,
+        "spot_is_new": false,
+        "otc_is_new": false,
+        "highest_24h_price": "61394",
+        "lowest_24h_price": "58035"
+      },
+      {
+        "symbol": "BNBTMN",
+        "base_asset": "BNB",
+        "quote_asset": "TMN",
+        "fa_base_asset": "بایننس کوین",
+        "fa_quote_asset": "تومان",
+        "en_base_asset": "Binance Coin",
+        "en_quote_asset": "Toman",
+        "categories": [
+          13,
+          16,
+          44,
+          7
+        ],
+        "price": "197217061",
+        "is_new": false,
+        "is_spot": true,
+        "is_otc": true,
+        "is_margin": true,
+        "is_tmn_based": true,
+        "is_usdt_based": false,
+        "is_zero_fee": false,
+        "leverage_step": 0.5,
+        "max_leverage": 10,
+        "created_at": "2021-06-01T00:00:00Z",
+        "amount_precision": 5,
+        "price_precision": 0,
+        "flags": [],
+        "is_market_type_enable": false,
+        "otc_min_notional": 90000,
+        "otc_max_notional": 80000000,
+        "otc_buy_enabled": true,
+        "otc_sell_enabled": true,
+        "fair_price": {
+          "ask": "198364445.559398021169",
+          "bid": "198364445.559398021169",
+          "spot": {
+            "threshold": "4.00",
+            "max_acceptable_buy": "8.00",
+            "max_acceptable_sell": "8.00"
+          },
+          "margin_market": {
+            "threshold": null,
+            "max_acceptable_buy": null,
+            "max_acceptable_sell": null
+          },
+          "margin_limit": {
+            "threshold": "5.00",
+            "max_acceptable_buy": null,
+            "max_acceptable_sell": null
+          },
+          "sakoo": {
+            "threshold": "4.00",
+            "max_acceptable_buy": "8.00",
+            "max_acceptable_sell": "8.00"
+          },
+          "market_maker": {
+            "threshold": "5.00",
+            "max_acceptable_buy": "10.00",
+            "max_acceptable_sell": "10.00"
+          }
+        },
+        "change_24h": 1.14,
+        "volume_24h": 156.5992,
+        "change_7D": 3.14,
+        "quote_volume_24h": 31154815396.30105,
+        "spot_is_new": false,
+        "otc_is_new": false,
+        "highest_24h_price": "200986353",
+        "lowest_24h_price": "193000678"
+      },
+      {
+        "symbol": "LTCTMN",
+        "base_asset": "LTC",
+        "quote_asset": "TMN",
+        "fa_base_asset": "لایت کوین",
+        "fa_quote_asset": "تومان",
+        "en_base_asset": "Litcoin",
+        "en_quote_asset": "Toman",
+        "categories": [
+          44,
+          53
+        ],
+        "price": "16167013",
+        "is_new": false,
+        "is_spot": true,
+        "is_otc": true,
+        "is_margin": false,
+        "is_tmn_based": true,
+        "is_usdt_based": false,
+        "is_zero_fee": false,
+        "leverage_step": null,
+        "max_leverage": null,
+        "created_at": "2020-08-01T00:00:00Z",
+        "amount_precision": 5,
+        "price_precision": 0,
+        "flags": [],
+        "is_market_type_enable": false,
+        "otc_min_notional": 90000,
+        "otc_max_notional": 50000000,
+        "otc_buy_enabled": true,
+        "otc_sell_enabled": true,
+        "fair_price": {
+          "ask": "16249838.67678954894174",
+          "bid": "16249838.67678954894174",
+          "spot": {
+            "threshold": "4.00",
+            "max_acceptable_buy": "8.00",
+            "max_acceptable_sell": "8.00"
+          },
+          "margin_market": {
+            "threshold": null,
+            "max_acceptable_buy": null,
+            "max_acceptable_sell": null
+          },
+          "margin_limit": {
+            "threshold": "5.00",
+            "max_acceptable_buy": null,
+            "max_acceptable_sell": null
+          },
+          "sakoo": {
+            "threshold": "4.00",
+            "max_acceptable_buy": "8.00",
+            "max_acceptable_sell": "8.00"
+          },
+          "market_maker": {
+            "threshold": "5.00",
+            "max_acceptable_buy": "10.00",
+            "max_acceptable_sell": "10.00"
+          }
+        },
+        "change_24h": 1.91,
+        "volume_24h": 479.49905,
+        "change_7D": 5.2,
+        "quote_volume_24h": 7823041463.75046,
+        "spot_is_new": false,
+        "otc_is_new": false,
+        "highest_24h_price": "16599999",
+        "lowest_24h_price": "15863950"
+      },
+      {
+        "symbol": "SHIBTMN",
+        "base_asset": "SHIB",
+        "quote_asset": "TMN",
+        "fa_base_asset": "شیبا",
+        "fa_quote_asset": "تومان",
+        "en_base_asset": "Shiba Inu",
+        "en_quote_asset": "Toman",
+        "categories": [
+          4
+        ],
+        "price": "1.3352",
+        "is_new": false,
+        "is_spot": true,
+        "is_otc": true,
+        "is_margin": true,
+        "is_tmn_based": true,
+        "is_usdt_based": false,
+        "is_zero_fee": false,
+        "leverage_step": 0.5,
+        "max_leverage": 10,
+        "created_at": "2022-12-18T00:00:00Z",
+        "amount_precision": 0,
+        "price_precision": 4,
+        "flags": [],
+        "is_market_type_enable": false,
+        "otc_min_notional": 90000,
+        "otc_max_notional": 50000000,
+        "otc_buy_enabled": true,
+        "otc_sell_enabled": true,
+        "fair_price": {
+          "ask": "1.35609203602404",
+          "bid": "1.35609203602404",
+          "spot": {
+            "threshold": "4.00",
+            "max_acceptable_buy": "8.00",
+            "max_acceptable_sell": "8.00"
+          },
+          "margin_market": {
+            "threshold": null,
+            "max_acceptable_buy": null,
+            "max_acceptable_sell": null
+          },
+          "margin_limit": {
+            "threshold": "5.00",
+            "max_acceptable_buy": null,
+            "max_acceptable_sell": null
+          },
+          "sakoo": {
+            "threshold": "4.00",
+            "max_acceptable_buy": "8.00",
+            "max_acceptable_sell": "8.00"
+          },
+          "market_maker": {
+            "threshold": "5.00",
+            "max_acceptable_buy": "10.00",
+            "max_acceptable_sell": "10.00"
+          }
+        },
+        "change_24h": 0.5,
+        "volume_24h": 3716586054,
+        "change_7D": 1.11,
+        "quote_volume_24h": 5030525431.4973,
+        "spot_is_new": false,
+        "otc_is_new": false,
+        "highest_24h_price": "1.39",
+        "lowest_24h_price": "1.3238"
+      },
+      {
+        "symbol": "ZECTMN",
+        "base_asset": "ZEC",
+        "quote_asset": "TMN",
+        "fa_base_asset": "زی کش",
+        "fa_quote_asset": "تومان",
+        "en_base_asset": "Zcash",
+        "en_quote_asset": "Toman",
+        "categories": null,
+        "price": "344000000",
+        "is_new": false,
+        "is_spot": true,
+        "is_otc": true,
+        "is_margin": false,
+        "is_tmn_based": true,
+        "is_usdt_based": false,
+        "is_zero_fee": false,
+        "leverage_step": null,
+        "max_leverage": null,
+        "created_at": "2025-09-29T00:00:00Z",
+        "amount_precision": 4,
+        "price_precision": 0,
+        "flags": [],
+        "is_market_type_enable": false,
+        "otc_min_notional": 90000,
+        "otc_max_notional": 30000000,
+        "otc_buy_enabled": true,
+        "otc_sell_enabled": true,
+        "fair_price": {
+          "ask": "345383191.67268837836244",
+          "bid": "345383191.67268837836244",
+          "spot": {
+            "threshold": "4.00",
+            "max_acceptable_buy": "8.00",
+            "max_acceptable_sell": "8.00"
+          },
+          "margin_market": {
+            "threshold": null,
+            "max_acceptable_buy": null,
+            "max_acceptable_sell": null
+          },
+          "margin_limit": {
+            "threshold": "5.00",
+            "max_acceptable_buy": null,
+            "max_acceptable_sell": null
+          },
+          "sakoo": {
+            "threshold": "4.00",
+            "max_acceptable_buy": "8.00",
+            "max_acceptable_sell": "8.00"
+          },
+          "market_maker": {
+            "threshold": "5.00",
+            "max_acceptable_buy": "10.00",
+            "max_acceptable_sell": "10.00"
+          }
+        },
+        "change_24h": 4.93,
+        "volume_24h": 99.9098,
+        "change_7D": 16.04,
+        "quote_volume_24h": 34764002857.3828,
+        "spot_is_new": false,
+        "otc_is_new": false,
+        "highest_24h_price": "362684159",
+        "lowest_24h_price": "326650221"
+      },
+      {
+        "symbol": "DASHTMN",
+        "base_asset": "DASH",
+        "quote_asset": "TMN",
+        "fa_base_asset": "دَش",
+        "fa_quote_asset": "تومان",
+        "en_base_asset": "Dash",
+        "en_quote_asset": "Toman",
+        "categories": [
+          13,
+          44
+        ],
+        "price": "13504691",
+        "is_new": false,
+        "is_spot": true,
+        "is_otc": true,
+        "is_margin": false,
+        "is_tmn_based": true,
+        "is_usdt_based": false,
+        "is_zero_fee": false,
+        "leverage_step": null,
+        "max_leverage": null,
+        "created_at": "2020-09-01T00:00:00Z",
+        "amount_precision": 5,
+        "price_precision": 0,
+        "flags": [],
+        "is_market_type_enable": false,
+        "otc_min_notional": 90000,
+        "otc_max_notional": 100000000,
+        "otc_buy_enabled": true,
+        "otc_sell_enabled": true,
+        "fair_price": {
+          "ask": "13581444.83554964583366",
+          "bid": "13581444.83554964583366",
+          "spot": {
+            "threshold": "4.00",
+            "max_acceptable_buy": "8.00",
+            "max_acceptable_sell": "8.00"
+          },
+          "margin_market": {
+            "threshold": null,
+            "max_acceptable_buy": null,
+            "max_acceptable_sell": null
+          },
+          "margin_limit": {
+            "threshold": "5.00",
+            "max_acceptable_buy": null,
+            "max_acceptable_sell": null
+          },
+          "sakoo": {
+            "threshold": "4.00",
+            "max_acceptable_buy": "8.00",
+            "max_acceptable_sell": "8.00"
+          },
+          "market_maker": {
+            "threshold": "5.00",
+            "max_acceptable_buy": "10.00",
+            "max_acceptable_sell": "10.00"
+          }
+        },
+        "change_24h": 4.09,
+        "volume_24h": 906.53192,
+        "change_7D": 6.59,
+        "quote_volume_24h": 12527075107.15572,
+        "spot_is_new": false,
+        "otc_is_new": false,
+        "highest_24h_price": "14258403",
+        "lowest_24h_price": "12969315"
+      },
+      {
+        "symbol": "GRAMTMN",
+        "base_asset": "GRAM",
+        "quote_asset": "TMN",
+        "fa_base_asset": "گرام",
+        "fa_quote_asset": "تومان",
+        "en_base_asset": "Gram",
+        "en_quote_asset": "TOMAN",
+        "categories": [
+          16,
+          44,
+          53
+        ],
+        "price": "360562",
+        "is_new": false,
+        "is_spot": true,
+        "is_otc": true,
+        "is_margin": false,
+        "is_tmn_based": true,
+        "is_usdt_based": false,
+        "is_zero_fee": false,
+        "leverage_step": null,
+        "max_leverage": null,
+        "created_at": "2026-06-17T00:00:00Z",
+        "amount_precision": 2,
+        "price_precision": 0,
+        "flags": [],
+        "is_market_type_enable": false,
+        "otc_min_notional": 90000,
+        "otc_max_notional": 10000000,
+        "otc_buy_enabled": true,
+        "otc_sell_enabled": true,
+        "fair_price": {
+          "ask": "360351.80085631269102",
+          "bid": "360351.80085631269102",
+          "spot": {
+            "threshold": "4.00",
+            "max_acceptable_buy": "8.00",
+            "max_acceptable_sell": "8.00"
+          },
+          "margin_market": {
+            "threshold": null,
+            "max_acceptable_buy": null,
+            "max_acceptable_sell": null
+          },
+          "margin_limit": {
+            "threshold": "5.00",
+            "max_acceptable_buy": null,
+            "max_acceptable_sell": null
+          },
+          "sakoo": {
+            "threshold": "4.00",
+            "max_acceptable_buy": "8.00",
+            "max_acceptable_sell": "8.00"
+          },
+          "market_maker": {
+            "threshold": "5.00",
+            "max_acceptable_buy": "10.00",
+            "max_acceptable_sell": "10.00"
+          }
+        },
+        "change_24h": 2.74,
+        "volume_24h": 15342.65,
+        "change_7D": 0.93,
+        "quote_volume_24h": 5508964541.05,
+        "spot_is_new": false,
+        "otc_is_new": false,
+        "highest_24h_price": "363975",
+        "lowest_24h_price": "350911"
+      },
+      {
+        "symbol": "BTCUSDT",
+        "base_asset": "BTC",
+        "quote_asset": "USDT",
+        "fa_base_asset": "بیت کوین",
+        "fa_quote_asset": "تتر",
+        "en_base_asset": "Bitcoin",
+        "en_quote_asset": "Tether",
+        "categories": [
+          44
+        ],
+        "price": "82810.42",
+        "is_new": false,
+        "is_spot": true,
+        "is_otc": true,
+        "is_margin": true,
+        "is_tmn_based": false,
+        "is_usdt_based": true,
+        "is_zero_fee": false,
+        "leverage_step": 0.5,
+        "max_leverage": 10,
+        "created_at": "2020-04-01T00:00:00Z",
+        "amount_precision": 8,
+        "price_precision": 2,
+        "flags": [],
+        "is_market_type_enable": true,
+        "otc_min_notional": 2,
+        "otc_max_notional": 2000,
+        "otc_buy_enabled": true,
+        "otc_sell_enabled": true,
+        "fair_price": {
+          "ask": "82878.25348514203506",
+          "bid": "82878.25348514203506",
+          "spot": {
+            "threshold": "4.00",
+            "max_acceptable_buy": "8.00",
+            "max_acceptable_sell": "8.00"
+          },
+          "margin_market": {
+            "threshold": null,
+            "max_acceptable_buy": null,
+            "max_acceptable_sell": null
+          },
+          "margin_limit": {
+            "threshold": "5.00",
+            "max_acceptable_buy": null,
+            "max_acceptable_sell": null
+          },
+          "sakoo": {
+            "threshold": "4.00",
+            "max_acceptable_buy": "8.00",
+            "max_acceptable_sell": "8.00"
+          },
+          "market_maker": {
+            "threshold": "5.00",
+            "max_acceptable_buy": "10.00",
+            "max_acceptable_sell": "10.00"
+          }
+        },
+        "change_24h": 0.0,
+        "volume_24h": 6.08045948,
+        "change_7D": 1.48,
+        "quote_volume_24h": 509388.3708886441,
+        "spot_is_new": false,
+        "otc_is_new": false,
+        "highest_24h_price": "84793.58",
+        "lowest_24h_price": "82680"
+      }
+    ],
+    "coin_categories": [
+      {
+        "id": 1,
+        "name": "بازارها | استیبل کوین‌ها",
+        "name_fa": "استیبل کوین"
+      },
+      {
+        "id": 4,
+        "name": "بازارها | میم کوین‌ها",
+        "name_fa": "میم کوین"
+      },
+      {
+        "id": 13,
+        "name": "بازارها | رمزارزهای دیفای (De.Fi)",
+        "name_fa": "دیفای"
+      },
+      {
+        "id": 16,
+        "name": "بازارها | رمزارزهای قرارداد هوشمند",
+        "name_fa": "قرارداد هوشمند"
+      },
+      {
+        "id": 34,
+        "name": "بازارها | رمزارزهای هوش مصنوعی",
+        "name_fa": "هوش مصنوعی"
+      },
+      {
+        "id": 22,
+        "name": "بازارها | رمزارزهای وب ۳.۰",
+        "name_fa": "وب ۳.۰"
+      },
+      {
+        "id": 44,
+        "name": "بازارها | رمزارزهای لایه ۱",
+        "name_fa": "لایه ۱"
+      },
+      {
+        "id": 35,
+        "name": "بازارها | رمزارزهای لایه ۲",
+        "name_fa": "لایه ۲"
+      },
+      {
+        "id": 38,
+        "name": "بازارها | رمزارزهای حوزه اپلیکیشن غیرمتمرکز (DApps)",
+        "name_fa": "اپلیکیشن غیرمتمرکز"
+      },
+      {
+        "id": 31,
+        "name": "بازارها | رمزارزهای NFT",
+        "name_fa": "NFT"
+      },
+      {
+        "id": 10,
+        "name": "بازارها | رمزارزهای متاورس",
+        "name_fa": "متاورس"
+      },
+      {
+        "id": 25,
+        "name": "بازارها | توکن‌های گیم‌فای",
+        "name_fa": "گیم‌فای"
+      },
+      {
+        "id": 19,
+        "name": "بازارها | رمزارزهای اوراکل",
+        "name_fa": "اوراکل"
+      },
+      {
+        "id": 41,
+        "name": "بازارها | رمزارزهای دیتا",
+        "name_fa": "دیتا"
+      },
+      {
+        "id": 7,
+        "name": "بازارها | توکن‌های صرافی",
+        "name_fa": "توکن صرافی"
+      },
+      {
+        "id": 47,
+        "name": "بازارها | رمزارزهای دپین",
+        "name_fa": "دپین"
+      },
+      {
+        "id": 50,
+        "name": "بازارها | دارایی های RWA",
+        "name_fa": "دارایی های RWA"
+      },
+      {
+        "id": 53,
+        "name": "آلت‌کوین های والکس",
+        "name_fa": "آلت‌کوین"
+      },
+      {
+        "id": 100001,
+        "name": "is_new",
+        "name_fa": "جدید"
+      }
+    ]
+  },
+  "message": "Success",
+  "success": true
+}
