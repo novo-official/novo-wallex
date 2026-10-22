@@ -50,3 +50,14 @@ dashboard-install:
 
 dashboard:
 	npm --prefix dashboard run dev
+
+# Go-live (RUNBOOK.md): freeze check, preflight, smoke test (typed YES), typed GO LIVE, tag live-v1 + push, start live.
+.PHONY: go-live smoke-test preflight
+go-live:
+	scripts/go_live.sh
+
+smoke-test:
+	$(PY) manage.py smoke_test
+
+preflight:
+	$(PY) manage.py preflight --mode live

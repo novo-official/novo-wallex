@@ -40,6 +40,9 @@ stop = 0.010                   # engine-side, against the best bid
 max_hold_bars = 24             # 2 h of 5m bars, then limit at best -> market
 entry_timeout_minutes = 3.0    # maker limit at the best bid, one reprice, then cancel
 reprices = 1
+# Fix-check variant (b) (reports/ai_fix_check, tuned on recent data): uncomment to trade only E[net] > 0.
+# min_edge = 0.0
+# skip_15m_down = true          # variant (c): no trades at all in the last 14 days
 
 [activity]                     # superseded by [ai_activity] (kept for the record; off)
 enabled = false
