@@ -6,7 +6,7 @@ import json
 from datetime import UTC, datetime
 from pathlib import Path
 
-MODES = ("shadow", "live")
+MODES = ("shadow", "live", "replay")  # replay: blind historical replay journal (scripts/export_replay_journal.py)
 
 
 def _read_json(path: Path) -> dict | None:

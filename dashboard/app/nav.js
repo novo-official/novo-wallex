@@ -16,6 +16,7 @@ function Inner() {
       <select value={mode} onChange={(e) => router.push(`${path}?mode=${e.target.value}`)} aria-label="حالت">
         <option value="shadow">شبیه‌سازی (شادو)</option>
         <option value="live">زنده</option>
+        <option value="replay">بازپخش تاریخی ۷ روزه (کورکورانه)</option>
       </select>
     </nav>
   );

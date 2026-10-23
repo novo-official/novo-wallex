@@ -20,7 +20,7 @@ function Row({ d }) {
     d.kind === "LLM"
       ? d.role === "regime_officer"
         ? `حالت ${d.risk_mode} · ممنوع: ${(d.avoid || []).join("، ") || "هیچ"}`
-        : `${d.symbol}: ${d.approve ? "تأیید" : "رد"} · اندازه ${d.size_fraction ?? "—"}`
+        : `${d.symbol}: ${d.approve ? "تأیید" : "رد"} · اندازه ${d.size_fraction == null ? "—" : Number(d.size_fraction).toFixed(2)}`
       : [d.symbol, d.price || d.limit ? `قیمت ${tmn(d.price || d.limit)}` : null, d.role].filter(Boolean).join(" · ");
   return (
     <li className={`event ${KIND_TONE[d.kind] || ""}`} onClick={() => setOpen(!open)}>
@@ -53,6 +53,12 @@ function Timeline() {
         ))}
         <span className="muted small">{data ? `${tmn(data.count)} رویداد · برای جزئیات کلیک کنید` : ""}</span>
       </div>
+      {mode === "replay" && (
+        <p className="muted small">
+          بازپخش کورکورانه پیکربندی زنده روی ۷ روز تاریخی (۱۵ تا ۲۲ اکتبر ۲۰۲۶): پاسخ‌های واقعی مدل از کش، بدون
+          تاریخ و قیمت در ورودی مدل. این داده شادو یا زنده نیست.
+        </p>
+      )}
       {error && <p className="bad">خطا در خواندن API: {error}</p>}
       {!data && !error && <p>در حال بارگذاری…</p>}
       <ul className="timeline">{data?.results.map((d, i) => <Row key={`${d.time}-${i}`} d={d} />)}</ul>

@@ -1,0 +1,14 @@
+risk/tests/test_guard.py::test_account_status_blocks_entries[overrides0-kill switch] PASSED
+risk/tests/test_guard.py::test_account_status_blocks_entries[overrides1-daily loss limit] PASSED
+risk/tests/test_guard.py::test_account_status_blocks_entries[overrides2-last 120 minutes] PASSED
+risk/tests/test_guard.py::test_account_status_blocks_entries[overrides3-risk_mode OFF] PASSED
+risk/tests/test_guard.py::test_account_status_blocks_entries[overrides4-kill switch] PASSED
+risk/tests/test_guard.py::test_account_status_blocks_entries[overrides5-daily loss limit] PASSED
+risk/tests/test_guard.py::test_status_flags_flatten_in_the_last_hour_and_on_kill PASSED
+risk/tests/test_guard.py::test_llm_can_only_reduce_risk PASSED
+risk/tests/test_guard.py::test_defensive_mode_halves_the_size PASSED
+execution/tests/test_engine.py::test_end_of_challenge_flattens_with_a_limit_then_market PASSED
+execution/tests/test_engine.py::test_kill_switch_flattens_and_halts PASSED
+execution/tests/test_engine.py::test_ramp_ends_after_two_hours PASSED
+execution/tests/test_engine.py::test_no_entry_on_a_market_without_recent_trades PASSED
+====================== 13 passed, 18 deselected in 0.30s =======================
