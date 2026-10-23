@@ -63,9 +63,9 @@ class Command(BaseCommand):
         }
         path = settings.BASE_DIR / "logs" / f"smoke-{datetime.now(UTC):%Y%m%dT%H%M%S}.json"
         path.parent.mkdir(exist_ok=True)
-        path.write_text(json.dumps(report, indent=1, ensure_ascii=False), encoding="utf-8")
+        path.write_text(json.dumps(report, indent=1, ensure_ascii=False, default=str), encoding="utf-8")
         for step in result.steps:
-            self.stdout.write(json.dumps(step, ensure_ascii=False))
+            self.stdout.write(json.dumps(step, ensure_ascii=False, default=str))
         self.stdout.write(f"fee endpoint: {fee}")
         self.stdout.write(f"report: {path} (local only, not committed)")
         if not result.ok:
@@ -110,9 +110,9 @@ class Command(BaseCommand):
             "steps": result.steps,
         }
         path = logs / f"roundtrip-{datetime.now(UTC):%Y%m%dT%H%M%S}.json"
-        path.write_text(json.dumps(report, indent=1, ensure_ascii=False), encoding="utf-8")
+        path.write_text(json.dumps(report, indent=1, ensure_ascii=False, default=str), encoding="utf-8")
         for step in result.steps:
-            self.stdout.write(json.dumps(step, ensure_ascii=False))
+            self.stdout.write(json.dumps(step, ensure_ascii=False, default=str))
         self.stdout.write(f"buy fee: {result.fee_buy}")
         self.stdout.write(f"sell fee: {result.fee_sell}")
         self.stdout.write(
