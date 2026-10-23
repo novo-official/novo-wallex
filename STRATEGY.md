@@ -112,6 +112,23 @@ RiskGuard (`risk/guard.py`, pure) checks every entry; LLM output passes through 
 
 ## 5. Results
 
+**Live run (prop account, 2026-10-23 11:38 → 23:00 Tehran):** 5,000,000 → 4,994,555 TMN (**−0.109%**; TMN only
+−0.218%, the rest is 0.0000085 ETH of unsellable dust). Two ETHTMN round trips: one 2-hour max-hold exit
+(−993 TMN), one stop (≈ −3,250 TMN, filled at −1.36% vs the −1% stop); pre-live smoke tests cost 873 TMN.
+`FINAL ok: true` (100% TMN excluding dust). Logs: `reports/decision_logs/live_decisions.*`.
+
+What the live run taught us (all fixed or documented, see CHANGELOG):
+- **The exchange differs from its docs:** MARKET orders and USDTTMN orders are refused on the prop account;
+  the buy fee is taken in the coin (0.25% maker / 0.30% taker) and the sell fee in TMN. Forced exits became
+  re-placed aggressive limits; USDTTMN left the live markets.
+- **Coin-side fees + a coarse amount step make dust:** ETH's 0.00001 step left ~6,000 TMN per trade that
+  cannot be sold below the minimum order. Every sell now uses the available balance, and dust is reported.
+- **Operations matter:** the laptop sleeping (on battery, lid closed) stopped the engine for ~2 h. It halted
+  entries and resumed without help, but a stop cannot be checked while the machine sleeps; run it on a server.
+- **Open bugs at the end:** the take-profit of a repriced entry is not rounded to the price step (rejected by
+  the exchange in trade 2; the stop still protected it), and the journal's approximate P&L is wrong for that trade.
+
+
 All fee tables use the **measured** fees from `GET /v1/account/fee` (2026-10-23): TMN maker 0.25% / taker 0.30%.
 
 **AI activity fix check** (`reports/ai_fix_check`, last 14 days to 2026-10-22, ML-only proxy, walk-forward predictions;

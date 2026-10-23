@@ -3,6 +3,7 @@
 > **خلاصه:** موتور معاملاتی تیم نوو برای چالش والکس در هکاتون Starkoch. بازار اسپات، فقط خرید، و بدون دخالت انسان.
 > - **تصمیم‌گیری:** مدل ML بازارها را رتبه‌بندی می‌کند، دو نقش مدل زبانی محلی (افسر ریسک و عامل معامله) تأیید می‌کنند و RiskGuard حرف آخر را می‌زند.
 > - **یک مسیر کد:** شادو و زنده یک کد مشترک دارند و همه چیز در DecisionLog ثبت می‌شود.
+> - **نتیجه اجرای زنده (۱ آبان، ۱۱:۳۸ تا ۲۳:۰۰):** ۵٬۰۰۰٬۰۰۰ تومان به ۴٬۹۹۴٬۵۵۵ تومان رسید (−۰٫۱۰۹٪)، با ۲ معامله روی ETHTMN. بررسی پایانی تومانی بودن قبول شد.
 > - **مستندات:** معماری و استراتژی در `STRATEGY.md`، راه‌اندازی زنده و خرابی‌ها در `RUNBOOK.md`، و ویدیوی دمو در `DEMO_SCRIPT.md`.
 
 Django 5.2 + DRF + PostgreSQL, Python 3.12, LightGBM, a local LLM (Ollama, `qwen3:8b` pinned by digest) and a
@@ -16,6 +17,22 @@ Next.js dashboard (Persian, RTL). The backtester, shadow and live share the same
 | `docs/RESEARCH_P2.md` … `P4.md` | data, costs, rules, ML, LLM roles: every experiment and its numbers |
 | `reports/experiments.jsonl` | append-only log of every experiment run (configs tried, holdout looks) |
 | `reports/decision_logs/` | exported decision logs (shadow; live once it runs) |
+
+## Live result (prop account, 2026-10-23)
+
+| | |
+|---|---|
+| period | 11:38 → 23:00 Tehran (11.4 h); live-v1 (`e285a7f`), then live-v1.1 by a controlled restart at 12:33 (`d6cb336`, tag `live-v1.1-deploy`) |
+| start → end | 5,000,000 TMN → **4,989,101 TMN + 0.0000085 ETH dust (≈ 5,455 TMN) = 4,994,555 TMN** |
+| return | **−0.109%** with the dust at the bid (TMN only: −0.218%) |
+| final check | `FINAL ok: true` at 23:00:02: 100% TMN excluding dust, 99.89% including it; dust is below the 50,000 TMN minimum order |
+| trades | 2 round trips, both ETHTMN: −993 TMN (2 h max-hold exit) and ≈ −3,250 TMN (stop) |
+| pre-live tests | smoke tests + two real BTCTMN round trips: −873 TMN |
+| AI decisions | 6 Officer decisions (all NORMAL; BTC/ETH avoided in 2 slots); 3 Trade Agent reviews, all approved with a smaller size; 4 candidates rejected by the Officer's avoid list |
+| operations | 0 crashes; 4 automatic entry halts, all resumed by themselves (the Mac slept on battery and with the lid closed; one DNS drop on the phone hotspot) |
+
+Decision logs: `reports/decision_logs/live_decisions.{jsonl,csv}` (every candidate, LLM decision, RiskGuard verdict,
+order, fill, exit and the final check). What the live run taught us is in `STRATEGY.md` §5.
 
 ## 1. Setup
 

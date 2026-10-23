@@ -235,7 +235,7 @@ across adjacent polls. ~2.8 req/s, no rate-limit headers seen; a 429 is retried 
   then the ablation (39 selection + 17 holdout non-overlapping windows). News: interface + stub only.
 - **P5/P6/P7 (2026-10-23):** engine, brokers, reconcile, preflight, smoke test, `make go-live`; trend OFF in live,
   AI activity only (fix check: (a) −1.34%, (b) E[net] > 0 +0.03% at 0.14 trades/day, (c) no trades); dashboard;
-  docs. Shadow running (G2 from 2026-10-23 05:26 Tehran, commit 861307c). Blocked on the prop account: the key is the main
+  docs. **Live ran 2026-10-23 11:38–23:00 Tehran: 5,000,000 → 4,994,555 TMN (−0.109%), 2 trades, FINAL ok.** Blocked on the prop account: the key is the main
   account's (all balances 0); CHALLENGE_END to be set by hand. Live config = (a) with both LLM roles (user decision 2026-10-23); live markets BTCTMN + ETHTMN (USDTTMN refused).
 - Triage if short on time: keep backtester + 3-day study, RiskGuard, execution + reconcile + end flatten,
   DecisionLog, LLM agent with ablation, docs + reproduce. Cut first: triarb, ML polish, dashboard polish, Telegram.
