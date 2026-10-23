@@ -1,4 +1,5 @@
-"""`smc_long`: a long-only ICT setup module on the 5m clock (research; not registered in strategy/factory.py).
+"""`smc_long`: a long-only ICT setup module on the 5m clock (live from live-v2 by the team's decision; it failed the
+research gate, docs/RESEARCH_SMC.md).
 
 1h bullish structure -> a 15m setup (bullish sweep, then a displacement that breaks structure up and leaves an
 FVG or OB) -> a maker LIMIT at the top of that zone on the retrace (timeout, then cancel). Stop under the sweep
@@ -73,7 +74,15 @@ class SMCLongModule:
                 f"zone top {limit:.0f} (discount), stop {distance:.2%}, target swing high {target:.0f} "
                 f"({reward / risk:.1f}R)"
             ),
-            signals={"zone_top": top, "sweep_low": sweep, "target": target, "rr": reward / risk},
+            signals={
+                "smc_pattern": "1h bullish structure; 15m liquidity sweep below a swing low, then a displacement "
+                "that broke structure up and left an FVG/OB; entry on the retrace into that zone",
+                "smc_sweep_depth": (limit - sweep) / limit,
+                "smc_target_distance": target / limit - 1,
+                "smc_rr": reward / risk,
+                "smc_discount": (limit - sweep) / (target - sweep),
+                "smc_structure_1h": "bullish",
+            },
             limit_price=limit,
             stop_price=stop,
             take_profit=target,

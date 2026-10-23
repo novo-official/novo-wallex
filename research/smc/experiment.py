@@ -25,10 +25,10 @@ from backtest.metrics import compute_metrics
 from ml.p3_experiments import _manifest
 from strategy.composite import CompositeStrategy, FairValueParams, MLFilterParams
 from strategy.factory import build_strategy
+from strategy.modules.smc_long import SMCLongModule, SMCModuleParams
+from strategy.smc import SMCParams
 
 from .data import market, smc_features
-from .features import SMCParams
-from .module import SMCLongModule, SMCModuleParams
 
 MEASURED = Fees(Decimal("0.0025"), Decimal("0.0030"))  # GET /v1/account/fee, TMN markets, 2026-10-23
 LIVE_REF = "live config (a), ML-only proxy"

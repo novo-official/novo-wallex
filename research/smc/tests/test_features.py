@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-from research.smc.features import SMCParams, smc_frame
+from strategy.smc import SMCParams, smc_frame
 
 
 def _bars(closes, spread=0.5):

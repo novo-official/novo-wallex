@@ -12,24 +12,15 @@ import pandas as pd
 from backtest.dataset import build_features, build_market_data, load_rules
 from ml.dataset import ml_frames
 from ml.p3_experiments import CACHE, TARGETS, _cache_key
-from strategy.data import as_of, fill_gaps, load_1m, resample
-
-from .features import COLUMNS, SMCParams, smc_frame
+from strategy.data import load_1m
+from strategy.smc import SMCParams, smc_on_clock
 
 H24 = next(t for t in TARGETS if t.name == "h24")
 ML_SYMBOLS = ["USDTTMN", "BTCTMN", "ETHTMN"]
-HTF_COLUMNS = ["structure", "bos_up", "bars_since_bos", "pd_pct"]
 
 
 def smc_columns(data_dir: Path, symbol: str, clock: pd.DatetimeIndex, params: SMCParams, tag: str = "") -> pd.DataFrame:
-    bars = fill_gaps(load_1m(data_dir, symbol))
-    m15, m60 = resample(bars, 15), resample(bars, 60)
-    f15, f60 = smc_frame(m15, params), smc_frame(m60, params)
-    joined = as_of(f15, clock, COLUMNS, f"_smc15{tag}").join(as_of(f60, clock, HTF_COLUMNS, f"_smc1h{tag}"))
-    for column in joined.columns:  # booleans arrive as objects after the as-of join
-        if joined[column].dtype == object:
-            joined[column] = joined[column].astype(float)
-    return joined
+    return smc_on_clock(load_1m(data_dir, symbol), clock, params, tag)
 
 
 def smc_features(config, data_dir: Path, symbols: list[str], variants: dict[str, SMCParams]) -> tuple[dict, dict]:

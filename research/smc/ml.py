@@ -16,10 +16,10 @@ from backtest.report import write_json
 from ml.features import FEATURES
 from ml.p3_experiments import selection_end
 from ml.perbar import PerBarSpec, build_table, fit_net_model, oof_quality, shap_summary, walk_forward_net
+from strategy.smc import SMCParams
 
 from . import experiment as x
 from .data import H24, ML_SYMBOLS, market, smc_columns
-from .features import SMCParams
 
 SMC_ML = {
     "fvg_dist_atr_smc15": "smc_fvg_dist_atr",

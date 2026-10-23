@@ -131,6 +131,9 @@ def candidate_context(intent) -> dict:
     for name in ("ema50_slope_1h", "rsi14_15m_min_1h", "stop_distance"):
         if name in signals:
             out[name] = _num(signals[name])
+    for name, value in signals.items():  # smc_long: sweep depth, target distance, R, discount, pattern
+        if name.startswith("smc_"):
+            out[name] = value if isinstance(value, str) else _num(value)
     return out
 
 
@@ -226,7 +229,7 @@ class AgentLayer:
     blind: bool = True
     tools_factory: object = None  # callable(ctx) -> ToolSet | None
     news: NewsFeed | None = None
-    reviewed_modules: tuple[str, ...] = ("trend", "ai_activity")
+    reviewed_modules: tuple[str, ...] = ("trend", "ai_activity", "smc_long")
     officer_hours: int = 1  # live/shadow: 1; historical replay: 4 (config/llm.toml [cadence])
     log: list[dict] = field(default_factory=list)
     _hour = None

@@ -3,6 +3,18 @@
 Every change to the trading code after the `live-v1` tag gets an entry here and a new tag (code freeze,
 RUNBOOK.md §2). Before go-live, `git log` is the history.
 
+## live-v2 (2026-10-24, team decision: SMC alongside AI activity; tagged at go-live)
+
+- `smc_long` (ICT: 1h bullish structure, 15m sweep, displacement + BOS, FVG/OB retrace entry, stop under the
+  sweep, swing-high target ≥ 1.5 R, discount only) runs **alongside** AI activity on BTCTMN/ETHTMN, variant
+  `p2fvgob_t24`. **It failed the research gate** (docs/RESEARCH_SMC.md: 14 days −0.15% at 0.14 trades/day); it is
+  enabled by the team's explicit decision, not by the evidence.
+- Every SMC entry goes through the Officer, the Trade Agent (which now sees named SMC fields: pattern, sweep
+  depth, target distance, R, discount) and RiskGuard; 250k TMN per trade like AI activity; same risk limits.
+- The SMC features are computed on the live 1m candles with the same `strategy.smc.smc_on_clock` as the
+  backtest; new setups are journaled as SMC_SETUP. Code moved from research/smc into strategy/ (frozen paths).
+- Includes live-v1.2 (repriced take-profit rounding, P&L cost basis).
+
 ## live-v1.2 (2026-10-24, bug fixes found in the live run; not deployed yet)
 
 - A repriced entry's take-profit (and stop) were not rounded to the price step: Wallex rejected the take-profit

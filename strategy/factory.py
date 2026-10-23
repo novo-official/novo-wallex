@@ -8,6 +8,7 @@ from .composite import CompositeStrategy, FairValueParams, MLFilterParams
 from .modules.ai_activity import AIActivityModule, AIActivityParams
 from .modules.mean_reversion import MeanReversionModule, MeanReversionParams
 from .modules.ml_signal import MLSignalModule, MLSignalParams
+from .modules.smc_long import SMCLongModule, SMCModuleParams
 from .modules.trend import TrendModule, TrendParams
 from .modules.usdt_allocation import USDTAllocationModule, USDTAllocationParams
 
@@ -37,6 +38,11 @@ def build_strategy(params: dict, symbols: list[str]) -> CompositeStrategy:
             if "symbols" in values:
                 values["symbols"] = tuple(values["symbols"])
             modules.append(AIActivityModule(AIActivityParams(**values)))
+        elif name == "smc_long":
+            values = dict(_subset(SMCModuleParams, params.get("smc_long", {})))
+            if "symbols" in values:
+                values["symbols"] = tuple(values["symbols"])
+            modules.append(SMCLongModule(SMCModuleParams(**values)))
         elif name == "usdt_allocation":
             values = _subset(USDTAllocationParams, params.get("usdt_allocation", {}))
             modules.append(USDTAllocationModule(USDTAllocationParams(**values)))

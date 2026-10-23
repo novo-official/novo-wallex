@@ -70,6 +70,11 @@ def live_strategy_params(study, live: dict) -> dict:
         params["ai_activity"] = {key: ai[key] for key in ai if key not in ("enabled", "notional_tmn")} | {
             "size_fraction": float(notional / cap)
         }
+        if live.get("smc", {}).get("enabled"):
+            # Team decision 2026-10-24: SMC runs alongside AI activity although it failed the research gate.
+            _, module = smc_settings(live)
+            params["modules"].append("smc_long")
+            params["smc_long"] = module | {"size_fraction": float(notional / cap)}
         return params
     activity = live["activity"]
     if activity.get("enabled"):
@@ -85,6 +90,59 @@ def live_strategy_params(study, live: dict) -> dict:
             "max_entries_per_day": int(activity["max_entries_per_day"]),
         }
     return params
+
+
+SMC_SYMBOLS = ("BTCTMN", "ETHTMN")
+
+
+def smc_settings(live: dict):
+    """(SMCParams, smc_long module params) from config/smc.toml, overridden by config/live.toml [smc]."""
+    from strategy.smc import SMCParams
+
+    raw = tomllib.loads((settings.BASE_DIR / "config" / "smc.toml").read_text(encoding="utf-8"))
+    smc = live.get("smc", {})
+    features = dict(raw["features"]) | {k: smc[k] for k in ("pivot_n", "zone") if k in smc}
+    module = dict(raw["module"]) | {k: smc[k] for k in ("timeout_bars",) if k in smc}
+    module["symbols"] = list(SMC_SYMBOLS)
+    return SMCParams(**features), module
+
+
+def smc_columns(feed, params, journal=None):
+    """Live SMC columns on the 5m clock from the feed's 1m bars (the same `smc_on_clock` as the backtest).
+    Journals SMC_SETUP once per new 15m setup, so the decision log shows what the module saw."""
+    import math
+
+    import pandas as pd
+
+    from strategy.smc import smc_on_clock
+
+    seen: dict[str, float] = {}
+
+    def columns(features: dict) -> dict:
+        frontier = feed._frontier()
+        out = {}
+        for symbol in SMC_SYMBOLS:
+            if symbol not in features or symbol not in feed.bars or feed.bars[symbol].empty:
+                continue
+            bars = feed._extended(feed.bars[symbol], frontier)
+            frame = smc_on_clock(bars, pd.DatetimeIndex(features[symbol].index), params)
+            out[symbol] = {column: frame[column] for column in frame.columns}
+            last = frame.iloc[-1]
+            setup = last["setup_id_smc15"]
+            if journal is not None and math.isfinite(setup) and seen.get(symbol) != setup:
+                seen[symbol] = setup
+                journal.decision(
+                    "SMC_SETUP",
+                    symbol=symbol,
+                    zone_top=last["setup_top_smc15"],
+                    zone_bottom=last["setup_bottom_smc15"],
+                    sweep_low=last["setup_sweep_low_smc15"],
+                    target=last["setup_tp_smc15"],
+                    structure_1h=last["structure_smc1h"],
+                )
+        return out
+
+    return columns
 
 
 def code_version() -> str:
@@ -143,7 +201,15 @@ def build_engine(mode: str) -> Engine:
     ai_on = bool(live.get("ai_activity", {}).get("enabled"))
     if ai_on and not (live["llm"]["officer"] and live["llm"]["trade_agent"]):
         raise ValueError("ai_activity needs both LLM roles: every trade is an ML + LLM decision")
-    extra = _ml_columns(study) if (ai_on or live["activity"].get("enabled")) else None
+    ml = _ml_columns(study) if (ai_on or live["activity"].get("enabled")) else None
+    smc = smc_columns(feed, smc_settings(live)[0], journal) if (ai_on and live.get("smc", {}).get("enabled")) else None
+
+    def extra(features: dict) -> dict:
+        out = ml(features) if ml else {}
+        for symbol, columns in (smc(features) if smc else {}).items():
+            out.setdefault(symbol, {}).update(columns)
+        return out
+
     agent = _agent(live, client, policy, feed) if (live["llm"]["officer"] or live["llm"]["trade_agent"]) else None
     engine_cfg = live["engine"]
     settings_obj = EngineSettings(
@@ -171,7 +237,7 @@ def build_engine(mode: str) -> Engine:
         journal,
         settings.BASE_DIR / "logs",
         agent=agent,
-        extra_columns=extra,
+        extra_columns=extra if (ml or smc) else None,
     )
     engine.config_hash = config_hash
     return engine

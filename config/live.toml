@@ -61,5 +61,8 @@ officer = true                 # hourly Regime/Risk Officer (local model); exits
 trade_agent = true
 mode = "live"                  # local Ollama first; free fallbacks only if configured in .env
 
-[smc]                          # ICT/SMC research module (research/smc/, config/smc.toml): NOT on the live path
-enabled = false                # enabled only if it passes the gate in docs/RESEARCH_SMC.md, then tag live-v2
+[smc]                          # ICT/SMC module smc_long (strategy/smc.py, config/smc.toml), alongside AI activity
+enabled = true                 # team decision 2026-10-24 although it FAILED the gate (docs/RESEARCH_SMC.md)
+pivot_n = 2                    # variant p2fvgob_t24: the most active one, the one evaluated on the holdout
+zone = "fvg_or_ob"
+timeout_bars = 24

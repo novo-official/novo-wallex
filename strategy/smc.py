@@ -1,4 +1,4 @@
-"""ICT / Smart Money Concepts as quantified, causal features (research module, not on the live path).
+"""ICT / Smart Money Concepts as quantified, causal features (the `smc_long` module; research: research/smc/).
 
 Pure functions over ONE timeframe's closed bars (columns open/high/low/close, index = bar open time). Every value
 at bar t uses bars <= t only. A swing point at bar i is known only from bar i + N (N right bars). Long only.
@@ -28,6 +28,7 @@ from dataclasses import dataclass
 import numpy as np
 import pandas as pd
 
+from strategy.data import as_of, fill_gaps, resample
 from strategy.features import atr as atr_series
 
 
@@ -180,3 +181,18 @@ def smc_frame(bars: pd.DataFrame, params: SMCParams | None = None) -> pd.DataFra
     if "close_time" in bars:
         frame["close_time"] = bars["close_time"].to_numpy()
     return frame
+
+
+HTF_COLUMNS = ["structure", "bos_up", "bars_since_bos", "pd_pct"]
+
+
+def smc_on_clock(bars_1m: pd.DataFrame, clock: pd.DatetimeIndex, params: SMCParams, tag: str = "") -> pd.DataFrame:
+    """SMC columns on the strategy's 5m clock: the 15m setup/structure (suffix _smc15) and the 1h structure
+    (_smc1h), as of the last *closed* higher-timeframe bar. The same function feeds the backtest and live."""
+    bars = fill_gaps(bars_1m)
+    f15, f60 = smc_frame(resample(bars, 15), params), smc_frame(resample(bars, 60), params)
+    joined = as_of(f15, clock, COLUMNS, f"_smc15{tag}").join(as_of(f60, clock, HTF_COLUMNS, f"_smc1h{tag}"))
+    for column in joined.columns:  # booleans arrive as objects after the as-of join
+        if joined[column].dtype == object:
+            joined[column] = joined[column].astype(float)
+    return joined
