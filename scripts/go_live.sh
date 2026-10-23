@@ -19,8 +19,8 @@ fi
 echo "== 2/6 preflight (live)"
 $PY manage.py preflight --mode live
 
-echo "== 3/6 smoke test (one tiny LIMIT BUY 5% under the bid, then cancel)"
-$PY manage.py smoke_test
+echo "== 3/6 smoke test: LIMIT BUY 5% under the bid + cancel (typed YES), then one real BTCTMN round trip (typed ROUNDTRIP)"
+$PY manage.py smoke_test --round-trip
 
 echo "== 4/6 confirmation"
 printf "Start LIVE trading on the prop account with commit %s? Type GO LIVE: " "$(git rev-parse --short HEAD)"

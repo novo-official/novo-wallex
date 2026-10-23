@@ -174,51 +174,86 @@ class Engine:
                     status=tracked.order.status,
                 )
 
-    def _sell_quantity(self, position: LivePosition) -> Decimal:
-        """Everything held of the coin, floored to the amount step: this also sells the rounding dust earlier
-        trades left (a coin-side buy fee leaves up to one step, ~6,000 TMN on ETHTMN). Live reads a fresh balance
-        first (the resting take-profit was just cancelled); if that read fails, only the position is sold."""
-        rules = self._rules(position.symbol)
-        base = self._base(position.symbol)
-        if self.s.mode == "live":
-            try:
-                self.balances = self.broker.balances()
-            except Exception as exc:  # noqa: BLE001 - fall back to the tracked quantity
-                self.journal.decision("BALANCE_READ_FAILED", symbol=position.symbol, error=repr(exc))
-                return floor_decimals(position.quantity, rules.amount_decimals)
-            held = self.balances.get(base, position.quantity)
-        else:
-            held = self.broker.balances().get(base, position.quantity)
-        return floor_decimals(held, rules.amount_decimals)
+    def _sellable(self, symbol: str) -> Decimal | None:
+        """The coin's available balance right now (a fresh read, after our resting orders on it were cancelled),
+        floored to the market's amount step. Never the bought quantity: a coin-side fee, a partial fill or
+        earlier rounding dust all make them differ. None if the balance cannot be read (no sell this loop)."""
+        try:
+            held = self.broker.available().get(self._base(symbol), ZERO)
+        except Exception as exc:  # noqa: BLE001 - no sell on a guess; the next loop retries
+            self.journal.decision("BALANCE_READ_FAILED", symbol=symbol, error=repr(exc))
+            return None
+        return floor_decimals(max(held, ZERO), self._rules(symbol).amount_decimals)
+
+    def _place_sell(
+        self, symbol: str, order_type: str, price: Decimal | None, role: str, expires=None, **meta
+    ) -> TrackedOrder | None:
+        """The only way the engine sells (take-profit, stop, max-hold exit, flatten, kill switch).
+
+        Quantity = the available balance now, floored. Below the minimum order value it is DUST: logged, not sold.
+        A rejected sell (e.g. insufficient balance) is retried once with a fresh, floored balance if that is
+        smaller; any other rejection is left to the caller (the next loop tries again). None: nothing was sent."""
+        quantity = self._sellable(symbol)
+        if quantity is None or self._is_dust(symbol, quantity, price, role):
+            return None
+        tracked = self._send_sell(symbol, order_type, price, quantity, role, expires, meta)
+        if tracked.order.status != "REJECTED":
+            return tracked
+        self.journal.decision("SELL_REJECTED", symbol=symbol, role=role, quantity=quantity, error=tracked.order.error)
+        retry = self._sellable(symbol)
+        if retry is None or retry >= quantity or self._is_dust(symbol, retry, price, role):
+            return tracked  # not a balance problem (or nothing left): do not resend now
+        self.journal.decision("SELL_RETRY", symbol=symbol, role=role, quantity=retry, previous=quantity)
+        return self._send_sell(symbol, order_type, price, retry, role, expires, meta)
+
+    def _send_sell(self, symbol, order_type, price, quantity, role, expires, meta) -> TrackedOrder:
+        prefix = {"take_profit": "T", "flatten_limit": "F"}.get(role, "X")
+        order = OrderState(new_client_id(prefix), symbol, "SELL", order_type, price, quantity)
+        return self._track(order, role, expires, **meta)
+
+    def _is_dust(self, symbol: str, quantity: Decimal, price: Decimal | None, role: str) -> bool:
+        rules = self._rules(symbol)
+        reference = price or self.feed.best_bid_ask(symbol)[0]
+        if quantity > 0 and (reference is None or quantity * reference >= rules.min_notional):
+            return False
+        self.journal.decision(
+            "DUST",
+            symbol=symbol,
+            role=role,
+            quantity=quantity,
+            value_tmn=quantity * reference if reference is not None else None,
+            min_notional=rules.min_notional,
+        )
+        return True
 
     def exit_position(self, position: LivePosition, reason: str, market: bool = True) -> None:
-        """Cancel the resting take-profit (self-trade guard), then sell: market, or limit at the best ask."""
+        """Cancel the resting take-profit (self-trade guard), then sell the whole available balance: market, or a
+        limit at the best ask."""
         if position.exit_client_id:
             pending = self.orders[position.exit_client_id].order
             if pending.status not in ("CANCELED", "REJECTED"):
                 return  # an exit is working or filled but not yet processed: never sell twice
         self._cancel_symbol_orders(position.symbol, ("take_profit", "entry"))
-        quantity = self._sell_quantity(position)
+        position.tp_client_id = None
         bid, ask = self.feed.best_bid_ask(position.symbol)
-        if quantity <= 0 or (bid and quantity * bid < self._rules(position.symbol).min_notional):
-            self.journal.decision("DUST", symbol=position.symbol, quantity=quantity, reason=reason)
-            self.positions.pop(position.symbol, None)
-            return
         if market:
-            order = OrderState(new_client_id("X"), position.symbol, "SELL", "MARKET", None, quantity)
-            tracked = self._track(order, "exit", reason=reason)
+            tracked = self._place_sell(position.symbol, "MARKET", None, "exit", reason=reason)
         else:
-            order = OrderState(new_client_id("F"), position.symbol, "SELL", "LIMIT", ask, quantity)
             expires = self.now() + timedelta(seconds=self.s.flatten_limit_timeout_seconds)
-            tracked = self._track(order, "flatten_limit", expires, reason=reason)
+            tracked = self._place_sell(position.symbol, "LIMIT", ask, "flatten_limit", expires, reason=reason)
+        if tracked is None:
+            if self._sellable(position.symbol) is not None:  # dust (not a read failure): nothing left to sell
+                self.positions.pop(position.symbol, None)
+            return
         position.exit_client_id = tracked.order.client_id
         self.journal.decision(
             "EXIT",
             symbol=position.symbol,
             module=position.module,
             reason=reason,
-            quantity=quantity,
+            quantity=tracked.order.quantity,
             client_id=tracked.order.client_id,
+            status=tracked.order.status,
             bid=bid,
             ask=ask,
         )
@@ -270,8 +305,9 @@ class Engine:
             position.take_profit is not None
             and quantity * position.take_profit >= self._rules(order.symbol).min_notional
         ):
-            tp = OrderState(new_client_id("T"), order.symbol, "SELL", "LIMIT", position.take_profit, quantity)
-            position.tp_client_id = self._track(tp, "take_profit", symbol_role="tp").order.client_id
+            tp = self._place_sell(order.symbol, "LIMIT", position.take_profit, "take_profit", symbol_role="tp")
+            if tp is not None and tp.order.status != "REJECTED":
+                position.tp_client_id = tp.order.client_id
 
     def _at_fresh_bid(self, symbol: str, decision):
         """Move an approved maker entry to the current best bid, keeping quantity and stop/TP distances."""
@@ -380,8 +416,8 @@ class Engine:
                 if position is not None:
                     position.quantity -= order.executed_qty
                     position.exit_client_id = None
-                    if position.quantity > 0:
-                        self.exit_position(position, "flatten: limit timed out, market", market=True)
+                    # the balance decides what is left (a dust remainder closes the position)
+                    self.exit_position(position, "flatten: limit timed out, market", market=True)
 
     # --- marking, risk ------------------------------------------------------------------------------
 
@@ -738,15 +774,31 @@ class Engine:
         self.journal.decision("RESTORE", positions=sorted(self.positions), open_orders=len(self.orders))
 
     def final_check(self) -> None:
+        """≥ 99% of the value in TMN. Coins worth less than the market's minimum order cannot be sold: they are
+        reported as dust and left out of the condition."""
         balances = self.broker.balances()
         total = Decimal(balances.get("TMN", ZERO))
-        coins = ZERO
+        coins, dust = ZERO, {}
         for asset, amount in balances.items():
-            if asset != "TMN" and amount > 0 and f"{asset}TMN" in self.feed.rules:
-                bid, _ = self.feed.best_bid_ask(f"{asset}TMN")
-                coins += amount * (bid or ZERO)
+            symbol = f"{asset}TMN"
+            if asset != "TMN" and amount > 0 and symbol in self.feed.rules:
+                bid, _ = self.feed.best_bid_ask(symbol)
+                value = amount * (bid or ZERO)
+                if value < self._rules(symbol).min_notional:
+                    dust[asset] = {"amount": amount, "value_tmn": value}
+                else:
+                    coins += value
         share = total / (total + coins) if total + coins > 0 else Decimal(1)
-        self.journal.decision("FINAL", tmn=total, coins_tmn=coins, tmn_share=share, ok=share >= Decimal("0.99"))
+        dust_tmn = sum((d["value_tmn"] for d in dust.values()), ZERO)
+        self.journal.decision(
+            "FINAL",
+            tmn=total,
+            coins_tmn=coins,
+            dust_tmn=dust_tmn,
+            dust=dust,
+            tmn_share=share,
+            ok=share >= Decimal("0.99"),
+        )
         self.final_checked = True
 
     def persist(self, now: datetime) -> None:

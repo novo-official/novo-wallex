@@ -5,6 +5,13 @@ RUNBOOK.md §2). Before go-live, `git log` is the history.
 
 ## Unreleased (before live-v1)
 
+- 2026-10-23: every SELL (take-profit, stop, max-hold, flatten, kill switch) goes through one path: the
+  available balance read at that moment, floored to the amount step, never the bought quantity; below the
+  minimum order it is DUST (logged, not sold, left out of the ≥ 99% TMN check but reported); a rejected sell is
+  retried once with a fresh, smaller balance. Shadow rejects oversells too. The smoke test adds one real BTCTMN
+  round trip (typed ROUNDTRIP) that measures the fee currency and rates and aborts go-live if the sell cannot
+  close.
+
 - 2026-10-23: AI activity module is the only live module (trend OFF); entry at the best bid after the LLM
   review, 3 min timeout from the order, one reprice; error halts lift after 40 clean loops; the feed clock no
   longer freezes on quiet markets; manual `CHALLENGE_END`; `make go-live` with the G3 smoke test.

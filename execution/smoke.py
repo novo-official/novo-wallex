@@ -79,3 +79,85 @@ def run(broker, smoke_plan: SmokePlan, balances_raw) -> SmokeResult:
     result.steps.append({"step": "balance after", "TMN": balances_raw()})
     result.ok = not result.problems
     return result
+
+
+@dataclass
+class RoundTripResult:
+    ok: bool = False
+    steps: list[dict] = field(default_factory=list)
+    problems: list[str] = field(default_factory=list)
+    fee_buy: dict = field(default_factory=dict)
+    fee_sell: dict = field(default_factory=dict)
+    leftover: Decimal = Decimal(0)
+    leftover_tmn: Decimal = Decimal(0)
+    cost_tmn: Decimal = Decimal(0)
+
+
+def _wait_done(broker, order: OrderState, wait, timeout_s: float) -> OrderState:
+    waited = 0.0
+    while order.status not in ("FILLED", "CANCELED", "REJECTED") and waited < timeout_s:
+        wait(2.0)
+        waited += 2.0
+        broker.refresh(order)
+    return order
+
+
+def round_trip(broker, symbol: str, rules, best_bid_ask, wait, timeout_s: float = 60.0) -> RoundTripResult:
+    """One minimal real round trip: LIMIT BUY at the best ask (just above the minimum order), then a MARKET SELL
+    of the whole available balance. Measures which currency each fee is charged in, the fee rates and the dust.
+    Not ok (abort go-live) if the buy fills but the sell cannot close the position."""
+    result = RoundTripResult()
+    base = symbol.removesuffix("TMN")
+    step = Decimal(1).scaleb(-rules.amount_decimals)
+    before = broker.available()
+    _, ask = best_bid_ask(symbol)
+    quantity = (rules.min_notional * Decimal("1.1") / ask).quantize(step, rounding=ROUND_CEILING)
+    buy = OrderState(new_client_id("R"), symbol, "BUY", "LIMIT", ask, quantity)
+    broker.place(buy)
+    _wait_done(broker, buy, wait, timeout_s)
+    result.steps.append({"step": "buy at the best ask", **_order_fields(buy), "price": str(ask)})
+    if buy.status not in ("FILLED", "CANCELED", "REJECTED"):
+        broker.cancel(buy)
+        broker.refresh(buy)
+    if buy.executed_qty <= 0:
+        result.problems.append(f"the buy did not fill ({buy.status} {buy.error}); nothing bought")
+        return result
+    after_buy = broker.available()
+    received = after_buy.get(base, Decimal(0)) - before.get(base, Decimal(0))
+    spent = before.get("TMN", Decimal(0)) - after_buy.get("TMN", Decimal(0))
+    notional = buy.executed_qty * (buy.avg_price or ask)
+    if received < buy.executed_qty:
+        result.fee_buy = {"asset": base, "rate": str((buy.executed_qty - received) / buy.executed_qty)}
+    else:
+        result.fee_buy = {"asset": "TMN", "rate": str((spent - notional) / notional) if notional else "?"}
+    result.fee_buy |= {"order_fee": str(buy.fee), "order_fee_asset": buy.fee_asset}
+    result.steps.append({"step": "after the buy", "received": str(received), "tmn_spent": str(spent)})
+    sell_qty = after_buy.get(base, Decimal(0)).quantize(step, rounding=ROUND_DOWN)
+    bid, _ = best_bid_ask(symbol)
+    if sell_qty * bid < rules.min_notional:
+        result.problems.append(f"cannot sell {sell_qty} {base}: below the minimum order")
+        return result
+    sell = OrderState(new_client_id("R"), symbol, "SELL", "MARKET", None, sell_qty)
+    broker.place(sell)
+    _wait_done(broker, sell, wait, timeout_s)
+    result.steps.append({"step": "market sell of the available balance", **_order_fields(sell)})
+    after_sell = broker.available()
+    got = after_sell.get("TMN", Decimal(0)) - after_buy.get("TMN", Decimal(0))
+    sold = sell.executed_qty * (sell.avg_price or bid)
+    result.fee_sell = {
+        "asset": sell.fee_asset or "TMN",
+        "rate": str((sold - got) / sold) if sold else "?",
+        "order_fee": str(sell.fee),
+    }
+    result.leftover = after_sell.get(base, Decimal(0)) - before.get(base, Decimal(0))
+    result.leftover_tmn = result.leftover * bid
+    result.cost_tmn = before.get("TMN", Decimal(0)) - after_sell.get("TMN", Decimal(0))
+    result.steps.append(
+        {"step": "after the sell", "leftover": str(result.leftover), "leftover_tmn": str(result.leftover_tmn)}
+    )
+    if sell.status != "FILLED" or result.leftover >= step:
+        result.problems.append(
+            f"the sell did not close the position: status {sell.status}, {result.leftover} {base} left"
+        )
+    result.ok = not result.problems
+    return result

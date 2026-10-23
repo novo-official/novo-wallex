@@ -96,6 +96,7 @@ class Broker(Protocol):
     def refresh(self, order: OrderState) -> OrderState: ...
     def open_orders(self) -> list[dict]: ...
     def balances(self) -> dict[str, Decimal]: ...
+    def available(self) -> dict[str, Decimal]: ...
 
 
 class LiveBroker:
@@ -180,6 +181,10 @@ class LiveBroker:
         data = self.client.get_json("/v1/account/balances")
         return parse_balances(data)
 
+    def available(self) -> dict[str, Decimal]:
+        """What can be sold now, per asset (a fresh GET at the moment of every sell)."""
+        return parse_available(self.client.get_json("/v1/account/balances"))
+
 
 def parse_balances(data: dict) -> dict[str, Decimal]:
     result = (data or {}).get("result") or {}
@@ -193,6 +198,29 @@ def parse_balances(data: dict) -> dict[str, Decimal]:
                 else _dec(entry.get("available")) + _dec(entry.get("locked"))
             )
             out[str(entry.get("asset") or asset).upper()] = value
+    if not out:
+        raise WallexError(f"unrecognized balances shape: {json.dumps(data)[:300]}")
+    return out
+
+
+def parse_available(data: dict) -> dict[str, Decimal]:
+    """Sellable amount per asset. `available` when the exchange sends it; otherwise `value - locked`.
+
+    Verified 2026-10-23: entries have `value` and `locked`; whether `value` already excludes `locked` is not known
+    yet (the smoke test reports it). Subtracting `locked` can only under-sell (the rest is swept later or reported
+    as dust); never over-sell. Our own resting orders on the coin are cancelled before every sell, so `locked`
+    is normally 0 there."""
+    result = (data or {}).get("result") or {}
+    balances = result.get("balances", result) if isinstance(result, dict) else {}
+    out = {}
+    for asset, entry in (balances or {}).items():
+        if not isinstance(entry, dict):
+            continue
+        if "available" in entry:
+            amount = _dec(entry.get("available"))
+        else:
+            amount = _dec(entry.get("value")) - _dec(entry.get("locked"))
+        out[str(entry.get("asset") or asset).upper()] = max(amount, ZERO)
     if not out:
         raise WallexError(f"unrecognized balances shape: {json.dumps(data)[:300]}")
     return out
@@ -213,9 +241,10 @@ class ShadowBroker:
 
     name = "shadow"
 
-    def __init__(self, feed, fees, start_tmn: Decimal) -> None:
+    def __init__(self, feed, fees, start_tmn: Decimal, buy_fee_in: str = "coin") -> None:
         self.feed = feed  # market feed: best_bid_ask(symbol), trades_since(symbol, iso)
         self.fees = fees
+        self.buy_fee_in = buy_fee_in  # "coin" (fee out of the bought coins) or "TMN"
         self.ledger: dict[str, Decimal] = {"TMN": start_tmn}
         self.orders: dict[str, OrderState] = {}
 
@@ -223,7 +252,12 @@ class ShadowBroker:
         base = order.symbol.removesuffix("TMN")
         quantity = order.quantity - order.executed_qty
         notional = quantity * price
-        if order.side == "BUY":
+        if order.side == "BUY" and self.buy_fee_in == "TMN":
+            fee = notional * fee_rate
+            self.ledger["TMN"] = self.ledger.get("TMN", ZERO) - notional - fee
+            self.ledger[base] = self.ledger.get(base, ZERO) + quantity
+            order.fee_asset = "TMN"
+        elif order.side == "BUY":
             fee = quantity * fee_rate  # fee in the received asset, as on most exchanges
             self.ledger["TMN"] = self.ledger.get("TMN", ZERO) - notional
             self.ledger[base] = self.ledger.get(base, ZERO) + quantity - fee
@@ -239,6 +273,9 @@ class ShadowBroker:
         order.status = "FILLED"
 
     def place(self, order: OrderState) -> OrderState:
+        if order.side == "SELL" and order.quantity > self.available().get(order.symbol.removesuffix("TMN"), ZERO):
+            order.status, order.error = "REJECTED", "insufficient balance (shadow)"
+            return order
         self.orders[order.client_id] = order
         bid, ask = self.feed.best_bid_ask(order.symbol)
         if order.type == "MARKET":
@@ -270,3 +307,12 @@ class ShadowBroker:
 
     def balances(self) -> dict[str, Decimal]:
         return dict(self.ledger)
+
+    def available(self) -> dict[str, Decimal]:
+        """The ledger minus coins locked in our own resting SELL orders."""
+        out = dict(self.ledger)
+        for order in self.orders.values():
+            if order.side == "SELL" and not order.done:
+                base = order.symbol.removesuffix("TMN")
+                out[base] = out.get(base, ZERO) - (order.quantity - order.executed_qty)
+        return out
