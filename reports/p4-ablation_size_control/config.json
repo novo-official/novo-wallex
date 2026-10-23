@@ -1,0 +1,117 @@
+{
+  "config": {
+    "agent": null,
+    "data": {
+      "candles/1m/ADATMN.parquet": "e953dfcdab2dda7ecd4c4e58cc51542a62822f54c0a92d2d270eab7da49dcf6f",
+      "candles/1m/ADAUSDT.parquet": "99dca4ed6f400ef6daeaa2195de0af9d4057877a4cae9edd8fbbdcd5652a6562",
+      "candles/1m/BNBTMN.parquet": "3c0a652732d85fbaf97e79268b3c18eabdf25edeb22107fe14e5cab335570873",
+      "candles/1m/BNBUSDT.parquet": "d003e84a5257b5fc6610f27f7896b4d1b2d3a2aac9fc03e2f857cfe6f5daf1ec",
+      "candles/1m/BTCTMN.parquet": "684d48d4d06dd28ddb4706d8e1dd3b95c0ae3345d258425a2e371e7abb9545cb",
+      "candles/1m/BTCUSDT.parquet": "454f13b3f6d06aede4794f7faa5fd8a208377dd38d199ce055f96ab85b8df596",
+      "candles/1m/DOGETMN.parquet": "9823abb685c05939489e8d46983ea83aec9e5554145cac56c7955fc0fc4a119c",
+      "candles/1m/DOGEUSDT.parquet": "168bc2560b7277da9f0008815bdb6761a60cc3b8b8d045d8f489cfd1bc59b29d",
+      "candles/1m/ETHTMN.parquet": "19aee00a0aac54894ccb9ef5656b59f4356551f9732e1c349a182a9907beaad9",
+      "candles/1m/ETHUSDT.parquet": "a0d9f0bcdb578d795a68e4643b3506e72662765b79947217edbbe825e375e901",
+      "candles/1m/LTCTMN.parquet": "6122bb78f753f2d461320581887062873e0801caab3652490c30a110052510ab",
+      "candles/1m/LTCUSDT.parquet": "afcddb41500eb9d412107b9e6c194be5f6ba9e6bbdf8b924764420b75f9ea8c6",
+      "candles/1m/SHIBTMN.parquet": "ccfcd30e4571a803c7982bdf3b56c86f4d6117c525c7127a5dfd863bbb43c664",
+      "candles/1m/SHIBUSDT.parquet": "d0c505ca04d648e78b9374fa6d5aae76c2b423ea696e26b8592b110a9a00bcd3",
+      "candles/1m/SOLTMN.parquet": "6e6b1bf6519e8af573c4849dff7671a9874e238318373e71c659c9d46068931d",
+      "candles/1m/SOLUSDT.parquet": "91a498c6981ca5b91bb6709445b23ad0efd71c405edea9c834b4726c55ce51ae",
+      "candles/1m/TRXTMN.parquet": "c37f80a64113ae33976f18f714a6d7c023bc91be828619bbc32c8c390372d337",
+      "candles/1m/TRXUSDT.parquet": "021d2c940f4271169932738264549602284333187c4340240916ffbea0555743",
+      "candles/1m/USDTTMN.parquet": "51a098448ecdd3e39cdc6809a569c28137934254312ebfb70a2f8ded6f82ca3c",
+      "candles/1m/XRPTMN.parquet": "5a817018bcbc4e0b11ef54978ad7772b64a2760864ba90168026c12d1fb21ebb",
+      "candles/1m/XRPUSDT.parquet": "ac5a3c59cc8fdcd20df8bdd3dcbe4937b76fffe2ae16b8f24fd4571e347dd21a"
+    },
+    "default_slippage": "0.002",
+    "fees": {
+      "maker": "0.0025",
+      "stress": "1.5",
+      "taker": "0.0035"
+    },
+    "initial_equity": "5000000",
+    "limits": {
+      "daily_loss_limit": "-0.03",
+      "flatten_before_end_minutes": "60",
+      "kill_switch": "-0.06",
+      "liquidity_buffer": "0.20",
+      "max_position_fraction": "0.20",
+      "max_stop_fraction": "0.02",
+      "max_total_exposure": "0.60",
+      "min_order_tmn": "500000",
+      "no_entry_before_end_minutes": "120",
+      "position_caps": "()",
+      "risk_per_trade": "0.005"
+    },
+    "module_symbols": null,
+    "risk_overrides": null,
+    "selection_share": 0.7,
+    "slippage": {
+      "ADATMN": "0.001653",
+      "BNBTMN": "0.001248",
+      "BTCTMN": "0.000401",
+      "DOGETMN": "0.001257",
+      "ETHTMN": "0.000319",
+      "LTCTMN": "0.002143",
+      "SHIBTMN": "0.004246",
+      "SOLTMN": "0.001186",
+      "TRXTMN": "0.001052",
+      "USDTTMN": "0.0002",
+      "XRPTMN": "0.001214"
+    },
+    "strategy": {
+      "fair_value": {
+        "base_fraction": 0.8,
+        "discount_fraction": 1.0,
+        "discount_z": -1.0,
+        "enabled": false,
+        "max_z": 1.5
+      },
+      "ml": {
+        "column": "ml_edge",
+        "enabled": false,
+        "full_size_margin": 0.2,
+        "low_fraction": 0.55,
+        "min_fraction": 0.5,
+        "mode": "filter",
+        "sizing": false,
+        "threshold": 0.05
+      },
+      "modules": [
+        "trend"
+      ],
+      "symbols": [
+        "USDTTMN",
+        "BTCTMN",
+        "ETHTMN"
+      ],
+      "trend": {
+        "breakeven_buffer": 0.007,
+        "breakout_bars": 12,
+        "entry_offset": 0.0005,
+        "entry_type": "maker",
+        "max_hold_bars": 864,
+        "max_stop": 0.02,
+        "min_active_share": 0.3,
+        "min_stop": 0.02,
+        "min_tp": 0.0,
+        "regime_exit": "none",
+        "require_4h": false,
+        "setup_rsi": 45.0,
+        "stop_atr": 2.0,
+        "timeout_bars": 3,
+        "tp_r": 3.0,
+        "trail_after_r": 0.0,
+        "trail_atr": 2.5,
+        "trigger": "breakout"
+      }
+    },
+    "windows": {
+      "step_hours": 72.0,
+      "warmup_days": 10.0,
+      "window_days": 3.0
+    }
+  },
+  "config_hash": "b1d5346614b602c2a358e8b68787b4ceccc33ee2e05e73a8d2f4f51e5598c043"
+}

@@ -1,0 +1,2 @@
+benchmark,split,windows,p_above_target,trades_per_day,positive_share,median_return,mean_return,p10_return,p90_return,worst_return,p10_drawdown,worst_drawdown,median_trades,zero_trade_share,median_fees_share
+buy_and_hold_USDTTMN_raw,selection,13,0.3076923076923077,0.3333333333333333,0.38461538461538464,-0.00893862514276822,-0.005252769235019366,-0.035357223427838494,0.01889449168244211,-0.03676170766257347,-0.05317358591971275,-0.08901845398104102,1.0,0.0,0.007

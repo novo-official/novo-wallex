@@ -1,0 +1,41 @@
+{
+  "chosen": "rules x0.76 size",
+  "chosen_feasible": false,
+  "chosen_params": {
+    "fair_value": {
+      "enabled": false
+    },
+    "modules": [
+      "trend"
+    ],
+    "size_scale_control": 0.7559808612440192,
+    "symbols": [
+      "USDTTMN",
+      "BTCTMN",
+      "ETHTMN"
+    ],
+    "trend": {
+      "max_hold_bars": 864,
+      "max_stop": 0.02,
+      "min_stop": 0.02,
+      "min_tp": 0.0,
+      "regime_exit": "none",
+      "require_4h": false,
+      "tp_r": 3.0,
+      "trail_after_r": 0.0,
+      "trigger": "breakout"
+    }
+  },
+  "config_hash": "b1d5346614b602c2a358e8b68787b4ceccc33ee2e05e73a8d2f4f51e5598c043",
+  "experiment": "P4 ablation control: rules at the trade agent's average exposure (no LLM)",
+  "holdout_evaluated": false,
+  "holdout_windows": 0,
+  "objective": {
+    "metric": "p_above_target",
+    "min_p10_drawdown": -0.035,
+    "min_trades_per_day": 1.0
+  },
+  "runtime_seconds": 3.236211,
+  "selection_windows": 13,
+  "variants": 2
+}
