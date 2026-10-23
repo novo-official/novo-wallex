@@ -16,6 +16,12 @@ if git rev-parse -q --verify "refs/tags/$TAG" >/dev/null && [ "$(git rev-parse "
   echo "tag $TAG exists on another commit: run with TAG=live-v2 (and add a CHANGELOG entry)"; exit 1
 fi
 
+if [ -f logs/engine_state_live.json ] && ! { [ -f logs/engine_live.pid ] && kill -0 "$(cat logs/engine_live.pid)" 2>/dev/null; }; then
+  echo "logs/engine_state_live.json exists from an earlier live run: a new go-live would restore it."
+  echo "If that run is over, archive it first: mv logs/engine_state_live.json logs/engine_state_live-\$(date +%Y%m%d%H%M).json"
+  exit 1
+fi
+
 echo "== 2/6 preflight (live)"
 $PY manage.py preflight --mode live
 

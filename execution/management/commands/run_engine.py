@@ -21,7 +21,8 @@ class Command(BaseCommand):
                 raise CommandError("live needs LIVE_TRADING_CONFIRMED=true in .env (and the user's go-ahead)")
             from execution.preflight import run_preflight
 
-            results = run_preflight("live")
+            restart = (settings.BASE_DIR / "logs" / "engine_state_live.json").exists()
+            results = run_preflight("live", restart=restart)
             if not all(ok for _, ok, _ in results):
                 raise CommandError("preflight failed; see `manage.py preflight --mode live`")
         engine = build_engine(mode)

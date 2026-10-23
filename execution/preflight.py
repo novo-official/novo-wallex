@@ -9,7 +9,9 @@ from email.utils import parsedate_to_datetime
 from django.conf import settings
 
 
-def run_preflight(mode: str) -> list[tuple[str, bool, str]]:
+def run_preflight(mode: str, restart: bool = False) -> list[tuple[str, bool, str]]:
+    """`restart`: the supervisor restarting a live engine that has a state file. Then our own resting orders are
+    expected (the engine restores and reconciles them) and the last hour is still allowed (the flatten must run)."""
     from exchange.client import WallexAPIError, WallexClient
     from exchange.factory import build_policy
 
@@ -43,7 +45,8 @@ def run_preflight(mode: str) -> list[tuple[str, bool, str]]:
         if moment is None:
             return False, "challenge end missing: set CHALLENGE_END in .env or [challenge] end in config/live.toml"
         left = moment - datetime.now(moment.tzinfo)
-        return left > timedelta(hours=1), f"{moment.isoformat()} ({left.total_seconds() / 3600:.1f} h left)"
+        needed = timedelta(0) if restart else timedelta(hours=1)
+        return left > needed, f"{moment.isoformat()} ({left.total_seconds() / 3600:.1f} h left)"
 
     check("challenge end", end)
 
@@ -69,6 +72,8 @@ def run_preflight(mode: str) -> list[tuple[str, bool, str]]:
             orders = LiveBroker(
                 client, build_policy(), Journal(settings.BASE_DIR / "logs", "preflight", "-")
             ).open_orders()
+            if restart:
+                return True, f"{len(orders)} open orders (restart: restored from the state file and reconciled)"
             return not orders, f"{len(orders)} open orders on the account"
 
         check("no open orders", open_orders)

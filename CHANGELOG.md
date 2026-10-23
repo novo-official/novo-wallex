@@ -3,7 +3,19 @@
 Every change to the trading code after the `live-v1` tag gets an entry here and a new tag (code freeze,
 RUNBOOK.md §2). Before go-live, `git log` is the history.
 
-## Unreleased (before live-v1)
+## live-v1.1 (2026-10-23, safety fix while live-v1 runs; the running process is not restarted)
+
+- A supervisor restart of the live engine could not come back: its preflight failed on our own resting
+  take-profit ("no open orders") and, in the last hour, on "challenge end > 1 h", leaving a position without
+  stops. A restart (state file present) now accepts our own open orders (restored and reconciled) and only
+  needs the end to be in the future.
+- After a restart without an open position the kill switch's reference was reset to the current equity, and the
+  day's starting equity was not saved: both loss limits could forget losses made before a crash. The start
+  equity, the day's start equity and the daily block are now kept across restarts.
+- go-live refuses to start while a state file from an earlier live run exists (it would be restored).
+
+## live-v1 (2026-10-23 11:38 Tehran): first live start
+
 
 - 2026-10-23 (safety, user-approved): USDTTMN removed from the live AI activity markets (`config/live.toml`):
   the prop account refuses orders on it (422 «امکان ثبت سفارش در بازار USDTTMN وجود ندارد»). Live trades BTCTMN

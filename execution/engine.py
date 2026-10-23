@@ -671,9 +671,9 @@ class Engine:
         now = self.now()
         if self.started_at is None:
             self.started_at = now
-            self.restore()
+            restored = self.restore()
             self.reconcile(now)
-            if self.s.mode == "live" and not self.positions:
+            if self.s.mode == "live" and not self.positions and not restored:
                 # Kill switch and daily limit are measured from the real equity at start (preflight: ~100% TMN).
                 self.s.start_equity = self.equity = self.mark()
             self.journal.decision(
@@ -743,11 +743,12 @@ class Engine:
             self.broker.ledger = ledger
             self.journal.decision("LEDGER_REBUILT", ledger={k: str(v) for k, v in ledger.items()})
 
-    def restore(self) -> None:
-        """Reload positions and open orders after a restart (the exchange stays the truth: reconcile follows)."""
+    def restore(self) -> bool:
+        """Reload positions, open orders and the loss-limit references after a restart (the exchange stays the
+        truth: reconcile follows). False when there is no state file (a first start)."""
         path = self.state_dir / f"engine_state_{self.s.mode}.json"
         if not path.exists():
-            return
+            return False
         state = json.loads(path.read_text(encoding="utf-8"))
         self._restore_ledger(state)
         for symbol, raw in state.get("positions", {}).items():
@@ -783,7 +784,15 @@ class Engine:
         self.halted = bool(state.get("halted"))
         if state.get("start_equity"):
             self.s.start_equity = Decimal(state["start_equity"])
+        # Loss limits keep their references across a restart (the kill switch and the daily limit must not forget
+        # losses made before a crash).
+        if state.get("day_key"):
+            self.day_key = pd.Timestamp(state["day_key"]).date()
+            self.day_start_equity = Decimal(state["day_start_equity"])
+        if state.get("daily_blocked_day"):
+            self.daily_blocked_day = pd.Timestamp(state["daily_blocked_day"]).date()
         self.journal.decision("RESTORE", positions=sorted(self.positions), open_orders=len(self.orders))
+        return True
 
     def final_check(self) -> None:
         """≥ 99% of the value in TMN. Coins worth less than the market's minimum order cannot be sold: they are
@@ -827,6 +836,9 @@ class Engine:
                 s: {k: str(v) for k, v in asdict(p).items() if k != "decision"} for s, p in self.positions.items()
             },
             "start_equity": str(self.s.start_equity),
+            "day_key": self.day_key.isoformat() if self.day_key else None,
+            "day_start_equity": str(self.day_start_equity) if self.day_start_equity is not None else None,
+            "daily_blocked_day": self.daily_blocked_day.isoformat() if self.daily_blocked_day else None,
             "open_orders": [
                 asdict(t.order) | {"role": t.role, "expires_at": t.expires_at, "meta": t.meta}
                 for t in self.orders.values()

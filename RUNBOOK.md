@@ -80,7 +80,7 @@ tail -n 20 journal/live/decisions-$(TZ=Asia/Tehran date +%Y%m%d).jsonl
 | `HALT_ENTRIES` that does not lift | reconcile found an open order the engine does not know | look at `RECONCILE` rows; if it is ours from a lost state file, cancel it on the website only if the organizers allow; restart the engine |
 | `KILL` (−2.5% from start) | flattens everything to TMN and halts for good | nothing; leave it halted (a restart keeps it halted: the state file stores `halted`) |
 | `BLOCK` (−2% in a Tehran day) | no new entries until the next Tehran day | nothing |
-| engine crashed | the supervisor restarts it after 10 s; state and orders are restored, then reconciled | `tail logs/engine_live.log`; if it crash-loops, stop it (below) and report |
+| engine crashed | the supervisor restarts it after 10 s; state, orders and the loss-limit references are restored, then reconciled (the restart preflight accepts our own open orders and the last hour) | `tail logs/engine_live.log`; if it crash-loops, stop it (below) and report |
 | local LLM down or slow | Officer failure → OFF (no new entries); Trade Agent failure → reject | `brew services restart ollama`; exits never depend on the LLM |
 | heartbeat older than 2 min | — | `ps -ax | grep run_engine`; restart with `make go-live` steps 5–6 only: `LIVE_TRADING_CONFIRMED=true scripts/run_engine.sh live` |
 | end of challenge | flatten in the last 60 min, `FINAL` row with the TMN share | check `FINAL ok: true`; export the decision log |

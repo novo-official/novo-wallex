@@ -438,3 +438,24 @@ def test_no_market_orders_and_an_unfilled_aggressive_exit_is_replaced_at_the_new
     engine.step()
     assert rested[0].status == "CANCELED" and "BTCTMN" not in engine.positions
     assert all(t.order.type != "MARKET" for t in engine.orders.values())
+
+
+def test_a_live_restart_keeps_the_loss_limit_references(tmp_path):
+    engine, feed, broker, strategy, clock = _engine(tmp_path)
+    engine.s.mode = "live"
+    engine.step()
+    engine.s.start_equity = Decimal("5000000")
+    engine.day_start_equity = Decimal("4950000")
+    engine.persist(clock.now)
+    broker.ledger["TMN"] = Decimal("4900000")  # lost 2% before the crash
+    settings = EngineSettings(
+        mode="live",
+        challenge_end=engine.s.challenge_end,
+        ramp_hours=2.0,
+        ramp_factor=Decimal("0.5"),
+        start_equity=Decimal("5000000"),
+    )
+    again = Engine(settings, feed, broker, engine.guard, strategy, engine.journal, tmp_path / "state", clock=clock)
+    again.step()
+    assert again.s.start_equity == Decimal("5000000")  # not reset to the 4.9M seen after the restart
+    assert again.day_start_equity == Decimal("4950000")
