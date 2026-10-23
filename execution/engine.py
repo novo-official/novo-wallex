@@ -53,6 +53,8 @@ class LivePosition:
     tp_client_id: str | None = None
     exit_client_id: str | None = None
     highest_close: float = 0.0
+    cost_tmn: Decimal | None = None  # TMN paid for this position (a coin-side buy fee is in the smaller quantity)
+    opened_quantity: Decimal | None = None
 
 
 @dataclass
@@ -211,6 +213,8 @@ class Engine:
         return self._send_sell(symbol, order_type, price, retry, role, expires, meta)
 
     def _send_sell(self, symbol, order_type, price, quantity, role, expires, meta) -> TrackedOrder:
+        if price is not None:
+            price = floor_decimals(price, self._rules(symbol).price_decimals)
         prefix = {"take_profit": "T", "flatten_limit": "F"}.get(role, "X")
         order = OrderState(new_client_id(prefix), symbol, "SELL", order_type, price, quantity)
         return self._track(order, role, expires, **meta)
@@ -299,6 +303,8 @@ class Engine:
             int(meta.get("bar_index", 0)),
             order.client_id,
             decision=meta,
+            cost_tmn=order.executed_qty * price + (order.fee if order.fee_asset.upper() == "TMN" else ZERO),
+            opened_quantity=quantity,
         )
         self.positions[order.symbol] = position
         self.journal.decision(
@@ -336,6 +342,13 @@ class Engine:
             notional=decision.quantity * price,
         )
 
+    @staticmethod
+    def _cost_of(position: LivePosition, sold: Decimal) -> Decimal:
+        """Cost basis of the sold part (a sale can also carry earlier dust, so the share is capped at 1)."""
+        if position.cost_tmn is None or not position.opened_quantity:
+            return position.quantity * position.entry_price
+        return position.cost_tmn * min(Decimal(1), sold / position.opened_quantity)
+
     def _reprice(self, tracked: TrackedOrder, now: datetime) -> None:
         """Re-place an unfilled maker entry at the current best bid (same quantity, same stop/TP distances)."""
         old, meta = tracked.order, dict(tracked.meta)
@@ -345,14 +358,17 @@ class Engine:
         bid, _ = self.feed.best_bid_ask(old.symbol)
         if bid is None:
             return
-        price = floor_decimals(bid, self._rules(old.symbol).price_decimals)
+        digits = self._rules(old.symbol).price_decimals
+        price = floor_decimals(bid, digits)
+        step = Decimal(1).scaleb(-digits)
         meta.update(
             reprices=int(meta["reprices"]) - 1,
-            stop=str(price * (1 - Decimal(meta["stop_fraction"]))),
+            # on the price step: the exchange rejects a price with more decimals (live 2026-10-23, trade 2)
+            stop=str((price * (1 - Decimal(meta["stop_fraction"]))).quantize(step, rounding=ROUND_CEILING)),
             reprice_of=old.client_id,
         )
         if meta.get("tp_fraction"):
-            meta["take_profit"] = str(price * (1 + Decimal(meta["tp_fraction"])))
+            meta["take_profit"] = str(floor_decimals(price * (1 + Decimal(meta["tp_fraction"])), digits))
         if self.exposure() + old.quantity * price > self.equity * self.guard.limits.max_total_exposure:
             return
         order = OrderState(new_client_id("E"), old.symbol, "BUY", "LIMIT", price, old.quantity)
@@ -411,7 +427,7 @@ class Engine:
                         price=price,
                         fee=order.fee,
                         fee_asset=order.fee_asset,
-                        pnl_tmn_approx=proceeds - position.quantity * position.entry_price,
+                        pnl_tmn_approx=proceeds - self._cost_of(position, order.executed_qty),
                         client_id=client_id,
                     )
                     self.positions.pop(order.symbol, None)
@@ -654,7 +670,7 @@ class Engine:
             self.journal.decision("RECONCILE", problem="unknown open orders on the account", client_ids=sorted(unknown))
         for position in self.positions.values():
             held = self.balances.get(self._base(position.symbol), ZERO)
-            if self.s.mode == "live" and held + Decimal("1e-8") < position.quantity:
+            if self.s.mode == "live" and not position.exit_client_id and held + Decimal("1e-8") < position.quantity:
                 self.journal.decision(
                     "RECONCILE",
                     problem="balance below position",
@@ -766,6 +782,10 @@ class Engine:
                 tp_client_id=None if raw.get("tp_client_id") in (None, "None") else raw["tp_client_id"],
                 exit_client_id=None if raw.get("exit_client_id") in (None, "None") else raw["exit_client_id"],
                 highest_close=float(raw.get("highest_close") or 0),
+                cost_tmn=Decimal(raw["cost_tmn"]) if raw.get("cost_tmn") not in (None, "None") else None,
+                opened_quantity=(
+                    Decimal(raw["opened_quantity"]) if raw.get("opened_quantity") not in (None, "None") else None
+                ),
             )
         for raw in state.get("open_orders", []):
             order = OrderState(

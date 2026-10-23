@@ -459,3 +459,41 @@ def test_a_live_restart_keeps_the_loss_limit_references(tmp_path):
     again.step()
     assert again.s.start_equity == Decimal("5000000")  # not reset to the 4.9M seen after the restart
     assert again.day_start_equity == Decimal("4950000")
+
+
+def test_a_repriced_entry_gets_its_take_profit_and_stop_on_the_price_step(tmp_path):
+    engine, feed, broker, strategy, clock = _engine(tmp_path)
+    engine.step()
+    strategy.queue = [_ai_entry()]
+    _cycle(engine, feed, clock)
+    feed.bid, feed.ask = Decimal("100501"), Decimal("100600")  # 100501 x 1.008 = 101305.008
+    clock.advance(minutes=3, seconds=5)
+    engine.step()
+    repriced = [t for t in engine.orders.values() if t.role == "entry"][-1]
+    assert Decimal(repriced.meta["take_profit"]) == Decimal("101305")
+    assert Decimal(repriced.meta["stop"]) == Decimal("99496")  # 100501 x 0.99 = 99495.99, rounded up
+    feed.trades.append({"price": Decimal("100400"), "quantity": Decimal("1"), "time": clock.now + timedelta(seconds=1)})
+    clock.advance(seconds=15)
+    engine.step()
+    tp = engine.orders[engine.positions["BTCTMN"].tp_client_id].order
+    assert tp.price == Decimal("101305") and tp.status != "REJECTED"
+
+
+def test_close_pnl_uses_the_cost_basis_even_if_reconcile_ran_during_the_exit(tmp_path):
+    engine, feed, broker, strategy, clock = _engine(tmp_path)
+    engine.step()
+    strategy.queue = [_entry(tp=None)]
+    _cycle(engine, feed, clock)
+    feed.trades.append({"price": Decimal("99990"), "quantity": Decimal("1"), "time": clock.now + timedelta(seconds=1)})
+    clock.advance(seconds=15)
+    engine.step()
+    position = engine.positions["BTCTMN"]
+    cost = position.cost_tmn
+    position.quantity = Decimal("0")  # what the reconcile did mid-exit on 2026-10-23
+    feed.bid, feed.ask = Decimal("97900"), Decimal("98000")
+    clock.advance(seconds=15)
+    engine.step()
+    clock.advance(seconds=15)
+    engine.step()
+    (close,) = [d for d in _decisions(tmp_path) if d["kind"] == "CLOSE"]
+    assert cost > 0 and Decimal(close["pnl_tmn_approx"]) < 0  # a stop-out loses money, not +cost

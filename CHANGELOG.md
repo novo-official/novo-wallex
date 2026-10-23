@@ -3,6 +3,16 @@
 Every change to the trading code after the `live-v1` tag gets an entry here and a new tag (code freeze,
 RUNBOOK.md §2). Before go-live, `git log` is the history.
 
+## live-v1.2 (2026-10-24, bug fixes found in the live run; not deployed yet)
+
+- A repriced entry's take-profit (and stop) were not rounded to the price step: Wallex rejected the take-profit
+  (422, "price has more than 0 decimals"), so trade 2 of 2026-10-23 had no take-profit (the stop still worked).
+  The reprice now rounds the take-profit down and the stop up, and every LIMIT sell is floored to the price step
+  right before it is sent.
+- The journal's approximate P&L used the position quantity, which the reconcile had set to the leftover balance
+  while the stop's sell was running (+193,323 TMN instead of about −3,250). P&L now uses the position's cost basis;
+  the reconcile no longer shrinks a position whose exit order is working.
+
 ## live-v1.1 deployed: 2026-10-23 12:33 Tehran (controlled restart, tag `live-v1.1-deploy`)
 
 - Switched the running live engine from live-v1 to live-v1.1 by a controlled restart: no open position, no resting
