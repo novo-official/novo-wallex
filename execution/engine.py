@@ -463,6 +463,7 @@ class Engine:
             if risk_mode == "OFF":
                 entries = False
         approved_groups: set[str] = set()
+        stale = self.feed.stale_symbols() if hasattr(self.feed, "stale_symbols") else {}
         for intent in self.strategy.on_cycle(ctx, view):
             position = self.positions.get(intent.symbol)
             if intent.kind == "ENTER" and intent.group and intent.group in approved_groups:
@@ -487,6 +488,17 @@ class Engine:
                 )
             elif intent.kind == "ENTER" and entries:
                 if intent.symbol in self.positions or intent.symbol in state.pending_symbols:
+                    continue
+                quiet = stale.get(intent.symbol)
+                if quiet is not None:
+                    self.journal.decision(
+                        "SKIP",
+                        symbol=intent.symbol,
+                        module=intent.module,
+                        reason=intent.reason,
+                        risk=f"no trades on this market for {quiet:.0f} min",
+                        bar=bar.isoformat(),
+                    )
                     continue
                 intent = replace(intent, size_fraction=intent.size_fraction * float(self.ramp(now)))
                 if intent.limit_at_bid:

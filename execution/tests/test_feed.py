@@ -22,6 +22,7 @@ def test_a_quiet_symbol_does_not_freeze_the_clock_and_is_extended_flat():
     assert (extended.loc["2026-10-22T22:23Z":, "volume"] == 0).all()
 
 
-def test_a_symbol_stale_beyond_the_limit_holds_the_clock_back():
+def test_a_symbol_quiet_beyond_the_limit_is_stale_but_does_not_hold_the_clock():
     feed = _feed(BTCTMN=_bars("2026-10-22T23:05Z"), USDTTMN=_bars("2026-10-22T20:00Z"))
-    assert feed.last_bar_close() == pd.Timestamp("2026-10-22T20:01Z")
+    assert feed.last_bar_close() == pd.Timestamp("2026-10-22T23:06Z")
+    assert set(feed.stale_symbols()) == {"USDTTMN"}

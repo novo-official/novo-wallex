@@ -85,17 +85,26 @@ class MarketFeed:
         return added
 
     def _frontier(self) -> pd.Timestamp | None:
-        """Open time of the newest 1m bar of any symbol, unless some symbol is staler than `max_quiet_minutes`.
+        """Open time of the newest 1m bar of any symbol.
 
-        The UDF does not send bars for minutes without trades at the end of the series (seen at night on
-        USDTTMN and quiet USDT pairs), so a minimum over symbols would freeze the clock. Quiet symbols are
-        extended with flat zero-volume bars up to the frontier (as `fill_gaps` does inside the series); a
-        symbol older than the limit makes the frontier its own last bar, so the cycle waits (fail safe)."""
+        The UDF sends no bars at all for a market without trades (seen 2026-10-23: USDTTMN had no trade for 6 h at
+        night while its book stayed live), so a minimum over symbols would freeze the clock. Quiet symbols are
+        extended with flat zero-volume bars up to the frontier (as `fill_gaps` does inside the series); entries
+        on a symbol quiet for more than `max_quiet_minutes` are refused by the engine (`stale_symbols`)."""
         lasts = [frame.index[-1] for frame in self.bars.values() if not frame.empty]
-        if not lasts:
-            return None
-        newest, oldest = max(lasts), min(lasts)
-        return oldest if newest - oldest > pd.Timedelta(minutes=self.max_quiet_minutes) else newest
+        return max(lasts) if lasts else None
+
+    def stale_symbols(self) -> dict[str, float]:
+        """Symbols whose last real bar is more than `max_quiet_minutes` older than the frontier: {symbol: minutes}."""
+        frontier = self._frontier()
+        if frontier is None:
+            return {}
+        out = {}
+        for symbol, frame in self.bars.items():
+            quiet = (frontier - frame.index[-1]).total_seconds() / 60 if not frame.empty else float("inf")
+            if quiet > self.max_quiet_minutes:
+                out[symbol] = quiet
+        return out
 
     def _extended(self, frame: pd.DataFrame, frontier: pd.Timestamp) -> pd.DataFrame:
         if frame.empty or frame.index[-1] >= frontier:

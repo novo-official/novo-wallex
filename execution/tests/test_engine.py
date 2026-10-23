@@ -370,3 +370,14 @@ def test_a_slow_llm_review_does_not_eat_the_entry_timeout_and_the_price_is_the_f
     clock.advance(minutes=2)
     engine.step()
     assert not entry.order.done  # 3 minutes from the order, not from the cycle start
+
+
+def test_no_entry_on_a_market_without_recent_trades(tmp_path):
+    engine, feed, broker, strategy, clock = _engine(tmp_path)
+    feed.stale_symbols = lambda: {"BTCTMN": 240.0}
+    engine.step()
+    strategy.queue = [_ai_entry()]
+    _cycle(engine, feed, clock)
+    assert not any(t.role == "entry" for t in engine.orders.values())
+    skip = [d for d in _decisions(tmp_path) if d["kind"] == "SKIP"]
+    assert skip and "240 min" in skip[0]["risk"]
