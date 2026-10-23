@@ -32,14 +32,14 @@
   },
   "config_hash": "168f7bd9ffc28c6afb02d59af688918b312c28801b387b767eed6bf42c4c23eb",
   "experiment": "P4 LLM ablation, local model (non-overlapping windows)",
-  "holdout_evaluated": false,
-  "holdout_windows": 0,
+  "holdout_evaluated": true,
+  "holdout_windows": 6,
   "objective": {
     "metric": "p_above_target",
     "min_p10_drawdown": -0.035,
     "min_trades_per_day": 1.0
   },
-  "runtime_seconds": 1474.629655,
+  "runtime_seconds": 599.41484,
   "selection_windows": 13,
   "variants": 3
 }

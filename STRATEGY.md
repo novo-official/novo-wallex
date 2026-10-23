@@ -84,7 +84,12 @@ The only live module is **AI activity** (`strategy/modules/ai_activity.py`):
 - **Reproducible:** every answer is cached in `data/llm_cache/` (committed); `make reproduce` replays the ablation
   without any model or network.
 - **Blind historical replay:** no dates and no price levels reach the model, so it cannot recall the period.
-- **Ablation** (rules vs + Officer vs + Officer + Trade Agent): `docs/RESEARCH_P4.md` §5.
+- **Ablation** (`docs/RESEARCH_P4.md` §5; 13 selection windows, base fees): the LLM roles did **not** improve
+  returns (mean −0.04% rules vs −0.05% with both roles) but cut the worst drawdown from −2.30% to −1.81% and
+  the worst window from −1.58% to −0.85%. An equal-exposure control (rules ×0.76, no LLM) gets −1.75% worst
+  drawdown, so most of that benefit is a size cut. The Officer was DEFENSIVE in half the blocks and mostly
+  avoided BTC/ETH; the Trade Agent approved 79% and usually trimmed size to 0.8. We keep the roles as an
+  auditable risk governor that can only reduce risk, not as a source of return.
 
 ## 4. Risk management (code, final word)
 
