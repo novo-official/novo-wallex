@@ -162,7 +162,8 @@ Full rules: `docs/CHALLENGE.md`. Ground truth for the API: `docs/wallex_spot_swa
   `/v1/account/openOrders` → `result.orders[]`. `/v1/account/fee` → per symbol `makerFeeRate`/`takerFeeRate`:
   **TMN 0.25% / 0.30%, USDT 0.10% / 0.13%**. `/v1/prop/user/packages/history` → 401 code 1201 «ابتدا وارد شوید»
   (needs a web login, not the API key). Orders and `/v1/account/orders/{client_id}` still UNVERIFIED.
-- UDF sends no trailing bars for minutes without trades (night, USDTTMN/quiet pairs): the live feed extends them.
+- UDF sends no bars for minutes without trades. At night even USDTTMN can go 6 h without a trade (book still
+  live): the feed extends quiet symbols flat and the engine refuses entries on a market quiet > 120 min.
 - Orders (Swagger, P5 only): `POST /v1/account/orders` {symbol, side BUY/SELL, type LIMIT/MARKET/STOP_LIMIT/STOP_MARKET,
   price, quantity, `stop_Price`, client_id}; response uses `stopPrice`. Cancel: `DELETE /v1/account/orders`
   {clientOrderId} or `DELETE /v1/account/orders/{client_id}`. OrderResource: status (enum undocumented), executedQty,
@@ -228,7 +229,7 @@ across adjacent polls. ~2.8 req/s, no rate-limit headers seen; a 429 is retried 
   then the ablation (39 selection + 17 holdout non-overlapping windows). News: interface + stub only.
 - **P5/P6/P7 (2026-10-23):** engine, brokers, reconcile, preflight, smoke test, `make go-live`; trend OFF in live,
   AI activity only (fix check: (a) −1.34%, (b) E[net] > 0 +0.03% at 0.14 trades/day, (c) no trades); dashboard;
-  docs. Shadow running (G2 from 2026-10-23 03:17 Tehran). Blocked on the prop account: the key is the main
+  docs. Shadow running (G2 from 2026-10-23 05:26 Tehran, commit 861307c). Blocked on the prop account: the key is the main
   account's (all balances 0); CHALLENGE_END to be set by hand. Live config choice (a)/(b) is the user's.
 - Triage if short on time: keep backtester + 3-day study, RiskGuard, execution + reconcile + end flatten,
   DecisionLog, LLM agent with ablation, docs + reproduce. Cut first: triarb, ML polish, dashboard polish, Telegram.
