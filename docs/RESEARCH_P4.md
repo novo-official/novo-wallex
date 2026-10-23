@@ -105,3 +105,20 @@ Low fees: +1.03% / +1.05% / +0.83%; stress: +0.69% / +0.71% / +0.56%. 19 trades 
   (CLAUDE.md §3), and it is a period of strong TMN devaluation that favors long-only rules. The really untouched
   test is the shadow/live data after 2026-10-22.
 - **Reproduce:** `make reproduce` replays this run from `data/llm_cache/` without a model.
+
+## 6. The live configuration with the LLM roles (`reports/ai_activity_llm`)
+
+AI activity (the only live module) on the last 7 days (2026-10-15 → 10-22), blind replay, Officer every 4 h,
+**measured fees** (TMN 0.25% / 0.30%). These days were already seen by the fix check (§ STRATEGY.md §5).
+
+| variant | return | max DD | worst 3 days | trades (per day) | win rate | fees (TMN) |
+|---|---|---|---|---|---|---|
+| ML only (proxy) | −0.67% | −0.73% | −0.43% | 20 (2.86) | 10% | 26,356 |
+| ML + Officer | −0.53% | −0.57% | −0.42% | 15 (2.14) | 7% | 17,615 |
+| **ML + Officer + Trade Agent (live)** | **−0.32%** | **−0.36%** | **−0.33%** | 11 (1.57) | 18% | 11,408 |
+
+- **Trade Agent:** approved 25 of 245 candidates (10%). Its typical reason: the 1h trend is not up while the ML
+  edge is negative. Unlike the trend rules (§5), here it acts as a real filter, not a size cut.
+- **Officer:** DEFENSIVE in 24 of 42 blocks (half size), never OFF.
+- **Reading:** the LLM roles halve the loss and the drawdown of the live module and keep ≥ 1 trade/day, but the
+  module is still negative: the roles reduce damage, they do not create an edge. 7 days, 11 trades: small sample.

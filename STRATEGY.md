@@ -126,6 +126,12 @@ All fee tables use the **measured** fees from `GET /v1/account/fee` (2026-10-23)
   falls (adverse selection). Gross P&L per trade −0.23% before ~0.55% of fees.
 - (b) is the only variant that does not lose, but 2 trades in 14 days is no evidence of an edge and it misses
   the ≥ 1 trade/day activity target.
+
+**The live configuration (a) with both LLM roles** (`reports/ai_activity_llm`, last 7 days, measured fees,
+blind replay): ML only −0.67% (20 trades) → + Officer −0.53% (15) → **+ Officer + Trade Agent −0.32%, max DD
+−0.36%, 11 trades (1.57/day)**. The Trade Agent approved 25 of 245 candidates. **Recommendation:** keep (a) with
+both roles (the current `config/live.toml`): the smallest loss that still meets ≥ 1 trade/day; (b) would be
+the choice only if not losing matters more than activity.
 - **Earlier phases:** trend rules (P2) about break-even per 3-day window at default fees; per-bar ML has real
   ranking skill (IC 0.12 at 1h) but the predictable move is smaller than a round trip (P3).
 

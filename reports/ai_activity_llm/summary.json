@@ -1,0 +1,541 @@
+{
+  "end": "2026-10-22 12:20:00+00:00",
+  "fees": "measured TMN 0.25/0.30",
+  "llm": "live-local",
+  "officer_decisions": [
+    {
+      "activity": false,
+      "avoid": [
+        "BTCTMN",
+        "ETHTMN"
+      ],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #df2da01c8c83",
+      "rationale": "USDTTMN shows a positive trend but with high volatility. BTCTMN and ETHTMN are in downtrends with high volatility and negative returns. The market conditions suggest elevated risk, so entries are halved to mitigate potential sharp moves.",
+      "risk_mode": "DEFENSIVE",
+      "role": "regime_officer",
+      "time": "2026-10-15T12:20:00+00:00"
+    },
+    {
+      "activity": false,
+      "avoid": [
+        "BTCTMN",
+        "ETHTMN"
+      ],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #e567afbff54d",
+      "rationale": "USDTTMN shows a strong uptrend with high volatility, but BTCTMN and ETHTMN have high volatility and are in uptrends, which may indicate overbought conditions. Given the elevated risk of a sharp USDTTMN move, activity trades are switched off.",
+      "risk_mode": "NORMAL",
+      "role": "regime_officer",
+      "time": "2026-10-15T16:00:00+00:00"
+    },
+    {
+      "activity": true,
+      "avoid": [],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #7179a1615767",
+      "rationale": "USDTTMN shows a slight uptrend with low volatility, suggesting stable conditions. BTCTMN and ETHTMN have moderate volatility but are not showing extreme movements. No news is available to suggest heightened risk, so NORMAL mode is appropriate.",
+      "risk_mode": "NORMAL",
+      "role": "regime_officer",
+      "time": "2026-10-15T20:00:00+00:00"
+    },
+    {
+      "activity": true,
+      "avoid": [],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #60bd86ee8d74",
+      "rationale": "USDTTMN shows a slight uptrend with low volatility, while BTCTMN and ETHTMN are in downtrends but with moderate volatility. No news is available, and the market appears stable. The risk of a sharp USDTTMN move is low.",
+      "risk_mode": "NORMAL",
+      "role": "regime_officer",
+      "time": "2026-10-16T00:00:00+00:00"
+    },
+    {
+      "activity": true,
+      "avoid": [],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #fc137a8c3ad4",
+      "rationale": "USDTTMN shows a slight uptrend with low volatility, while BTCTMN and ETHTMN have mixed signals. No news is available, and the market appears stable. The risk of a sharp USDTTMN move is low, so NORMAL mode is appropriate.",
+      "risk_mode": "NORMAL",
+      "role": "regime_officer",
+      "time": "2026-10-16T04:00:00+00:00"
+    },
+    {
+      "activity": false,
+      "avoid": [
+        "BTCTMN",
+        "ETHTMN"
+      ],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #60214cbc24b9",
+      "rationale": "USDTTMN shows negative returns and low breadth, indicating potential volatility. BTCTMN and ETHTMN have negative close vs EMA200 and high volatility, suggesting overbought conditions. DEFENSIVE mode is chosen to avoid exposure to possible sharp moves.",
+      "risk_mode": "DEFENSIVE",
+      "role": "regime_officer",
+      "time": "2026-10-16T08:00:00+00:00"
+    },
+    {
+      "activity": false,
+      "avoid": [
+        "USDTTMN"
+      ],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #52faf3920351",
+      "rationale": "USDTTMN shows negative returns and low activity, indicating potential instability. The risk mode is set to defensive to avoid exposure to a possibly volatile market. Activity trades are switched off to prioritize capital preservation.",
+      "risk_mode": "DEFENSIVE",
+      "role": "regime_officer",
+      "time": "2026-10-16T12:00:00+00:00"
+    },
+    {
+      "activity": false,
+      "avoid": [
+        "BTCTMN",
+        "ETHTMN"
+      ],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #62843c24e03c",
+      "rationale": "The USDTTMN and BTCTMN markets show negative returns and high volatility, with BTCTMN and ETHTMN exhibiting significant discounts relative to fair value. The risk of a sharp USDTTMN move is elevated due to recent volatility and the potential for news-driven jumps. Defensive mode is applied to reduce exposure to these volatile markets.",
+      "risk_mode": "DEFENSIVE",
+      "role": "regime_officer",
+      "time": "2026-10-16T16:00:00+00:00"
+    },
+    {
+      "activity": false,
+      "avoid": [
+        "BTCTMN",
+        "ETHTMN"
+      ],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #d65333d4eb6d",
+      "rationale": "USDTTMN shows a mixed trend with recent losses, while BTCTMN and ETHTMN have negative returns and high volatility. The fair value premiums suggest potential mispricing, and the lack of news adds uncertainty. DEFENSIVE mode is chosen to avoid exposure to volatile markets.",
+      "risk_mode": "DEFENSIVE",
+      "role": "regime_officer",
+      "time": "2026-10-16T20:00:00+00:00"
+    },
+    {
+      "activity": false,
+      "avoid": [
+        "BTCTMN",
+        "ETHTMN"
+      ],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #529f16b252aa",
+      "rationale": "USDTTMN shows a negative return and low volatility, but BTCTMN and ETHTMN have negative returns and mixed volatility. The fair value premiums suggest potential mispricing, and the uptrend indicators are weak. Given the recent volatility and the risk of a sharp USDTTMN move, a defensive approach is prudent.",
+      "risk_mode": "DEFENSIVE",
+      "role": "regime_officer",
+      "time": "2026-10-17T00:00:00+00:00"
+    },
+    {
+      "activity": false,
+      "avoid": [
+        "BTCTMN",
+        "ETHTMN"
+      ],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #bb19e7d77d94",
+      "rationale": "The USDTTMN and BTCTMN markets show negative returns and volatility, with BTCTMN and ETHTMN at unusual fair value premiums. The risk of a sharp USDTTMN move is elevated due to recent volatility and the weekend effect. Avoiding these symbols reduces exposure to erratic movements.",
+      "risk_mode": "DEFENSIVE",
+      "role": "regime_officer",
+      "time": "2026-10-17T04:00:00+00:00"
+    },
+    {
+      "activity": false,
+      "avoid": [
+        "BTCTMN",
+        "ETHTMN"
+      ],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #ec5e430be897",
+      "rationale": "The USDTTMN and other markets show negative returns and low breadth of uptrends. BTCTMN and ETHTMN have high volatility and negative fair value premiums, indicating potential mispricing or risk. Given the elevated risk of a sharp USDTTMN move and the lack of positive trends, a defensive mode is appropriate.",
+      "risk_mode": "DEFENSIVE",
+      "role": "regime_officer",
+      "time": "2026-10-17T08:00:00+00:00"
+    },
+    {
+      "activity": false,
+      "avoid": [
+        "BTCTMN",
+        "ETHTMN"
+      ],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #429b258951aa",
+      "rationale": "The USDTTMN market shows elevated volatility and a negative return over the last day, indicating potential instability. BTCTMN and ETHTMN have negative close vs EMA200 and fair value premiums, suggesting they may be undervalued or in a downtrend. Given the risk of a sharp USDTTMN move and the lack of clear uptrends, a defensive approach is prudent.",
+      "risk_mode": "DEFENSIVE",
+      "role": "regime_officer",
+      "time": "2026-10-17T12:00:00+00:00"
+    },
+    {
+      "activity": false,
+      "avoid": [
+        "BTCTMN",
+        "ETHTMN"
+      ],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #a09b941970be",
+      "rationale": "USDTTMN shows a positive trend but with low volatility, while BTCTMN and ETHTMN are in downtrends with negative returns. The fair value premiums are slightly negative, indicating potential overvaluation or undervaluation. Given the recent volatility and the risk of a sharp USDTTMN move, a defensive mode is appropriate to limit exposure.",
+      "risk_mode": "DEFENSIVE",
+      "role": "regime_officer",
+      "time": "2026-10-17T16:00:00+00:00"
+    },
+    {
+      "activity": false,
+      "avoid": [
+        "BTCTMN",
+        "ETHTMN"
+      ],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #2e237832edbb",
+      "rationale": "USDTTMN shows mixed signals with a flat 1h return but a positive 4h return, while BTCTMN and ETHTMN are in downtrends with negative 1h returns. The fair value premiums are negative, indicating potential overvaluation or discount, and the uptrend breadth is low. Given the volatility and mixed signals, a defensive approach is prudent.",
+      "risk_mode": "DEFENSIVE",
+      "role": "regime_officer",
+      "time": "2026-10-17T20:00:00+00:00"
+    },
+    {
+      "activity": false,
+      "avoid": [
+        "BTCTMN",
+        "ETHTMN"
+      ],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #7576c106b98b",
+      "rationale": "USDTTMN shows no recent movement, but BTCTMN and ETHTMN are in downtrends with high volatility. The fair value premiums suggest potential mispricing, and the lack of news adds uncertainty. DEFENSIVE mode is chosen to avoid exposure to volatile markets.",
+      "risk_mode": "DEFENSIVE",
+      "role": "regime_officer",
+      "time": "2026-10-18T00:00:00+00:00"
+    },
+    {
+      "activity": false,
+      "avoid": [
+        "BTCTMN",
+        "ETHTMN"
+      ],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #e4cb2eedfb27",
+      "rationale": "The USDTTMN shows no recent movement, but the rial has been drifting up. BTCTMN and ETHTMN show strong uptrends but are below their 200 EMA, indicating potential overbought conditions. Given the volatility and the risk of a sudden USDTTMN move, a defensive approach is prudent.",
+      "risk_mode": "DEFENSIVE",
+      "role": "regime_officer",
+      "time": "2026-10-18T04:00:00+00:00"
+    },
+    {
+      "activity": false,
+      "avoid": [
+        "BTCTMN",
+        "ETHTMN",
+        "USDTTMN"
+      ],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #958e7d3a032a",
+      "rationale": "All markets show negative returns and low breadth of uptrends. USDTTMN, BTCTMN, and ETHTMN are all in downtrends with high volatility. The fair value premiums suggest potential mispricing, but the overall market environment is uncertain. Given the recent volatility and the risk of a sharp USDTTMN move, a defensive approach is warranted.",
+      "risk_mode": "DEFENSIVE",
+      "role": "regime_officer",
+      "time": "2026-10-18T08:00:00+00:00"
+    },
+    {
+      "activity": false,
+      "avoid": [
+        "BTCTMN",
+        "ETHTMN"
+      ],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #1f7f4772b28e",
+      "rationale": "The USDTTMN and ETHTMN show elevated volatility and negative returns, with ETHTMN at a discount. BTCTMN has a fair value premium but is trending down. The market is uncertain, so entries are halved to mitigate risk.",
+      "risk_mode": "DEFENSIVE",
+      "role": "regime_officer",
+      "time": "2026-10-18T12:00:00+00:00"
+    },
+    {
+      "activity": false,
+      "avoid": [
+        "BTCTMN",
+        "ETHTMN"
+      ],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #a0c5ce74770d",
+      "rationale": "The USDTTMN and other markets show mixed short-term trends with elevated volatility. The fair value premiums for BTCTMN and ETHTMN are unusual, and the recent returns suggest potential instability. Given the risk of a sharp USDTTMN move and the erratic behavior of the markets, a defensive approach is warranted.",
+      "risk_mode": "DEFENSIVE",
+      "role": "regime_officer",
+      "time": "2026-10-18T16:00:00+00:00"
+    },
+    {
+      "activity": false,
+      "avoid": [
+        "BTCTMN",
+        "ETHTMN"
+      ],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #54452a260380",
+      "rationale": "The USDTTMN and other markets show negative returns and low breadth of uptrends. The fair value premiums for BTCTMN and ETHTMN are unusual, and the volatility is high. Given the recent trends and the potential for sharp USDTTMN moves, a defensive approach is warranted.",
+      "risk_mode": "DEFENSIVE",
+      "role": "regime_officer",
+      "time": "2026-10-18T20:00:00+00:00"
+    },
+    {
+      "activity": false,
+      "avoid": [
+        "BTCTMN",
+        "ETHTMN"
+      ],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #2f3e08dbc014",
+      "rationale": "The USDTTMN and BTCTMN/ETHTMN markets show elevated volatility and negative returns, with BTCTMN and ETHTMN showing signs of overbought conditions. Given the recent volatility and potential for sharp moves, a defensive approach is prudent to avoid exposure to sudden price jumps.",
+      "risk_mode": "DEFENSIVE",
+      "role": "regime_officer",
+      "time": "2026-10-19T00:00:00+00:00"
+    },
+    {
+      "activity": false,
+      "avoid": [
+        "BTCTMN",
+        "ETHTMN"
+      ],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #36ed000c340a",
+      "rationale": "USDTTMN shows mixed signals with a slight uptrend in the 4h but a negative close vs EMA200. BTCTMN and ETHTMN have higher volatility and fair value premiums, indicating potential overvaluation. Given the elevated USDTTMN risk and the possibility of sharp moves, a defensive approach is prudent.",
+      "risk_mode": "DEFENSIVE",
+      "role": "regime_officer",
+      "time": "2026-10-19T04:00:00+00:00"
+    },
+    {
+      "activity": true,
+      "avoid": [],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #915e31ac4079",
+      "rationale": "The USDTTMN market shows low volatility and no uptrend, suggesting stability. BTCTMN and ETHTMN have moderate volatility and mixed signals, but no extreme premiums or discounts. No news impacts the market, and the risk of a sharp USDTTMN move is low.",
+      "risk_mode": "NORMAL",
+      "role": "regime_officer",
+      "time": "2026-10-19T08:00:00+00:00"
+    },
+    {
+      "activity": false,
+      "avoid": [
+        "BTCTMN",
+        "ETHTMN"
+      ],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #f4ab0ac81587",
+      "rationale": "The USDTTMN and BTCTMN/ETHTMN markets show negative returns and low uptrend breadth. The fair value premiums are slightly negative, indicating potential overvaluation or undervaluation. Given the recent volatility and the risk of a sharp USDTTMN move, a defensive mode is appropriate to limit exposure.",
+      "risk_mode": "DEFENSIVE",
+      "role": "regime_officer",
+      "time": "2026-10-19T12:00:00+00:00"
+    },
+    {
+      "activity": false,
+      "avoid": [
+        "BTCTMN",
+        "ETHTMN"
+      ],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #e578f6bc177c",
+      "rationale": "The USDTTMN and BTCTMN markets show mixed signals with elevated volatility and negative close vs EMA200. ETHTMN has a significant negative close vs EMA200 and a sharp 4h decline. The risk mode is set to defensive to avoid potential sharp moves in USDTTMN and to protect open positions.",
+      "risk_mode": "DEFENSIVE",
+      "role": "regime_officer",
+      "time": "2026-10-19T16:00:00+00:00"
+    },
+    {
+      "activity": false,
+      "avoid": [
+        "BTCTMN",
+        "ETHTMN"
+      ],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #d48d805087e0",
+      "rationale": "The USDTTMN and BTCTMN/ETHTMN markets show negative short-term returns and volatility, with fair value premiums indicating potential overvaluation. Given the elevated risk of a sharp USDTTMN move and the lack of clear uptrends, a defensive approach is prudent to avoid exposure to erratic movements.",
+      "risk_mode": "DEFENSIVE",
+      "role": "regime_officer",
+      "time": "2026-10-19T20:00:00+00:00"
+    },
+    {
+      "activity": true,
+      "avoid": [],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #c7355ad105ff",
+      "rationale": "The USDTTMN market shows low volatility and no uptrend, while BTCTMN and ETHTMN have moderate volatility and slight positive returns. No news is available, and the risk of a sharp USDTTMN move is low. The system remains in NORMAL mode with activity trades enabled.",
+      "risk_mode": "NORMAL",
+      "role": "regime_officer",
+      "time": "2026-10-20T00:00:00+00:00"
+    },
+    {
+      "activity": true,
+      "avoid": [],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #ba6b2bcd0baf",
+      "rationale": "The USDTTMN market shows low volatility and no uptrend, suggesting stability. BTCTMN and ETHTMN have moderate volatility but are not in uptrends. No news is available, and the risk of a sharp USDTTMN move is low. The system can proceed with normal trading.",
+      "risk_mode": "NORMAL",
+      "role": "regime_officer",
+      "time": "2026-10-20T04:00:00+00:00"
+    },
+    {
+      "activity": true,
+      "avoid": [],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #9e559b668a1b",
+      "rationale": "The USDTTMN market shows low volatility and no uptrend, suggesting stability. BTCTMN and ETHTMN have negative returns but moderate volatility. No news is available, and the risk of a sharp USDTTMN move is low. The regime remains normal with no symbols to avoid.",
+      "risk_mode": "NORMAL",
+      "role": "regime_officer",
+      "time": "2026-10-20T08:00:00+00:00"
+    },
+    {
+      "activity": true,
+      "avoid": [],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #f61c06d78425",
+      "rationale": "USDTTMN shows a slight positive return over 4h but is in a consolidation phase. BTCTMN and ETHTMN have moderate volatility and positive returns, with ETHTMN showing a fair value premium. No news is available, and the market appears stable.",
+      "risk_mode": "NORMAL",
+      "role": "regime_officer",
+      "time": "2026-10-20T12:00:00+00:00"
+    },
+    {
+      "activity": false,
+      "avoid": [
+        "BTCTMN",
+        "ETHTMN"
+      ],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #55f0fc630b7b",
+      "rationale": "USDTTMN shows mixed returns with a recent drop, while BTCTMN and ETHTMN have high volatility and negative close vs EMA200. The fair value premiums suggest potential mispricing, and the uptrend indicators are weak. Given the elevated risk of a sharp USDTTMN move, a defensive approach is prudent.",
+      "risk_mode": "DEFENSIVE",
+      "role": "regime_officer",
+      "time": "2026-10-20T16:00:00+00:00"
+    },
+    {
+      "activity": false,
+      "avoid": [
+        "BTCTMN",
+        "ETHTMN",
+        "USDTTMN"
+      ],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #eeec3dcfa3fb",
+      "rationale": "USDTTMN, BTCTMN, and ETHTMN all show negative short-term returns and mixed trend signals. The fair value premiums for BTCTMN and ETHTMN suggest potential mispricing, and the overall volatility and recent price movements indicate elevated risk. Defensive mode is preferred to avoid exposure to possible sharp USDTTMN moves.",
+      "risk_mode": "DEFENSIVE",
+      "role": "regime_officer",
+      "time": "2026-10-20T20:00:00+00:00"
+    },
+    {
+      "activity": true,
+      "avoid": [],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #5bec89bed398",
+      "rationale": "The USDTTMN market shows low volatility and no uptrend, while BTCTMN and ETHTMN have moderate volatility and mixed returns. No news is available, and the risk of a sharp USDTTMN move is low. Activity trades can proceed as planned.",
+      "risk_mode": "NORMAL",
+      "role": "regime_officer",
+      "time": "2026-10-21T00:00:00+00:00"
+    },
+    {
+      "activity": true,
+      "avoid": [],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #57533a8debff",
+      "rationale": "The USDTTMN market shows low volatility and no uptrend, suggesting stability. BTCTMN and ETHTMN have moderate volatility but are not in uptrends. No news is available, and the risk of a sharp USDTTMN move is low. Positions can be managed with normal risk parameters.",
+      "risk_mode": "NORMAL",
+      "role": "regime_officer",
+      "time": "2026-10-21T04:00:00+00:00"
+    },
+    {
+      "activity": true,
+      "avoid": [],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #6da8acc484c4",
+      "rationale": "USDTTMN shows low volatility and no uptrend, while BTCTMN and ETHTMN have moderate volatility and positive returns. No news is available, and the market appears stable. No symbols are at unusual premiums or discounts, so no avoidance is needed.",
+      "risk_mode": "NORMAL",
+      "role": "regime_officer",
+      "time": "2026-10-21T08:00:00+00:00"
+    },
+    {
+      "activity": true,
+      "avoid": [],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #277c3d60402b",
+      "rationale": "The USDTTMN market shows low volatility and a slight negative return in the last hour, suggesting stability. BTCTMN and ETHTMN have positive returns over the last 4 hours, with moderate volatility. No news is available, and the risk mode remains normal as there are no signs of disorderly market conditions or sharp USDTTMN moves.",
+      "risk_mode": "NORMAL",
+      "role": "regime_officer",
+      "time": "2026-10-21T12:00:00+00:00"
+    },
+    {
+      "activity": false,
+      "avoid": [
+        "BTCTMN"
+      ],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #299865b7f7c8",
+      "rationale": "USDTTMN shows elevated risk with a high RSI and positive returns, but BTCTMN has a strong uptrend with high volatility and a fair value premium, suggesting caution. Activity trades are off due to elevated risk.",
+      "risk_mode": "NORMAL",
+      "role": "regime_officer",
+      "time": "2026-10-21T16:00:00+00:00"
+    },
+    {
+      "activity": false,
+      "avoid": [
+        "USDTTMN"
+      ],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #5438bf427c24",
+      "rationale": "USDTTMN shows a strong uptrend but with a high RSI and low recent returns, indicating potential overbought conditions. The risk mode is set to NORMAL, but activity trades are switched off due to elevated USDTTMN risk. USDTTMN is avoided to mitigate exposure to a possible sharp move.",
+      "risk_mode": "NORMAL",
+      "role": "regime_officer",
+      "time": "2026-10-21T20:00:00+00:00"
+    },
+    {
+      "activity": true,
+      "avoid": [],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #9009e314ce6d",
+      "rationale": "USDTTMN shows a slight uptrend with low volatility, while BTCTMN and ETHTMN have mixed signals but remain in uptrends. No news is available, and the market appears stable. Risk is low, so NORMAL mode is appropriate.",
+      "risk_mode": "NORMAL",
+      "role": "regime_officer",
+      "time": "2026-10-22T00:00:00+00:00"
+    },
+    {
+      "activity": true,
+      "avoid": [],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #83b5c98893a0",
+      "rationale": "The USDTTMN market shows a strong uptrend with low volatility and positive returns, suggesting stability. BTCTMN and ETHTMN also exhibit uptrends with moderate volatility, and their fair value premiums are within normal ranges. No news events are affecting the market, and the risk of a sharp USDTTMN move is low.",
+      "risk_mode": "NORMAL",
+      "role": "regime_officer",
+      "time": "2026-10-22T04:00:00+00:00"
+    },
+    {
+      "activity": false,
+      "avoid": [
+        "USDTTMN"
+      ],
+      "ok": true,
+      "prompt_hash": "ollama/qwen3:8b@500a1f067a9f regime_officer_v1@52753075 #d88916c9793c",
+      "rationale": "USDTTMN shows a strong uptrend with high returns but also high volatility and a premium over the USDT market. This suggests a potential for sharp moves, increasing risk. Other symbols show mixed signals, but the elevated risk from USDTTMN warrants caution.",
+      "risk_mode": "NORMAL",
+      "role": "regime_officer",
+      "time": "2026-10-22T08:00:00+00:00"
+    }
+  ],
+  "results": {
+    "ML + Officer": {
+      "fees_paid": 17614.554086165008,
+      "max_drawdown": -0.005668391937957873,
+      "return": -0.0052517924525312155,
+      "trades": 15,
+      "trades_per_day": 2.142857142857143,
+      "win_rate": 0.06666666666666667,
+      "worst_3d": -0.004153335619600074
+    },
+    "ML + Officer + Trade Agent (live config)": {
+      "fees_paid": 11408.250426357417,
+      "max_drawdown": -0.0035625033782757942,
+      "return": -0.0032286354764509994,
+      "trades": 11,
+      "trades_per_day": 1.5714285714285714,
+      "win_rate": 0.18181818181818182,
+      "worst_3d": -0.0033002537499795537
+    },
+    "ML only (proxy)": {
+      "fees_paid": 26355.51802621997,
+      "max_drawdown": -0.007278812166227389,
+      "return": -0.006714685480386153,
+      "trades": 20,
+      "trades_per_day": 2.857142857142857,
+      "win_rate": 0.1,
+      "worst_3d": -0.0043056229397473444
+    }
+  },
+  "start": "2026-10-15 12:20:00+00:00",
+  "trade_agent_approved": 25,
+  "trade_agent_reviews": 245
+}

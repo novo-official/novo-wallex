@@ -1,0 +1,59 @@
+{
+ "identity": {
+  "digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+  "model": "qwen3:8b",
+  "provider": "ollama"
+ },
+ "request": {
+  "max_tokens": 1500,
+  "messages": [
+   {
+    "content": "{\"candidate\": {\"module\": \"ai_activity\", \"stop_fraction\": 0.01, \"symbol\": \"ETHTMN\", \"take_profit_fraction\": 0.008}, \"market\": {\"breadth_uptrend_1h\": 0.0, \"markets\": [{\"active_share_1d\": 0.5, \"adx14_4h\": 27.16692, \"close_vs_ema200_1h\": -0.0072, \"fair_value_premium\": null, \"ret_1d\": -0.00195, \"ret_1h\": 9e-05, \"ret_4h\": 0.00533, \"rsi14_1h\": 52.10793, \"symbol\": \"USDTTMN\", \"uptrend_1h\": false, \"vol_1d\": 0.00064}, {\"active_share_1d\": 0.94792, \"adx14_4h\": 42.35349, \"close_vs_ema200_1h\": -0.00503, \"fair_value_premium\": -0.00139, \"ret_1d\": 0.00127, \"ret_1h\": -0.00291, \"ret_4h\": 0.00202, \"rsi14_1h\": 58.84691, \"symbol\": \"BTCTMN\", \"uptrend_1h\": false, \"vol_1d\": 0.00141}, {\"active_share_1d\": 0.83333, \"adx14_4h\": 41.62676, \"close_vs_ema200_1h\": -0.01743, \"fair_value_premium\": -0.00113, \"ret_1d\": 0.00097, \"ret_1h\": -0.00323, \"ret_4h\": 0.00584, \"rsi14_1h\": 59.64574, \"symbol\": \"ETHTMN\", \"uptrend_1h\": false, \"vol_1d\": 0.00195}], \"news\": {\"available\": false, \"items\": []}, \"tehran_hour\": 13, \"weekday\": \"Monday\"}, \"tools_available\": false}",
+    "role": "user"
+   }
+  ],
+  "options": {
+   "seed": 42,
+   "temperature": 0
+  },
+  "schema": {
+   "additionalProperties": false,
+   "properties": {
+    "approve": {
+     "type": "boolean"
+    },
+    "rationale": {
+     "type": "string"
+    },
+    "size_fraction": {
+     "type": "number"
+    },
+    "stop_fraction": {
+     "type": "number"
+    },
+    "take_profit_fraction": {
+     "type": "number"
+    }
+   },
+   "required": [
+    "approve",
+    "rationale",
+    "size_fraction",
+    "stop_fraction",
+    "take_profit_fraction"
+   ],
+   "type": "object"
+  },
+  "system": "You are the Trade Agent of an automated spot-trading system on Wallex, an Iranian exchange. The trading rules\nhave proposed one long entry. You approve or reject it, and you may make it more careful.\n\nYou receive a JSON object with the candidate (market, the rule that fired, stop and take-profit distances as\nfractions of the entry price, and the rule's own signal values as ratios) and a summary of the market. When the\nread-only tools are available you may call them, at most three times in total, to look at the order book, the\nrecent trades or the market's rules; when they are unavailable, decide from the summary.\n\nDecide:\n- approve: false when the entry looks poor right now: for example a thin or one-sided order book, a wide spread,\n  the TMN price at a premium to its USDT value, a sharp move against the trade in the last minutes, or a regime\n  that contradicts the signal.\n- size_fraction: between 0 and 1, the share of the size the risk layer would allow (1 = full). Use less than 1\n  when you see a reason for caution but not for a rejection.\n- stop_fraction: 0 to keep the rule's stop, or a smaller distance (for example 0.012 for 1.2%) to tighten it.\n- take_profit_fraction: 0 to keep the rule's target, or a smaller distance to bring it closer (at least 0.007,\n  so that it still pays the fees).\n- rationale: two or three short sentences an auditor can check against the data.\n\nA risk layer in code enforces every limit: it ignores a larger size, a wider stop or a farther target. Costs are\nabout 0.6% per round trip. Base your answer only on the data you are given. Answer with the JSON object only."
+ },
+ "response": {
+  "stop_reason": "end",
+  "text": "{\n  \"approve\": false,\n  \"size_fraction\": 0.3,\n  \"stop_fraction\": 0.01,\n  \"take_profit_fraction\": 0.008,\n  \"rationale\": \"The market shows mixed signals with ETHTMN in a downtrend, low volume, and a fair value premium suggesting potential undervaluation. The rule's signal is weak, and the recent 1h return is positive but not strong enough to justify a full size.\"\n}",
+  "tool_calls": [],
+  "usage": {
+   "input_tokens": 999,
+   "output_tokens": 103,
+   "seconds": 15.4492305
+  }
+ }
+}
