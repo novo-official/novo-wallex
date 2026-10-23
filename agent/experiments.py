@@ -189,7 +189,7 @@ def precompute(config: StudyConfig, data_dir: Path, final: bool, progress: Path)
 
 
 def llm_ablation(config, data_dir, out_dir, reports_dir, final=False, llm="replay", log=True):
-    config, data, _, _, _ = _windows(config, data_dir, final)
+    config, data, selection, holdout, _ = _windows(config, data_dir, final)
     _, first = _market(config, data_dir)
     planned = plan(config, data_dir, final)
     if planned["to_compute"] and llm == "replay":
@@ -205,6 +205,7 @@ def llm_ablation(config, data_dir, out_dir, reports_dir, final=False, llm="repla
         references=("rules", "rules + officer"),
         final=final,
         since=first,
+        windows_override=(selection, holdout),  # the time-boxed subset the officer precompute covered
         processes=1 if llm != "replay" else 4,
         notes=f"llm={llm}; officer every 4 h in replay; blind contexts",
         log=log,
