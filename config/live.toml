@@ -31,7 +31,7 @@ max_consecutive_errors = 5     # then: halt new entries, keep managing exits
 [ai_activity]                  # user decision 2026-10-22: trend OFF; the only live module. Every entry = ML rank +
 enabled = true                 # Officer risk_mode != OFF + Trade Agent approval + RiskGuard
 column = "ml_net_h24"
-symbols = ["BTCTMN", "ETHTMN", "USDTTMN"]
+symbols = ["BTCTMN", "ETHTMN"]       # USDTTMN removed 2026-10-23: orders refused on the prop account (422)
 notional_tmn = "250000"        # per trade (or the exchange minimum if higher); sized against the 15% cap
 slot_minutes = 60
 min_spacing_minutes = 45

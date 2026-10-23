@@ -5,6 +5,11 @@ RUNBOOK.md §2). Before go-live, `git log` is the history.
 
 ## Unreleased (before live-v1)
 
+- 2026-10-23 (safety, user-approved): USDTTMN removed from the live AI activity markets (`config/live.toml`):
+  the prop account refuses orders on it (422 «امکان ثبت سفارش در بازار USDTTMN وجود ندارد»). Live trades BTCTMN
+  and ETHTMN only (both passed the place/cancel smoke test). USDTTMN stays in the data universe (features, fair
+  value). Not a tuning change: candidates on USDTTMN could never have been filled.
+
 - 2026-10-23 (smoke test on the prop account): MARKET orders are refused (422), so every forced sell (stop, max
   hold, flatten fallback, kill switch) is an aggressive LIMIT 0.2% under the best bid that expires after 30 s and
   is re-placed at the new bid until closed; the engine never sends MARKET. USDTTMN orders are refused too.

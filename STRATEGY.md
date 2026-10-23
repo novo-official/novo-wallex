@@ -50,7 +50,8 @@ flowchart LR
 User decision 2026-10-22: the trend rules are **off** in live (G1: −1.61% over 14 days, 6 trades, all stopped out).
 The only live module is **AI activity** (`strategy/modules/ai_activity.py`):
 
-- **Universe:** BTCTMN, ETHTMN, USDTTMN: the deepest TMN books (2–4 bps slippage) and the only ones with MARKET orders.
+- **Universe:** BTCTMN and ETHTMN, the deepest TMN books (2–4 bps slippage). USDTTMN was removed on 2026-10-23:
+  the prop account refuses orders on it. It stays in the data (features, fair value).
 - **Every 60 min slot:** rank the three markets by the ML model's calibrated expected net return over 2 h (E[net],
   h24 = 24 five-minute bars, already net of costs). Propose them in that order as **one exclusive group**: the engine
   takes at most one approved entry per slot.
