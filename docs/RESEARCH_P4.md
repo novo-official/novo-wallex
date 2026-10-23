@@ -4,6 +4,7 @@
 > - **بازده:** دو نقش مدل زبانی محلی (افسر ریسک و عامل معامله) بازده قوانین را بهتر نکردند. میانگین بازده هر پنجره ۳ روزه −۰٫۰۴٪ بدون LLM و −۰٫۰۵٪ با LLM است.
 > - **ریسک:** بدترین افت سرمایه را کم کردند (−۲٫۳۰٪ به −۱٫۸۱٪) و بدترین پنجره هم بهتر شد (−۱٫۵۸٪ به −۰٫۸۵٪).
 > - **آزمون کنترل:** قوانین با همان اندازه متوسط (۰٫۷۶ برابر) و بدون LLM تقریباً همان کاهش افت را می‌دهند (−۱٫۷۵٪). پس بیشتر اثر ریسکی LLM همان کوچک‌تر کردن حجم است، نه قضاوت. فقط بدترین پنجره و p10 افت کمی بهتر است، که با ۱۳ پنجره معنادار نیست.
+> - **ماژول زنده (AI activity، ۷ روز):** با LLM زیان از −۰٫۶۷٪ به −۰٫۳۲٪ رسید. ولی این بهبود از معاملات کمتر و کوچک‌تر آمده، نه از انتخاب بهتر: سود خالص هر معامله نسبت به حجمش −۰٫۷۴٪ است در برابر −۰٫۶۸٪ بدون LLM. نمونه کوچک است (۱۱ تا ۲۰ معامله).
 > - **holdout (۶ پنجره):** قوانین +۰٫۸۸٪، با هر دو نقش +۰٫۷۱٪. بازده به همان نسبتی کم شد که حجم کم شده بود (۲۰٪)، و افت هم از −۱٫۷۰٪ به −۱٫۳۶٪ رسید.
 
 ## 1. Decisions (user, 2026-10-22)
@@ -122,3 +123,19 @@ AI activity (the only live module) on the last 7 days (2026-10-15 → 10-22), bl
 - **Officer:** DEFENSIVE in 24 of 42 blocks (half size), never OFF.
 - **Reading:** the LLM roles halve the loss and the drawdown of the live module and keep ≥ 1 trade/day, but the
   module is still negative: the roles reduce damage, they do not create an edge. 7 days, 11 trades: small sample.
+
+**Per-trade P&L (honesty addendum).** Size-free columns (% of the trade's notional) measure selection quality:
+
+| variant | trades | mean P&L per trade (TMN) | per trade, % of equity | mean notional (TMN) | gross per trade, % of notional | net per trade, % of notional | wins |
+|---|---|---|---|---|---|---|---|
+| ML only | 20 | −1,679 | −0.034% | 247,708 | −0.15% | −0.68% | 2 |
+| + Officer | 15 | −1,751 | −0.035% | 222,840 | −0.29% | −0.81% | 1 |
+| + Officer + Trade Agent | 11 | −1,468 | −0.029% | 198,674 | −0.22% | −0.74% | 2 |
+
+- **The improvement comes from fewer and smaller trades, not from better selection.** Per unit of notional, the
+  trades the LLM let through were slightly *worse* than the ML-only trades (net −0.74% vs −0.68%). At the ML-only
+  per-trade mean, 11 trades would lose ~18,500 TMN (−0.37%); the LLM run lost −0.32%, the rest of the gap being its
+  ~20% smaller sizes (Officer DEFENSIVE half sizes, Trade Agent trims).
+- **Sample:** 7 days, 11–20 trades, 1–2 winners per variant: far too small for a selection claim either way.
+- **What it means for live:** the roles act as a brake that cuts the number and size of loss-making trades in a
+  market where the module has no edge. That is a real risk benefit, but it is not skill at picking trades.

@@ -1,7 +1,7 @@
 {
   "end": "2026-10-22 12:20:00+00:00",
   "fees": "measured TMN 0.25/0.30",
-  "llm": "live-local",
+  "llm": "replay",
   "officer_decisions": [
     {
       "activity": false,
@@ -510,6 +510,142 @@
     "ML + Officer": {
       "fees_paid": 17614.554086165008,
       "max_drawdown": -0.005668391937957873,
+      "per_trade": {
+        "exit_reasons": {
+          "max hold 24 bars": 12,
+          "stop": 2,
+          "take_profit": 1
+        },
+        "mean_gross_pct_notional": -0.0028524290355222744,
+        "mean_net_pct_notional": -0.008110640751482398,
+        "mean_notional_tmn": 222839.59612470932,
+        "mean_pnl_pct_equity": -0.00035011949683541436,
+        "mean_pnl_tmn": -1750.597484177072,
+        "n": 15,
+        "trades": [
+          {
+            "entry": "2026-10-15 12:25:00+00:00",
+            "exit": "2026-10-15 14:30:00+00:00",
+            "exit_reason": "max hold 24 bars (2 h) (maker)",
+            "net_pct_notional": -0.006531179567050296,
+            "pnl_tmn": -802.4539,
+            "symbol": "USDTTMN"
+          },
+          {
+            "entry": "2026-10-15 16:25:00+00:00",
+            "exit": "2026-10-15 18:30:00+00:00",
+            "exit_reason": "max hold 24 bars (2 h) (maker timeout, taker)",
+            "net_pct_notional": -0.005669441194835054,
+            "pnl_tmn": -1403.450154654,
+            "symbol": "USDTTMN"
+          },
+          {
+            "entry": "2026-10-16 07:25:00+00:00",
+            "exit": "2026-10-16 09:30:00+00:00",
+            "exit_reason": "max hold 24 bars (2 h) (maker)",
+            "net_pct_notional": -0.008664446077168958,
+            "pnl_tmn": -2150.5273,
+            "symbol": "USDTTMN"
+          },
+          {
+            "entry": "2026-10-17 05:35:00+00:00",
+            "exit": "2026-10-17 07:40:00+00:00",
+            "exit_reason": "max hold 24 bars (2 h) (maker)",
+            "net_pct_notional": -0.010226408022805484,
+            "pnl_tmn": -1269.59925,
+            "symbol": "USDTTMN"
+          },
+          {
+            "entry": "2026-10-18 05:35:00+00:00",
+            "exit": "2026-10-18 07:40:00+00:00",
+            "exit_reason": "max hold 24 bars (2 h) (maker timeout, taker)",
+            "net_pct_notional": -0.014107716183062757,
+            "pnl_tmn": -1751.3341442,
+            "symbol": "USDTTMN"
+          },
+          {
+            "entry": "2026-10-21 08:35:00+00:00",
+            "exit": "2026-10-21 10:40:00+00:00",
+            "exit_reason": "max hold 24 bars (2 h) (maker timeout, taker)",
+            "net_pct_notional": -0.0033932360395444623,
+            "pnl_tmn": -846.6546306195679,
+            "symbol": "BTCTMN"
+          },
+          {
+            "entry": "2026-10-21 09:35:00+00:00",
+            "exit": "2026-10-21 11:40:00+00:00",
+            "exit_reason": "max hold 24 bars (2 h) (maker timeout, taker)",
+            "net_pct_notional": -0.006896425567748983,
+            "pnl_tmn": -1701.03573548626,
+            "symbol": "ETHTMN"
+          },
+          {
+            "entry": "2026-10-21 11:45:00+00:00",
+            "exit": "2026-10-21 13:50:00+00:00",
+            "exit_reason": "max hold 24 bars (2 h) (maker)",
+            "net_pct_notional": -0.004105646270391843,
+            "pnl_tmn": -1015.8392,
+            "symbol": "USDTTMN"
+          },
+          {
+            "entry": "2026-10-21 22:35:00+00:00",
+            "exit": "2026-10-22 00:40:00+00:00",
+            "exit_reason": "max hold 24 bars (2 h) (maker timeout, taker)",
+            "net_pct_notional": -0.013283947302860715,
+            "pnl_tmn": -3265.0955706944505,
+            "symbol": "ETHTMN"
+          },
+          {
+            "entry": "2026-10-22 01:35:00+00:00",
+            "exit": "2026-10-22 02:10:00+00:00",
+            "exit_reason": "stop",
+            "net_pct_notional": -0.015784861604165826,
+            "pnl_tmn": -3857.23860935089,
+            "symbol": "ETHTMN"
+          },
+          {
+            "entry": "2026-10-22 02:35:00+00:00",
+            "exit": "2026-10-22 04:40:00+00:00",
+            "exit_reason": "max hold 24 bars (2 h) (maker timeout, taker)",
+            "net_pct_notional": -0.008595767626193757,
+            "pnl_tmn": -2133.871866744654,
+            "symbol": "ETHTMN"
+          },
+          {
+            "entry": "2026-10-22 03:35:00+00:00",
+            "exit": "2026-10-22 05:40:00+00:00",
+            "exit_reason": "max hold 24 bars (2 h) (maker)",
+            "net_pct_notional": -0.002946470688091759,
+            "pnl_tmn": -733.2122356134,
+            "symbol": "BTCTMN"
+          },
+          {
+            "entry": "2026-10-22 04:45:00+00:00",
+            "exit": "2026-10-22 06:50:00+00:00",
+            "exit_reason": "max hold 24 bars (2 h) (maker)",
+            "net_pct_notional": -0.008568266126290598,
+            "pnl_tmn": -2120.692467,
+            "symbol": "ETHTMN"
+          },
+          {
+            "entry": "2026-10-22 05:45:00+00:00",
+            "exit": "2026-10-22 07:05:00+00:00",
+            "exit_reason": "stop",
+            "net_pct_notional": -0.015865798983104678,
+            "pnl_tmn": -3948.4361890636037,
+            "symbol": "BTCTMN"
+          },
+          {
+            "entry": "2026-10-22 07:55:00+00:00",
+            "exit": "2026-10-22 08:15:00+00:00",
+            "exit_reason": "take_profit",
+            "net_pct_notional": 0.0029799999810791924,
+            "pnl_tmn": 740.47899077075,
+            "symbol": "BTCTMN"
+          }
+        ],
+        "wins": 1
+      },
       "return": -0.0052517924525312155,
       "trades": 15,
       "trades_per_day": 2.142857142857143,
@@ -519,6 +655,110 @@
     "ML + Officer + Trade Agent (live config)": {
       "fees_paid": 11408.250426357417,
       "max_drawdown": -0.0035625033782757942,
+      "per_trade": {
+        "exit_reasons": {
+          "max hold 24 bars": 7,
+          "stop": 2,
+          "take_profit": 2
+        },
+        "mean_gross_pct_notional": -0.002175942191904028,
+        "mean_net_pct_notional": -0.00739632982722799,
+        "mean_notional_tmn": 198673.55865425456,
+        "mean_pnl_pct_equity": -0.00029351231604099996,
+        "mean_pnl_tmn": -1467.5615802049997,
+        "n": 11,
+        "trades": [
+          {
+            "entry": "2026-10-15 16:25:00+00:00",
+            "exit": "2026-10-15 18:30:00+00:00",
+            "exit_reason": "max hold 24 bars (2 h) (maker timeout, taker)",
+            "net_pct_notional": -0.005669441194835054,
+            "pnl_tmn": -1131.81464085,
+            "symbol": "USDTTMN"
+          },
+          {
+            "entry": "2026-10-21 14:25:00+00:00",
+            "exit": "2026-10-21 14:55:00+00:00",
+            "exit_reason": "take_profit",
+            "net_pct_notional": 0.0029799999822639305,
+            "pnl_tmn": 595.23168448785,
+            "symbol": "BTCTMN"
+          },
+          {
+            "entry": "2026-10-21 20:25:00+00:00",
+            "exit": "2026-10-21 22:30:00+00:00",
+            "exit_reason": "max hold 24 bars (2 h) (maker)",
+            "net_pct_notional": -0.0063694573236899,
+            "pnl_tmn": -1270.85907375,
+            "symbol": "ETHTMN"
+          },
+          {
+            "entry": "2026-10-21 21:25:00+00:00",
+            "exit": "2026-10-21 23:30:00+00:00",
+            "exit_reason": "max hold 24 bars (2 h) (maker)",
+            "net_pct_notional": -0.010235617213618728,
+            "pnl_tmn": -2044.8654217719,
+            "symbol": "BTCTMN"
+          },
+          {
+            "entry": "2026-10-21 22:35:00+00:00",
+            "exit": "2026-10-22 00:40:00+00:00",
+            "exit_reason": "max hold 24 bars (2 h) (maker timeout, taker)",
+            "net_pct_notional": -0.013283947302860715,
+            "pnl_tmn": -2647.3747870495545,
+            "symbol": "ETHTMN"
+          },
+          {
+            "entry": "2026-10-22 01:35:00+00:00",
+            "exit": "2026-10-22 02:10:00+00:00",
+            "exit_reason": "stop",
+            "net_pct_notional": -0.015784861604165826,
+            "pnl_tmn": -3127.4907643385595,
+            "symbol": "ETHTMN"
+          },
+          {
+            "entry": "2026-10-22 02:35:00+00:00",
+            "exit": "2026-10-22 04:40:00+00:00",
+            "exit_reason": "max hold 24 bars (2 h) (maker timeout, taker)",
+            "net_pct_notional": -0.008595767626193756,
+            "pnl_tmn": -1684.6356842720954,
+            "symbol": "ETHTMN"
+          },
+          {
+            "entry": "2026-10-22 03:35:00+00:00",
+            "exit": "2026-10-22 05:40:00+00:00",
+            "exit_reason": "max hold 24 bars (2 h) (maker)",
+            "net_pct_notional": -0.0029464706880917586,
+            "pnl_tmn": -587.6098058462,
+            "symbol": "BTCTMN"
+          },
+          {
+            "entry": "2026-10-22 04:45:00+00:00",
+            "exit": "2026-10-22 06:50:00+00:00",
+            "exit_reason": "max hold 24 bars (2 h) (maker)",
+            "net_pct_notional": -0.008568266126290598,
+            "pnl_tmn": -1674.230895,
+            "symbol": "ETHTMN"
+          },
+          {
+            "entry": "2026-10-22 05:45:00+00:00",
+            "exit": "2026-10-22 07:05:00+00:00",
+            "exit_reason": "stop",
+            "net_pct_notional": -0.015865798983104678,
+            "pnl_tmn": -3162.956876141537,
+            "symbol": "BTCTMN"
+          },
+          {
+            "entry": "2026-10-22 07:55:00+00:00",
+            "exit": "2026-10-22 08:15:00+00:00",
+            "exit_reason": "take_profit",
+            "net_pct_notional": 0.0029799999810791924,
+            "pnl_tmn": 593.428882277,
+            "symbol": "BTCTMN"
+          }
+        ],
+        "wins": 2
+      },
       "return": -0.0032286354764509994,
       "trades": 11,
       "trades_per_day": 1.5714285714285714,
@@ -528,6 +768,182 @@
     "ML only (proxy)": {
       "fees_paid": 26355.51802621997,
       "max_drawdown": -0.007278812166227389,
+      "per_trade": {
+        "exit_reasons": {
+          "max hold 24 bars": 14,
+          "stop": 4,
+          "take_profit": 2
+        },
+        "mean_gross_pct_notional": -0.0014763279095084108,
+        "mean_net_pct_notional": -0.00679665816058055,
+        "mean_notional_tmn": 247707.54491864,
+        "mean_pnl_pct_equity": -0.00033573427401930765,
+        "mean_pnl_tmn": -1678.671370096538,
+        "n": 20,
+        "trades": [
+          {
+            "entry": "2026-10-15 13:25:00+00:00",
+            "exit": "2026-10-15 14:10:00+00:00",
+            "exit_reason": "take_profit",
+            "net_pct_notional": 0.002979999987230225,
+            "pnl_tmn": 744.896443,
+            "symbol": "ETHTMN"
+          },
+          {
+            "entry": "2026-10-15 14:25:00+00:00",
+            "exit": "2026-10-15 16:30:00+00:00",
+            "exit_reason": "max hold 24 bars (2 h) (maker timeout, taker)",
+            "net_pct_notional": -0.007623884191071723,
+            "pnl_tmn": -1891.299949986,
+            "symbol": "USDTTMN"
+          },
+          {
+            "entry": "2026-10-15 15:25:00+00:00",
+            "exit": "2026-10-15 17:30:00+00:00",
+            "exit_reason": "max hold 24 bars (2 h) (maker timeout, taker)",
+            "net_pct_notional": -0.004788453128903873,
+            "pnl_tmn": -1196.2026524901482,
+            "symbol": "BTCTMN"
+          },
+          {
+            "entry": "2026-10-15 16:35:00+00:00",
+            "exit": "2026-10-15 18:40:00+00:00",
+            "exit_reason": "max hold 24 bars (2 h) (maker timeout, taker)",
+            "net_pct_notional": -0.005669441194835054,
+            "pnl_tmn": -1403.450154654,
+            "symbol": "USDTTMN"
+          },
+          {
+            "entry": "2026-10-15 17:35:00+00:00",
+            "exit": "2026-10-15 19:40:00+00:00",
+            "exit_reason": "max hold 24 bars (2 h) (maker timeout, taker)",
+            "net_pct_notional": -0.003023746192303719,
+            "pnl_tmn": -748.214692885138,
+            "symbol": "ETHTMN"
+          },
+          {
+            "entry": "2026-10-15 18:45:00+00:00",
+            "exit": "2026-10-15 20:50:00+00:00",
+            "exit_reason": "max hold 24 bars (2 h) (maker timeout, taker)",
+            "net_pct_notional": -0.0020018441550837362,
+            "pnl_tmn": -499.56688596568586,
+            "symbol": "BTCTMN"
+          },
+          {
+            "entry": "2026-10-15 23:45:00+00:00",
+            "exit": "2026-10-16 01:50:00+00:00",
+            "exit_reason": "max hold 24 bars (2 h) (maker timeout, taker)",
+            "net_pct_notional": -0.004333128924947214,
+            "pnl_tmn": -1068.9285711209614,
+            "symbol": "ETHTMN"
+          },
+          {
+            "entry": "2026-10-16 02:45:00+00:00",
+            "exit": "2026-10-16 04:50:00+00:00",
+            "exit_reason": "max hold 24 bars (2 h) (maker timeout, taker)",
+            "net_pct_notional": -0.004409059790018358,
+            "pnl_tmn": -1090.6057513095527,
+            "symbol": "ETHTMN"
+          },
+          {
+            "entry": "2026-10-16 06:45:00+00:00",
+            "exit": "2026-10-16 08:50:00+00:00",
+            "exit_reason": "max hold 24 bars (2 h) (maker timeout, taker)",
+            "net_pct_notional": -0.006873985293715119,
+            "pnl_tmn": -1692.865779217547,
+            "symbol": "ETHTMN"
+          },
+          {
+            "entry": "2026-10-16 07:45:00+00:00",
+            "exit": "2026-10-16 09:50:00+00:00",
+            "exit_reason": "max hold 24 bars (2 h) (maker)",
+            "net_pct_notional": -0.0057686270862830095,
+            "pnl_tmn": -1428.54385,
+            "symbol": "USDTTMN"
+          },
+          {
+            "entry": "2026-10-17 05:35:00+00:00",
+            "exit": "2026-10-17 07:40:00+00:00",
+            "exit_reason": "max hold 24 bars (2 h) (maker)",
+            "net_pct_notional": -0.010226408022805484,
+            "pnl_tmn": -2539.1985,
+            "symbol": "USDTTMN"
+          },
+          {
+            "entry": "2026-10-17 07:35:00+00:00",
+            "exit": "2026-10-17 07:45:00+00:00",
+            "exit_reason": "stop",
+            "net_pct_notional": -0.015784861386550896,
+            "pnl_tmn": -3839.2374402661226,
+            "symbol": "ETHTMN"
+          },
+          {
+            "entry": "2026-10-18 05:35:00+00:00",
+            "exit": "2026-10-18 07:40:00+00:00",
+            "exit_reason": "stop",
+            "net_pct_notional": -0.01578486219419922,
+            "pnl_tmn": -3918.461299378952,
+            "symbol": "ETHTMN"
+          },
+          {
+            "entry": "2026-10-18 07:35:00+00:00",
+            "exit": "2026-10-18 09:40:00+00:00",
+            "exit_reason": "max hold 24 bars (2 h) (maker)",
+            "net_pct_notional": -0.003843696591356403,
+            "pnl_tmn": -956.43561446255,
+            "symbol": "BTCTMN"
+          },
+          {
+            "entry": "2026-10-22 01:35:00+00:00",
+            "exit": "2026-10-22 02:10:00+00:00",
+            "exit_reason": "stop",
+            "net_pct_notional": -0.015784861604165826,
+            "pnl_tmn": -3857.23860935089,
+            "symbol": "ETHTMN"
+          },
+          {
+            "entry": "2026-10-22 02:35:00+00:00",
+            "exit": "2026-10-22 04:40:00+00:00",
+            "exit_reason": "max hold 24 bars (2 h) (maker timeout, taker)",
+            "net_pct_notional": -0.008595767626193757,
+            "pnl_tmn": -2133.871866744654,
+            "symbol": "ETHTMN"
+          },
+          {
+            "entry": "2026-10-22 03:35:00+00:00",
+            "exit": "2026-10-22 05:40:00+00:00",
+            "exit_reason": "max hold 24 bars (2 h) (maker)",
+            "net_pct_notional": -0.0029464706880917594,
+            "pnl_tmn": -731.91221391905,
+            "symbol": "BTCTMN"
+          },
+          {
+            "entry": "2026-10-22 04:45:00+00:00",
+            "exit": "2026-10-22 06:50:00+00:00",
+            "exit_reason": "max hold 24 bars (2 h) (maker)",
+            "net_pct_notional": -0.008568266126290598,
+            "pnl_tmn": -2120.692467,
+            "symbol": "ETHTMN"
+          },
+          {
+            "entry": "2026-10-22 05:45:00+00:00",
+            "exit": "2026-10-22 07:05:00+00:00",
+            "exit_reason": "stop",
+            "net_pct_notional": -0.015865798983104678,
+            "pnl_tmn": -3941.422980912514,
+            "symbol": "BTCTMN"
+          },
+          {
+            "entry": "2026-10-22 07:55:00+00:00",
+            "exit": "2026-10-22 08:15:00+00:00",
+            "exit_reason": "take_profit",
+            "net_pct_notional": 0.0029799999810791924,
+            "pnl_tmn": 739.825434733,
+            "symbol": "BTCTMN"
+          }
+        ],
+        "wins": 2
+      },
       "return": -0.006714685480386153,
       "trades": 20,
       "trades_per_day": 2.857142857142857,

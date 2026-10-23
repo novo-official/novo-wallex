@@ -132,6 +132,23 @@ blind replay): ML only −0.67% (20 trades) → + Officer −0.53% (15) → **+ 
 −0.36%, 11 trades (1.57/day)**. The Trade Agent approved 25 of 245 candidates. **Decision (team, 2026-10-23):** keep (a) with
 both roles (the current `config/live.toml`): the smallest loss that still meets ≥ 1 trade/day; (b) would be
 the choice only if not losing matters more than activity.
+
+**Per-trade P&L (honesty addendum, `docs/RESEARCH_P4.md` §6).** Size-free columns (% of the trade's notional) measure selection quality:
+
+| variant | trades | mean P&L per trade (TMN) | per trade, % of equity | mean notional (TMN) | gross per trade, % of notional | net per trade, % of notional | wins |
+|---|---|---|---|---|---|---|---|
+| ML only | 20 | −1,679 | −0.034% | 247,708 | −0.15% | −0.68% | 2 |
+| + Officer | 15 | −1,751 | −0.035% | 222,840 | −0.29% | −0.81% | 1 |
+| + Officer + Trade Agent | 11 | −1,468 | −0.029% | 198,674 | −0.22% | −0.74% | 2 |
+
+- **The improvement comes from fewer and smaller trades, not from better selection.** Per unit of notional, the
+  trades the LLM let through were slightly *worse* than the ML-only trades (net −0.74% vs −0.68%). At the ML-only
+  per-trade mean, 11 trades would lose ~18,500 TMN (−0.37%); the LLM run lost −0.32%, the rest of the gap being its
+  ~20% smaller sizes (Officer DEFENSIVE half sizes, Trade Agent trims).
+- **Sample:** 7 days, 11–20 trades, 1–2 winners per variant: far too small for a selection claim either way.
+- **What it means for live:** the roles act as a brake that cuts the number and size of loss-making trades in a
+  market where the module has no edge. That is a real risk benefit, but it is not skill at picking trades.
+
 - **Earlier phases:** trend rules (P2) about break-even per 3-day window at default fees; per-bar ML has real
   ranking skill (IC 0.12 at 1h) but the predictable move is smaller than a round trip (P3).
 

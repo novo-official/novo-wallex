@@ -34,6 +34,43 @@ from strategy.factory import build_strategy  # noqa: E402
 MEASURED = Fees(Decimal("0.0025"), Decimal("0.0030"))
 
 
+def per_trade(trades) -> dict:
+    """Per-trade P&L: TMN and % of the 5M equity (size-dependent), and % of the trade's notional (size-free, so it
+    measures selection quality: a better filter shows a better net % per trade, not just fewer trades)."""
+    if not trades:
+        return {"n": 0}
+    n = len(trades)
+    pnl = [float(t.pnl) for t in trades]
+    notional = [float(t.entry_price * t.quantity) for t in trades]
+    gross = [float(t.exit_price / t.entry_price - 1) for t in trades]
+    net = [p / v for p, v in zip(pnl, notional, strict=True)]
+    reasons: dict[str, int] = {}
+    for t in trades:
+        key = t.exit_reason.split(" (")[0]
+        reasons[key] = reasons.get(key, 0) + 1
+    return {
+        "n": n,
+        "mean_pnl_tmn": sum(pnl) / n,
+        "mean_pnl_pct_equity": sum(pnl) / n / 5_000_000,
+        "mean_notional_tmn": sum(notional) / n,
+        "mean_gross_pct_notional": sum(gross) / n,
+        "mean_net_pct_notional": sum(net) / n,
+        "wins": sum(1 for p in pnl if p > 0),
+        "exit_reasons": reasons,
+        "trades": [
+            {
+                "symbol": t.symbol,
+                "entry": str(t.entry_time),
+                "exit": str(t.exit_time),
+                "pnl_tmn": float(t.pnl),
+                "net_pct_notional": float(t.pnl) / float(t.entry_price * t.quantity),
+                "exit_reason": t.exit_reason,
+            }
+            for t in trades
+        ],
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--llm", default="live-local", choices=["live-local", "replay"])
@@ -62,6 +99,7 @@ def main() -> None:
         rolling = result.equity.resample("1h").last().pct_change(72).dropna()
         out[name] = {k: m[k] for k in ("return", "max_drawdown", "trades", "trades_per_day", "win_rate", "fees_paid")}
         out[name]["worst_3d"] = float(rolling.min()) if len(rolling) else 0.0
+        out[name]["per_trade"] = per_trade(result.trades)
         logs[name] = agent.log if agent else []
         print(
             f"{name:<42} ret {m['return'] * 100:+.2f}%  DD {m['max_drawdown'] * 100:.2f}%  trades {m['trades']} "
@@ -87,7 +125,12 @@ def main() -> None:
         configs=3,
         holdout_evaluated=False,
         report="reports/ai_activity_llm",
-        notes=f"llm={args.llm}; measured fees; officer every 4 h; recent data already seen by the fix check",
+        notes=f"llm={args.llm}; measured fees; officer every 4 h; recent data already seen by the fix check"
+        + (
+            "; replay of the cached live-local run (per-trade P&L added), no new LLM answers"
+            if args.llm == "replay"
+            else ""
+        ),
     )
 
 
