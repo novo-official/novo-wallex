@@ -1,0 +1,34 @@
+# SMC / ICT research module (research/smc/). NOT on the live path: config/live.toml [smc] enabled = false.
+# Definitions: research/smc/features.py and STRATEGY.md "SMC research module".
+
+[features]                  # per timeframe (15m setup, 1h structure)
+pivot_n = 3                 # fractal swing points: N bars left and right (confirmed N bars later)
+atr_period = 14
+equal_lows_tolerance = 0.001
+sweep_close_back_bars = 2
+displacement_body_atr = 1.5
+displacement_move_atr = 2.0
+displacement_k = 3
+fvg_min_atr = 0.3
+fvg_max_age = 48            # 15m bars (12 h)
+ob_lookback = 10
+setup_window = 8            # 15m bars from the sweep to the displacement + BOS
+setup_max_age = 16          # 15m bars a setup stays armed (4 h)
+zone = "fvg"                # "fvg" or "fvg_or_ob"
+sweep_recent_bars = 8
+
+[module]                    # smc_long, on the 5m clock
+symbols = ["BTCTMN", "ETHTMN"]
+size_fraction = 0.3333333333  # of the 15% cap: 250k TMN on 5M
+timeout_bars = 12           # 1 h for the retrace into the zone
+min_stop = 0.008
+max_stop = 0.02
+min_rr = 1.5
+fee_floor = 0.007
+discount_max = 0.5
+max_hold_bars = 48
+
+[grid]                      # experiment A (selection windows only): 2 x 2 x 2 = 8 configs
+pivot_n = [2, 3]
+zone = ["fvg", "fvg_or_ob"]
+timeout_bars = [12, 24]

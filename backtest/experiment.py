@@ -90,6 +90,7 @@ def run_experiment(
     processes: int | None = None,
     notes: str = "",
     log: bool = True,
+    limits: RiskLimits | None = None,
 ) -> dict:
     """Run `variants` on the selection windows, choose one, then the fee table (and holdout if `final`)."""
     if len(variants) > MAX_CONFIGS:
@@ -102,7 +103,7 @@ def run_experiment(
     names = [variant_name for variant_name, _ in variants]
     params = [variant_params for _, variant_params in variants]
     selection, holdout = windows_override or select_windows(data, config, since)
-    limits = RiskLimits()
+    limits = limits or RiskLimits()
 
     rows = run_windows(data, factory, params, {"base": config.costs()}, limits, config.windows, selection, processes)
     ranking = rank(rows, names, config)
