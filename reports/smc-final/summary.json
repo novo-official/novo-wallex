@@ -1,0 +1,33 @@
+{
+  "chosen": "smc_long_p2fvgob_t24",
+  "chosen_feasible": false,
+  "chosen_params": {
+    "smc": {
+      "discount_max": 0.5,
+      "fee_floor": 0.007,
+      "max_hold_bars": 48,
+      "max_stop": 0.02,
+      "min_rr": 1.5,
+      "min_stop": 0.008,
+      "size_fraction": 0.3333333333,
+      "symbols": [
+        "BTCTMN",
+        "ETHTMN"
+      ],
+      "tag": "_p2fvgob",
+      "timeout_bars": 24
+    }
+  },
+  "config_hash": "96a5df1f744375d7ff85c6ded3f292f8c9cc9e51d4560c01406d96325934b577",
+  "experiment": "SMC A: smc_long_p2fvgob_t24 vs live (a), holdout (--final)",
+  "holdout_evaluated": true,
+  "holdout_windows": 96,
+  "objective": {
+    "metric": "p_above_target",
+    "min_p10_drawdown": -0.035,
+    "min_trades_per_day": 1.0
+  },
+  "runtime_seconds": 7.822799,
+  "selection_windows": 143,
+  "variants": 2
+}

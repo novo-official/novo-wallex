@@ -1,0 +1,57 @@
+{
+  "chosen": "live (a) with h24 + SMC features",
+  "chosen_feasible": true,
+  "chosen_params": {
+    "ai_activity": {
+      "column": "ml_net_h24smc",
+      "entry_timeout_minutes": 3.0,
+      "max_concurrent": 2,
+      "max_hold_bars": 24,
+      "max_per_day": 12,
+      "min_spacing_minutes": 45,
+      "reprices": 1,
+      "size_fraction": 0.3333333333333333,
+      "slot_minutes": 60,
+      "stop": 0.01,
+      "symbols": [
+        "BTCTMN",
+        "ETHTMN"
+      ],
+      "take_profit": 0.008
+    },
+    "fair_value": {
+      "enabled": false
+    },
+    "modules": [
+      "ai_activity"
+    ],
+    "symbols": [
+      "USDTTMN",
+      "BTCTMN",
+      "ETHTMN"
+    ],
+    "trend": {
+      "max_hold_bars": 864,
+      "max_stop": 0.02,
+      "min_stop": 0.02,
+      "min_tp": 0.0,
+      "regime_exit": "none",
+      "require_4h": false,
+      "tp_r": 3.0,
+      "trail_after_r": 0.0,
+      "trigger": "breakout"
+    }
+  },
+  "config_hash": "2c456f2d753e2eb086d0ed8f912d82feb999b19a3c69a943e97cc0afff4166af",
+  "experiment": "SMC B: live (a) with h24+SMC vs h24, selection windows",
+  "holdout_evaluated": false,
+  "holdout_windows": 0,
+  "objective": {
+    "metric": "p_above_target",
+    "min_p10_drawdown": -0.035,
+    "min_trades_per_day": 1.0
+  },
+  "runtime_seconds": 7.550805,
+  "selection_windows": 143,
+  "variants": 2
+}

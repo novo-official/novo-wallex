@@ -1,0 +1,66 @@
+{
+  "end": "2026-10-22 12:20:00+00:00",
+  "results": {
+    "live config (a), ML-only proxy/base": {
+      "avg_r": -0.6987057308044602,
+      "fees_paid": 68855.1300395314,
+      "max_drawdown": -0.018596121276012956,
+      "return": -0.018184669533566084,
+      "setups_per_day": null,
+      "trades": 53,
+      "trades_per_day": 3.7857142857142856,
+      "win_rate": 0.2641509433962264
+    },
+    "live config (a), ML-only proxy/low": {
+      "avg_r": -0.49887481516083865,
+      "fees_paid": 42992.475167923374,
+      "max_drawdown": -0.013437345669217948,
+      "return": -0.01302366583619342,
+      "setups_per_day": null,
+      "trades": 53,
+      "trades_per_day": 3.7857142857142856,
+      "win_rate": 0.3018867924528302
+    },
+    "live config (a), ML-only proxy/stress": {
+      "avg_r": -0.9829382394602355,
+      "fees_paid": 101130.26346185633,
+      "max_drawdown": -0.025014427362988867,
+      "return": -0.025014427362988905,
+      "setups_per_day": null,
+      "trades": 52,
+      "trades_per_day": 3.7142857142857144,
+      "win_rate": 0.21153846153846154
+    },
+    "smc_long_p2fvgob_t24/base": {
+      "avg_r": -1.8436553530925748,
+      "fees_paid": 2724.1838782888167,
+      "max_drawdown": -0.0014681789586020733,
+      "return": -0.0014681789586019948,
+      "setups_per_day": 1.3571428571428572,
+      "trades": 2,
+      "trades_per_day": 0.14285714285714285,
+      "win_rate": 0.0
+    },
+    "smc_long_p2fvgob_t24/low": {
+      "avg_r": -1.594814951726104,
+      "fees_paid": 1733.1518579188178,
+      "max_drawdown": -0.0012699725545279872,
+      "return": -0.001269972554527995,
+      "setups_per_day": 1.3571428571428572,
+      "trades": 2,
+      "trades_per_day": 0.14285714285714285,
+      "win_rate": 0.0
+    },
+    "smc_long_p2fvgob_t24/stress": {
+      "avg_r": -2.1856659507017375,
+      "fees_paid": 4086.275817433225,
+      "max_drawdown": -0.0017405973464308389,
+      "return": -0.0017405973464308764,
+      "setups_per_day": 1.3571428571428572,
+      "trades": 2,
+      "trades_per_day": 0.14285714285714285,
+      "win_rate": 0.0
+    }
+  },
+  "start": "2026-10-08 12:20:00+00:00"
+}

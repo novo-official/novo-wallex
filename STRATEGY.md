@@ -174,3 +174,31 @@ rejections with reasons, maker orders, reprice, cancel.
 5. **Operations matter as much as the signal.** In shadow we found and fixed: DNS outages that halted entries for
    good, a bar clock that froze at night (quiet markets get no trailing bars), and a slow local LLM eating the
    entry timeout. Each has a test now.
+
+## 7. SMC / ICT research module (researched; off in live)
+
+`research/smc/` (features, `smc_long` module, experiments), parameters in `config/smc.toml`, `config/live.toml`
+`[smc] enabled = false`. Not on the live path: not registered in `strategy/factory.py`. Results and the gate:
+`docs/RESEARCH_SMC.md`.
+
+**Definitions** (pure functions, closed bars only, no lookahead; a test checks that no value changes when later
+bars arrive). Structure on 1h, setup on 15m, trigger on the 5m clock; long only.
+
+| concept | quantified definition |
+|---|---|
+| swing high / low | fractal pivot: high[i] > the N highs before it and ≥ the N after it (lows mirrored), N = 3; known only at bar i + N |
+| BOS up / down | a close above the last confirmed swing high (below the last confirmed swing low), counted once per level |
+| structure | bullish after a BOS up, bearish after a BOS down; CHoCH = the first BOS against the prior structure |
+| bullish liquidity sweep | a low under the last confirmed swing low (or a cluster of equal lows within 0.1%) and a close back above that level within ≤ 2 bars |
+| displacement (up) | an up bar with body ≥ 1.5 × ATR(14), or a 3-bar rise ≥ 2 × ATR |
+| bullish FVG | low[i] > high[i−2]; zone [high[i−2], low[i]]; size ≥ 0.3 × ATR; valid until a close below the zone bottom or 48 bars |
+| bullish order block | the last down-close bar before a displacement that produced a BOS up; zone [low, open]; invalid on a close below its low |
+| premium / discount | position in the dealing range (sweep low → target swing high); long only below 50% (discount) |
+
+**`smc_long` entry:** 1h structure bullish → a 15m bullish sweep → within 8 bars a displacement that breaks
+structure up (BOS or CHoCH) and leaves an FVG (or OB) → a maker LIMIT at the top of that zone on the retrace
+(timeout, then cancel) → stop under the sweep low (min 0.8%, cap 2%) → take-profit at the nearest swing high
+above (buy-side liquidity), required ≥ 1.5 R and ≥ 0.7% (fee floor) → only in discount. Max hold 4 h.
+
+**Result: rejected.** It fails the live gate (last 14 days −0.15% with 0.14 trades/day; SMC features do not
+improve the ML model: IC 0.070 → 0.069, SHAP ranks 31–48 of 48). Details: `docs/RESEARCH_SMC.md`.

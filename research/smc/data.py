@@ -21,9 +21,7 @@ ML_SYMBOLS = ["USDTTMN", "BTCTMN", "ETHTMN"]
 HTF_COLUMNS = ["structure", "bos_up", "bars_since_bos", "pd_pct"]
 
 
-def smc_columns(
-    data_dir: Path, symbol: str, clock: pd.DatetimeIndex, params: SMCParams, tag: str = ""
-) -> pd.DataFrame:
+def smc_columns(data_dir: Path, symbol: str, clock: pd.DatetimeIndex, params: SMCParams, tag: str = "") -> pd.DataFrame:
     bars = fill_gaps(load_1m(data_dir, symbol))
     m15, m60 = resample(bars, 15), resample(bars, 60)
     f15, f60 = smc_frame(m15, params), smc_frame(m60, params)

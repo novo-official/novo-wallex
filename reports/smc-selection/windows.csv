@@ -1,0 +1,859 @@
+params_id,cost_case,start,return,max_drawdown,trades,win_rate,fees_share,avg_exposure,halted,llm_calls,llm_fallbacks,split,variant
+0,low,2026-06-20T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-06-20T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-06-21T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-06-21T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-06-22T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-06-22T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-06-23T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-06-23T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-06-24T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-06-24T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-06-25T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-06-25T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-06-26T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-06-26T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-06-27T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-06-27T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-06-28T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-06-28T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-06-29T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-06-29T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-06-30T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-06-30T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-01T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-01T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-02T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-02T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-03T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-03T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-04T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-04T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-05T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-05T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-06T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-06T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-07T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-07T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-08T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-08T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-09T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-09T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-10T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-10T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-11T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-11T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-12T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-12T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-13T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-13T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-14T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-14T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-15T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-15T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-16T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-16T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-17T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-17T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-18T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-18T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-19T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-19T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-20T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-20T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-21T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-21T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-22T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-22T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-23T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-23T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-24T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-24T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-25T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-25T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-26T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-26T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-27T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-27T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-28T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-28T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-29T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-29T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-30T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-30T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-31T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-07-31T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-01T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-01T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-02T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-02T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-03T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-03T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-04T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-04T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-05T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-05T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-06T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-06T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-07T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-07T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-08T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-08T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-09T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-09T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-10T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-10T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-11T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-11T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-12T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-12T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-13T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-13T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-14T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-14T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-15T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-15T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-16T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-16T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-17T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-17T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-18T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-18T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-19T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-19T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-20T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-20T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-21T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-21T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-22T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-22T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-23T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-23T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-24T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-24T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-25T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-25T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-26T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-26T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-27T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-27T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-28T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-28T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-29T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-29T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,low,2026-08-30T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-06-20T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-06-20T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-06-21T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-06-21T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-06-22T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-06-22T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-06-23T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-06-23T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-06-24T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-06-24T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-06-25T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-06-25T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-06-26T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-06-26T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-06-27T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-06-27T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-06-28T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-06-28T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-06-29T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-06-29T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-06-30T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-06-30T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-01T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-01T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-02T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-02T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-03T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-03T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-04T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-04T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-05T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-05T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-06T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-06T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-07T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-07T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-08T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-08T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-09T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-09T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-10T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-10T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-11T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-11T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-12T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-12T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-13T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-13T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-14T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-14T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-15T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-15T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-16T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-16T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-17T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-17T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-18T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-18T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-19T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-19T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-20T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-20T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-21T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-21T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-22T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-22T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-23T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-23T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-24T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-24T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-25T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-25T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-26T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-26T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-27T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-27T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-28T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-28T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-29T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-29T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-30T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-30T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-31T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-07-31T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-01T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-01T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-02T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-02T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-03T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-03T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-04T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-04T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-05T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-05T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-06T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-06T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-07T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-07T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-08T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-08T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-09T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-09T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-10T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-10T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-11T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-11T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-12T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-12T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-13T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-13T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-14T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-14T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-15T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-15T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-16T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-16T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-17T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-17T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-18T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-18T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-19T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-19T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-20T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-20T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-21T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-21T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-22T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-22T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-23T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-23T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-24T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-24T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-25T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-25T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-26T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-26T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-27T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-27T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-28T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-28T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-29T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-29T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,base,2026-08-30T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-06-20T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-06-20T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-06-21T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-06-21T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-06-22T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-06-22T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-06-23T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-06-23T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-06-24T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-06-24T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-06-25T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-06-25T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-06-26T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-06-26T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-06-27T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-06-27T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-06-28T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-06-28T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-06-29T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-06-29T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-06-30T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-06-30T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-01T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-01T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-02T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-02T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-03T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-03T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-04T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-04T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-05T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-05T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-06T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-06T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-07T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-07T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-08T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-08T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-09T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-09T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-10T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-10T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-11T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-11T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-12T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-12T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-13T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-13T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-14T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-14T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-15T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-15T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-16T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-16T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-17T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-17T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-18T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-18T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-19T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-19T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-20T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-20T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-21T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-21T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-22T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-22T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-23T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-23T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-24T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-24T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-25T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-25T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-26T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-26T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-27T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-27T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-28T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-28T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-29T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-29T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-30T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-30T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-31T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-07-31T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-01T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-01T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-02T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-02T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-03T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-03T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-04T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-04T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-05T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-05T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-06T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-06T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-07T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-07T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-08T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-08T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-09T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-09T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-10T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-10T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-11T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-11T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-12T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-12T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-13T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-13T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-14T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-14T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-15T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-15T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-16T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-16T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-17T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-17T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-18T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-18T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-19T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-19T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-20T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-20T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-21T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-21T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-22T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-22T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-23T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-23T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-24T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-24T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-25T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-25T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-26T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-26T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-27T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-27T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-28T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-28T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-29T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-29T12:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+0,stress,2026-08-30T00:00:00+00:00,0.0,0.0,0,0.0,0.0,0.0,False,0,0,selection,smc_long_p3fvg_t24
+1,low,2026-06-20T00:00:00+00:00,-0.0016004009100803805,-0.0022110626181742754,7,0.2857142857142857,0.0011449704368700804,0.009309636147112063,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-06-20T12:00:00+00:00,-0.0012734713409683746,-0.0017704954180904897,13,0.46153846153846156,0.0020710681279972627,0.015463315928493501,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-06-21T00:00:00+00:00,-0.002256603269602158,-0.0022916956655500975,10,0.3,0.0016181839841598383,0.012582348919600816,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-06-21T12:00:00+00:00,-0.0022667079386776323,-0.002902599129082084,16,0.4375,0.002616436565532144,0.017588635162705868,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-06-22T00:00:00+00:00,-0.00396995213136209,-0.003978323079377621,12,0.16666666666666666,0.001987658496527769,0.01454728839433965,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-06-22T12:00:00+00:00,-0.004576677145410103,-0.004878700949808357,11,0.0,0.0018360424244774087,0.011948267468674428,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-06-23T00:00:00+00:00,-0.002743928638520053,-0.0030583707267853866,6,0.0,0.0010438602861322724,0.005806289479048654,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-06-23T12:00:00+00:00,-0.0034276359937190116,-0.004218261473983298,14,0.35714285714285715,0.0023115225149388536,0.01314569799691292,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-06-24T00:00:00+00:00,-0.00566758141477603,-0.005851282836788929,14,0.07142857142857142,0.0023553514606585793,0.0147082001769531,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-06-24T12:00:00+00:00,-0.005333150421001828,-0.005403410148859811,19,0.3157894736842105,0.0031007510745537027,0.017917323455408633,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-06-25T00:00:00+00:00,-0.005505356557104786,-0.0055756162849625035,15,0.13333333333333333,0.002478354715570216,0.01786007539077268,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-06-25T12:00:00+00:00,-0.0021497809452442427,-0.003232468142871592,17,0.35294117647058826,0.0027648703438558344,0.018915747510211516,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-06-26T00:00:00+00:00,-0.005265929531831035,-0.0054512845332777005,13,0.15384615384615385,0.002176422460150969,0.015702003837057624,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-06-26T12:00:00+00:00,-0.0028808212245800733,-0.0030094768423538643,11,0.36363636363636365,0.0018354263846796152,0.010173882275409562,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-06-27T00:00:00+00:00,-0.00017101381913292723,-0.000505750123621973,6,0.5,0.0009975278604562206,0.007716562326563478,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-06-27T12:00:00+00:00,-0.002609339440168552,-0.0032466507882755735,18,0.2222222222222222,0.0029405952616147644,0.023463591416138754,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-06-28T00:00:00+00:00,-0.0029503707403213345,-0.0032946071105858232,14,0.14285714285714285,0.0022891356986495873,0.01873313525343234,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-06-28T12:00:00+00:00,-0.00579238153662806,-0.005910112724195393,21,0.19047619047619047,0.0034023466904636013,0.02351121786586913,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-06-29T00:00:00+00:00,-0.0032082611675048928,-0.0036772216188644125,14,0.21428571428571427,0.0022652215464336097,0.018116157500260525,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-06-29T12:00:00+00:00,-0.0035597357933464663,-0.004620643916896983,18,0.2222222222222222,0.0028847664762307506,0.021608833248808947,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-06-30T00:00:00+00:00,-0.004177463016317772,-0.004525224410684814,16,0.125,0.0025584007011519045,0.020471587778392707,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-06-30T12:00:00+00:00,-0.0045154003996783956,-0.0047333889682487085,25,0.32,0.003996331062876224,0.02912491453842718,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-01T00:00:00+00:00,-0.002675670910968794,-0.002707754432354159,19,0.2631578947368421,0.0029863129078616336,0.02500408404986509,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-01T12:00:00+00:00,-0.0017377404902510745,-0.0022843661734078813,19,0.42105263157894735,0.0029891834690227996,0.024052612672550332,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-02T00:00:00+00:00,-0.0010498230793519775,-0.002258051042696718,18,0.4444444444444444,0.0028177890226432295,0.023951063108652373,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-02T12:00:00+00:00,-0.002395716257162273,-0.003188524455564834,17,0.23529411764705882,0.0027144440469415096,0.020794747447473422,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-03T00:00:00+00:00,-0.0029586651866932785,-0.0036467431818898444,13,0.15384615384615385,0.0020621941844104364,0.01600934810661914,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-03T12:00:00+00:00,-0.0027971929505345183,-0.003472093117258823,14,0.21428571428571427,0.00223692967331998,0.01832695460483082,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-04T00:00:00+00:00,-0.003264192792379409,-0.0034235921583872786,14,0.21428571428571427,0.0022828961035801757,0.017900223135054884,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-04T12:00:00+00:00,-0.004129723727375667,-0.004375053468709478,14,0.21428571428571427,0.002356653042881182,0.017111790678050534,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-05T00:00:00+00:00,-0.0019947050375725443,-0.001994705037572597,8,0.25,0.0013419177995191562,0.010217370472950757,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-05T12:00:00+00:00,-0.0028177512157077796,-0.003145272077237693,9,0.1111111111111111,0.0014670685787125928,0.012186933045801757,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-06T00:00:00+00:00,-0.003321033004564836,-0.003568052932721777,8,0.0,0.0013415461496630054,0.011499523198909473,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-06T12:00:00+00:00,-0.003013873440080005,-0.0031496073980806782,17,0.29411764705882354,0.0026632210164582917,0.019080781256421542,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-07T00:00:00+00:00,-0.002290389776275129,-0.0024261237342758646,10,0.0,0.0015910324220867905,0.01361604754493302,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-07T12:00:00+00:00,-0.002425002547159189,-0.0031792990942660637,12,0.3333333333333333,0.0019107391592163832,0.013482950601145348,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-08T00:00:00+00:00,-0.0019463007411718407,-0.0022929523996689793,9,0.2222222222222222,0.0014417995439310934,0.011377879634291207,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-08T12:00:00+00:00,-0.0023266511153548454,-0.0028331999081557813,19,0.3684210526315789,0.003012104956596699,0.024263367046457495,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-09T00:00:00+00:00,-0.0015976401187178966,-0.0022051887726602937,12,0.3333333333333333,0.0019431770853475241,0.01534750804936463,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-09T12:00:00+00:00,-0.004100654784633719,-0.004100654784633728,19,0.2631578947368421,0.003081196475120145,0.023735306997594404,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-10T00:00:00+00:00,-0.0028214880355141103,-0.002821488035514075,13,0.3076923076923077,0.002040037579800117,0.015940069156466005,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-10T12:00:00+00:00,-0.005407749226556559,-0.005533662525982086,21,0.23809523809523808,0.0033778935195697044,0.02637559231358497,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-11T00:00:00+00:00,-0.004770899701608544,-0.004949733287821889,17,0.17647058823529413,0.0027508582762088897,0.019563473282756663,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-11T12:00:00+00:00,-0.0032063372128581158,-0.004145084895556428,14,0.21428571428571427,0.002213796568978701,0.01763497656928403,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-12T00:00:00+00:00,-0.0031913436293960185,-0.003927563908089904,16,0.3125,0.002511806895254604,0.02096713431110765,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-12T12:00:00+00:00,-0.0023963574451100404,-0.0031425411203479525,17,0.23529411764705882,0.0027144767020677073,0.02288696048576073,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-13T00:00:00+00:00,-0.0029325488607611643,-0.003678689904802468,15,0.2,0.002385894368176606,0.01851328532079378,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-13T12:00:00+00:00,-0.0009543284034713204,-0.0014445735805567184,14,0.35714285714285715,0.0021948239614859493,0.01894007652316057,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-14T00:00:00+00:00,-0.0003655177724832381,-0.000998976075537339,12,0.4166666666666667,0.0018477643006310066,0.015776233932600834,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-14T12:00:00+00:00,-0.0018918353402146545,-0.0023545333086960607,13,0.46153846153846156,0.0020909728884474757,0.014598819244962133,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-15T00:00:00+00:00,-0.001576878946014829,-0.0021747895680627183,8,0.375,0.0012666661161324462,0.007925788107910664,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-15T12:00:00+00:00,-0.003279968198780771,-0.003632807878244604,14,0.2857142857142857,0.0021854349744553493,0.018605449491954452,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-16T00:00:00+00:00,-0.0032167186996946533,-0.003719470515440859,8,0.125,0.001310225812854647,0.00927436920305561,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-16T12:00:00+00:00,-0.005295842261063722,-0.00534729835330694,15,0.13333333333333333,0.0024511062133680075,0.01914993257974425,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-17T00:00:00+00:00,-0.0016529295715809783,-0.002291779187079901,10,0.5,0.0015856711144736923,0.010246723578807924,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-17T12:00:00+00:00,-0.004680253269807485,-0.0048496931958113,17,0.29411764705882354,0.0027711359709927594,0.01855802370170531,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-18T00:00:00+00:00,-0.003135251750092143,-0.003411227685100382,14,0.35714285714285715,0.002284385948951179,0.016288387165137898,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-18T12:00:00+00:00,-0.004150093996654322,-0.004864873275611914,16,0.375,0.0026039150286652295,0.01843070908629834,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-19T00:00:00+00:00,-0.005254438788144428,-0.005616722326359347,16,0.25,0.0025536853535060382,0.018849678325569795,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-19T12:00:00+00:00,-0.0037339451049764566,-0.004106664531445148,12,0.08333333333333333,0.001960029358138136,0.014760934240727514,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-20T00:00:00+00:00,-0.0027988123089958306,-0.0032355084383209887,15,0.26666666666666666,0.002384214612323125,0.016483853949197876,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-20T12:00:00+00:00,-0.0026292701429539806,-0.002950150226088022,17,0.11764705882352941,0.0027372091823381723,0.023391356336309586,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-21T00:00:00+00:00,-0.0013376557980007567,-0.0018639588603328594,14,0.21428571428571427,0.0022448352068034074,0.018874309776791984,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-21T12:00:00+00:00,-0.004888115872380309,-0.004888115872380361,15,0.0,0.0024598374008251746,0.021155166128327487,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-22T00:00:00+00:00,-0.00351532331146592,-0.0038970533655507955,13,0.07692307692307693,0.002111436259500561,0.016939930116058342,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-22T12:00:00+00:00,-0.004961295248243271,-0.005112645867349164,17,0.17647058823529413,0.0027771525271255326,0.021698647483340387,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-23T00:00:00+00:00,-0.004841762353011062,-0.005062658002901066,16,0.125,0.0026518750009850863,0.020606958706367355,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-23T12:00:00+00:00,-0.003005961092605181,-0.003647513556770954,17,0.29411764705882354,0.002804885721990074,0.021737893228900365,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-24T00:00:00+00:00,-0.002326439466721427,-0.002952855418963951,13,0.23076923076923078,0.0021118934124188496,0.0166453856295461,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-24T12:00:00+00:00,-0.0029481749194554896,-0.0032619553441196603,14,0.2857142857142857,0.0022604650969251373,0.018316618035354466,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-25T00:00:00+00:00,-0.0029837370405267085,-0.002997964156419397,13,0.23076923076923078,0.0021121003007226226,0.016995393197576248,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-25T12:00:00+00:00,-0.005092305881228308,-0.0057861722280645456,20,0.3,0.0032499670765875396,0.024003093388483276,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-26T00:00:00+00:00,-0.003785061722521161,-0.004727723680082563,17,0.35294117647058826,0.002732702870345663,0.018725255914526076,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-26T12:00:00+00:00,-0.0027562587210397953,-0.0035390014356058153,23,0.43478260869565216,0.0036796255586374763,0.025368741999292906,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-27T00:00:00+00:00,-0.003009433447930152,-0.0035395561647098006,18,0.3888888888888889,0.002882195997127177,0.021132918677952188,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-27T12:00:00+00:00,-0.003252386713492531,-0.003871746309600077,15,0.4,0.0024336946924338175,0.015907538119518554,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-28T00:00:00+00:00,-0.0012642509107349904,-0.0020795251381464652,14,0.35714285714285715,0.002240869416709135,0.01855063700803928,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-28T12:00:00+00:00,-0.0030391506184268384,-0.0030391506184268557,14,0.42857142857142855,0.0022607844816634193,0.016385406180765533,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-29T00:00:00+00:00,-0.00202131851436006,-0.002258031430019236,9,0.3333333333333333,0.0014921725574104537,0.012415132779553787,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-29T12:00:00+00:00,-0.002176690835848952,-0.002339777569513979,8,0.125,0.0013686586250048487,0.009781643430736621,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-30T00:00:00+00:00,-0.001063760460212004,-0.001683783336994371,7,0.14285714285714285,0.0011467287703618616,0.00932191924759469,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-30T12:00:00+00:00,-0.0033381707173622955,-0.00333817071736231,12,0.16666666666666666,0.0020123856135309142,0.01310911896243331,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-31T00:00:00+00:00,-0.0029565388037166747,-0.002956538803716713,10,0.2,0.0016869695764429144,0.010210123841712661,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-07-31T12:00:00+00:00,-0.004779297502108129,-0.0047792975021081485,14,0.2857142857142857,0.0023046352484224057,0.014236803436133268,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-01T00:00:00+00:00,-0.005086380919779027,-0.005188739302559586,16,0.1875,0.002627771953518553,0.018066394834117795,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-01T12:00:00+00:00,-0.0053012490961533406,-0.005376221589967312,18,0.1111111111111111,0.0029283547559937556,0.021117125366236677,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-02T00:00:00+00:00,-0.0029196544700717812,-0.0040051596358146035,12,0.16666666666666666,0.001960916042212089,0.014554208345308552,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-02T12:00:00+00:00,-0.0040072851337202295,-0.004177444634384075,17,0.11764705882352941,0.0027533959971414316,0.0218405068975583,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-03T00:00:00+00:00,-0.0038111289913912326,-0.003833892132173111,13,0.0,0.0021601762449093855,0.018254207613561953,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-03T12:00:00+00:00,-0.004360014636764914,-0.004634661834108655,18,0.05555555555555555,0.0029345174109462655,0.025869398450521823,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-04T00:00:00+00:00,-0.0019396913394048537,-0.0021735817836633364,12,0.25,0.0019689793081606615,0.01691995915351627,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-04T12:00:00+00:00,-0.0026090143721093054,-0.0027666930955968505,12,0.25,0.0019420242997811238,0.016683705031225633,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-05T00:00:00+00:00,-0.0015789199015160303,-0.0019120775859058359,8,0.25,0.0012946969678444037,0.011035177116830724,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-05T12:00:00+00:00,-0.000694436911738351,-0.0010518363720941615,7,0.14285714285714285,0.001148073615087801,0.008925925355975849,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-06T00:00:00+00:00,-0.0012915283404169608,-0.0014006801930360746,7,0.0,0.0011701779913774809,0.010059890337252275,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-06T12:00:00+00:00,-0.0010563045532814438,-0.0014704397037592631,10,0.2,0.0016693195162027976,0.013506630915297904,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-07T00:00:00+00:00,-0.0008290410031584887,-0.0010641948857618155,8,0.25,0.001297241777053998,0.010649979795443583,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-07T12:00:00+00:00,-0.002425606646138927,-0.0025332303488271313,11,0.09090909090909091,0.0018160008301638837,0.014314944520045794,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-08T00:00:00+00:00,-0.0017765452605716353,-0.0017765452605716936,7,0.14285714285714285,0.001143319788846721,0.008145271253530283,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-08T12:00:00+00:00,-0.003370132320619875,-0.0038559202474225396,12,0.08333333333333333,0.0019583558700611734,0.015035379532009058,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-09T00:00:00+00:00,-0.002035663095464577,-0.0023295127676880023,9,0.1111111111111111,0.0014939430196101932,0.011792680480301156,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-09T12:00:00+00:00,-0.0016685973812702603,-0.0022730642306045823,13,0.15384615384615385,0.0021372368523191808,0.018301266391164098,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-10T00:00:00+00:00,-0.0017487078842104138,-0.002031922054025026,9,0.1111111111111111,0.001444185857816825,0.012826047845442716,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-10T12:00:00+00:00,-0.0024613832461673887,-0.0027460133147299004,11,0.09090909090909091,0.0017640409991036745,0.015279040448511383,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-11T00:00:00+00:00,-0.000933366555228196,-0.0012179966237906292,5,0.0,0.000793784744894216,0.007157127137927602,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-11T12:00:00+00:00,-0.0014415930542483167,-0.001773860972582031,8,0.125,0.0012918139442276687,0.011473078135274439,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-12T00:00:00+00:00,-0.001212618202788201,-0.0012934266348857415,8,0.125,0.0013659671682774025,0.011056830365197896,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-12T12:00:00+00:00,-0.00366807351852442,-0.003707840789357042,14,0.0,0.002325026856363776,0.019632366260261287,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-13T00:00:00+00:00,-0.001828113539190875,-0.002024812865164871,10,0.0,0.001664580111821344,0.013942295200372627,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-13T12:00:00+00:00,-0.0028669504123829672,-0.0028707503321016015,12,0.0,0.0020117501260759046,0.016199076989388324,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-14T00:00:00+00:00,-0.0024254932686026604,-0.002514273436340475,11,0.09090909090909091,0.0018692584186697954,0.015425161855014252,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-14T12:00:00+00:00,-0.004601755782625983,-0.0046737195285069255,18,0.0,0.0029836643761511723,0.024444255228806874,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-15T00:00:00+00:00,-0.0034241044362330222,-0.0035150080934563954,12,0.0,0.002013736058974933,0.0158120912892655,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-15T12:00:00+00:00,-0.0035637329819302047,-0.003605244675230601,13,0.0,0.0021604604858685116,0.017233067021762066,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-16T00:00:00+00:00,-0.004216474220339474,-0.004644381428926647,15,0.0,0.0025344840718032674,0.019721766350027432,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-16T12:00:00+00:00,-0.003648051655531762,-0.003752999735446627,15,0.06666666666666667,0.0024346920550240136,0.020842277947588715,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-17T00:00:00+00:00,-0.0030247781301433563,-0.0033755794374119574,13,0.07692307692307693,0.0021384113177580683,0.01798358041514305,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-17T12:00:00+00:00,-0.0022252290970750798,-0.0031543325620103646,18,0.3333333333333333,0.0028873925492221603,0.02266799323167901,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-18T00:00:00+00:00,-0.002376452596011732,-0.0031146330869226135,16,0.3125,0.0025883081798810607,0.01979202280468668,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-18T12:00:00+00:00,-0.0002977996875575088,-0.0018902003444553062,16,0.5625,0.0025159777380752164,0.01840486455867653,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-19T00:00:00+00:00,0.0013530916415867747,-0.0008658517893640472,16,0.8125,0.0024702759862843746,0.016570335199184594,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-19T12:00:00+00:00,-0.001760523829887669,-0.003044785867866273,26,0.6153846153846154,0.004082753562832681,0.019124474708887156,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-20T00:00:00+00:00,-0.0019841407796999393,-0.003713739904074753,21,0.5714285714285714,0.0033357414671859376,0.019018452235382625,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-20T12:00:00+00:00,-0.006281372262814326,-0.0070174050997069415,26,0.38461538461538464,0.004132443820808416,0.020522094353317918,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-21T00:00:00+00:00,-0.005163675685410897,-0.005864498514754346,25,0.44,0.003988440033062493,0.01977661474167018,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-21T12:00:00+00:00,-0.003943425676000833,-0.0053338020254734,26,0.46153846153846156,0.004148387408693376,0.023324613462422226,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-22T00:00:00+00:00,-0.002398286749695411,-0.004127724977949887,20,0.55,0.0031811306622108438,0.01597371097305449,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-22T12:00:00+00:00,-0.0038961564926753203,-0.004241061512928801,22,0.5454545454545454,0.003541269754553344,0.021531385511009957,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-23T00:00:00+00:00,-0.0021346056235923916,-0.002134605623592467,18,0.6111111111111112,0.0028786352578711633,0.014053998174043335,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-23T12:00:00+00:00,-0.003059752867187864,-0.0030597528671879592,14,0.35714285714285715,0.002225430552108279,0.013619354056728762,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-24T00:00:00+00:00,-0.0030500675023341717,-0.003050067502334164,15,0.5333333333333333,0.0024001094615803886,0.011960666812741147,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-24T12:00:00+00:00,-0.0041215267878276785,-0.004585835266273985,18,0.3888888888888889,0.0029192265520735336,0.016144260308016873,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-25T00:00:00+00:00,-0.005135415669321439,-0.005301125939378926,12,0.08333333333333333,0.0020225585847130382,0.009735754250058178,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-25T12:00:00+00:00,-0.005693014583535324,-0.005864695854385538,17,0.11764705882352941,0.0028173015323200313,0.017070703280743147,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-26T00:00:00+00:00,-0.0023999399580564938,-0.0025721729039415164,11,0.18181818181818182,0.0018137769052952394,0.014015775455463375,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-26T12:00:00+00:00,-0.0011014132296795754,-0.0016609404952498963,17,0.4117647058823529,0.002731514460023038,0.018132653621538725,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-27T00:00:00+00:00,-0.00236140380371103,-0.0025682318514238522,15,0.2,0.00245828967870045,0.01642608991312399,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-27T12:00:00+00:00,-0.002429525100238513,-0.003133899265770679,12,0.25,0.0018870186605613056,0.014859791959931812,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-28T00:00:00+00:00,-0.002459345339924657,-0.0029047622874985857,11,0.18181818181818182,0.0017607399535522511,0.012336132236075256,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-28T12:00:00+00:00,-0.006293326963727648,-0.006586113608968103,20,0.05,0.003254267664705211,0.02081114070048542,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-29T00:00:00+00:00,-0.00454476911255012,-0.004843655479566333,16,0.0625,0.002623964810807562,0.017380978431239032,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-29T12:00:00+00:00,-0.0036563627108850433,-0.004216247543065377,16,0.1875,0.0025468530612846475,0.018195345504593667,False,0,0,selection,"live config (a), ML-only proxy"
+1,low,2026-08-30T00:00:00+00:00,-0.003422182240267981,-0.0036180607709808132,17,0.23529411764705882,0.0027239500229991613,0.0192519311795579,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-06-20T00:00:00+00:00,-0.0022975286586409504,-0.0027083747721468043,7,0.2857142857142857,0.001841929667210628,0.009302600950454404,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-06-20T12:00:00+00:00,-0.0025696807446812316,-0.002866293760771965,13,0.38461538461538464,0.003367770750164655,0.015454445544044022,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-06-21T00:00:00+00:00,-0.0032513086255623247,-0.0032526711240775663,10,0.2,0.0026132341933312398,0.012572668102445006,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-06-21T12:00:00+00:00,-0.0038594343128772533,-0.0040967285855909585,16,0.3125,0.004209493183758784,0.01757812054630868,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-06-22T00:00:00+00:00,-0.0051615816702347325,-0.005169944230526635,12,0.08333333333333333,0.0031797266456459437,0.014538038213611786,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-06-22T12:00:00+00:00,-0.00566818713247899,-0.005969908307814742,11,0.0,0.0029277077178097625,0.01194053097815504,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-06-23T00:00:00+00:00,-0.0033319875651144585,-0.0036337087404502144,6,0.0,0.0016375156052345654,0.005797708585168468,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-06-23T12:00:00+00:00,-0.0048184685892879,-0.005261979217234702,14,0.35714285714285715,0.003703431295671963,0.013138927796238629,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-06-24T00:00:00+00:00,-0.007046478055267463,-0.0072297995594072795,14,0.07142857142857142,0.0037406767716036274,0.014695651474083147,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-06-24T12:00:00+00:00,-0.0072123661914478415,-0.007282580172082942,19,0.3157894736842105,0.004982289681255678,0.017896522037788284,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-06-25T00:00:00+00:00,-0.006986986551490274,-0.0070572005321253295,15,0.13333333333333333,0.003962105881639598,0.017837252742210683,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-06-25T12:00:00+00:00,-0.003837246979147785,-0.004818191418994866,17,0.29411764705882354,0.004455302126009872,0.01889668554109402,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-06-26T00:00:00+00:00,-0.0065520883525620605,-0.006737257627554283,13,0.07692307692307693,0.0034624363625702665,0.015696229963067732,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-06-26T12:00:00+00:00,-0.003972832137119813,-0.004008260793965879,11,0.2727272727272727,0.0029271891162433545,0.010169697708098398,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-06-27T00:00:00+00:00,-0.0007695351173388753,-0.0009651130619190429,6,0.3333333333333333,0.0015960037162995862,0.0077108826296347095,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-06-27T12:00:00+00:00,-0.004402103423244842,-0.004838804889384263,18,0.2222222222222222,0.00473339170896545,0.023454412364317855,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-06-28T00:00:00+00:00,-0.004342401374274303,-0.004586952217152218,14,0.14285714285714285,0.0036815587834004605,0.018722973585147316,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-06-28T12:00:00+00:00,-0.007868569837727919,-0.007985967042193343,21,0.19047619047619047,0.005483475438249087,0.0234866716347386,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-06-29T00:00:00+00:00,-0.004600929684835707,-0.004996034795419102,14,0.14285714285714285,0.0036583267996814915,0.018105831934541426,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-06-29T12:00:00+00:00,-0.005337824729409555,-0.00619884198962517,18,0.2222222222222222,0.004668179598900365,0.0215725424200095,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-06-30T00:00:00+00:00,-0.0057615839912466705,-0.0059118546996809185,16,0.125,0.0041409122296012695,0.020428046354637255,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-06-30T12:00:00+00:00,-0.0069822076386705486,-0.007101514297995881,25,0.28,0.006467551444138042,0.029080122310174785,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-01T00:00:00+00:00,-0.00456757865493556,-0.004567592369279283,19,0.21052631578947367,0.0048737395764944,0.024981285005286086,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-01T12:00:00+00:00,-0.00362874730349366,-0.003975812487509445,19,0.3157894736842105,0.004880989149258775,0.024044474099194378,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-02T00:00:00+00:00,-0.0028430649046965635,-0.0031810546862052202,18,0.3333333333333333,0.004611732172005002,0.023940956213592414,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-02T12:00:00+00:00,-0.004086376897368037,-0.004579198554982344,17,0.17647058823529413,0.004406086444466079,0.020784023029925502,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-03T00:00:00+00:00,-0.00424964215777256,-0.004937055763782894,13,0.15384615384615385,0.003353790093395311,0.016000539786464856,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-03T12:00:00+00:00,-0.004178284772393711,-0.004594657372225086,14,0.14285714285714285,0.0036249383778819808,0.018305879702863983,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-04T00:00:00+00:00,-0.004652988453496222,-0.004652988453496265,14,0.14285714285714285,0.00367217143888735,0.01789139309428649,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-04T12:00:00+00:00,-0.005508100591133795,-0.0056544805333970105,14,0.21428571428571427,0.003741989030732311,0.017091445768965537,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-05T00:00:00+00:00,-0.0027895714400257322,-0.0027895714400257843,8,0.25,0.002136992076626018,0.010209857395664408,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-05T12:00:00+00:00,-0.0037129935210182072,-0.003959790890474935,9,0.1111111111111111,0.0023624460852063765,0.01218045801499516,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-06T00:00:00+00:00,-0.0041120359536233365,-0.004358833323080069,8,0.0,0.0021332534344428887,0.011474552844280048,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-06T12:00:00+00:00,-0.00469206569211605,-0.004827688359361648,17,0.23529411764705882,0.004347954664075124,0.019050236160448944,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-07T00:00:00+00:00,-0.0032839443128065996,-0.003419566980052191,10,0.0,0.002584885850283322,0.013607401194964813,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-07T12:00:00+00:00,-0.003606572441983904,-0.004260188962199707,12,0.3333333333333333,0.0030984011158263648,0.013464390500793698,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-08T00:00:00+00:00,-0.0028411219714788954,-0.0028888014483511304,9,0.2222222222222222,0.0023364982599207566,0.011370232247716754,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-08T12:00:00+00:00,-0.004211660293376111,-0.004256145105315912,19,0.3684210526315789,0.0048987145312609105,0.024234441581218773,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-09T00:00:00+00:00,-0.0027870305152827876,-0.0033934390052630103,12,0.3333333333333333,0.0031343862436517588,0.01531743420170348,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-09T12:00:00+00:00,-0.005986987428868719,-0.0059869874288687175,19,0.15789473684210525,0.004967973433631044,0.023721751637522638,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-10T00:00:00+00:00,-0.0041143149713956904,-0.004114314971395805,13,0.23076923076923078,0.003333229433558692,0.015929069160785455,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-10T12:00:00+00:00,-0.007491156082924534,-0.007602256342940539,21,0.14285714285714285,0.005462378834404024,0.026364909119890447,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-11T00:00:00+00:00,-0.006455717072694575,-0.006563921331081746,17,0.17647058823529413,0.004435610196773326,0.01955491975701793,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-11T12:00:00+00:00,-0.004598524456645907,-0.005177144795788902,14,0.21428571428571427,0.003605988015567696,0.017624752800846587,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-12T00:00:00+00:00,-0.004781672106432283,-0.005218362475049143,16,0.25,0.004101854678268071,0.020953366093495643,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-12T12:00:00+00:00,-0.004087807710704731,-0.0048332086064470925,17,0.17647058823529413,0.0044059786595909995,0.022871617373586103,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-13T00:00:00+00:00,-0.004423168803808757,-0.005168569699551151,15,0.13333333333333333,0.003875960382043053,0.01850221994266124,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-13T12:00:00+00:00,-0.002350474288051364,-0.002776082651583134,14,0.2857142857142857,0.00359017175357237,0.01892785014445736,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-14T00:00:00+00:00,-0.0015636253249588345,-0.0019896485114568874,12,0.3333333333333333,0.0030450678910173786,0.015764605827587472,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-14T12:00:00+00:00,-0.003186537574746192,-0.003349990583409901,13,0.3076923076923077,0.0033846637372864745,0.014588454253804723,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-15T00:00:00+00:00,-0.0023721732642619357,-0.0027695342285901647,8,0.25,0.002061766027989553,0.007921141139168522,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-15T12:00:00+00:00,-0.004669675050732062,-0.0048230915395430785,14,0.07142857142857142,0.0035755999781586396,0.01859479789518759,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-16T00:00:00+00:00,-0.00400758864569105,-0.004410036779085247,8,0.0,0.0021014259067450437,0.009267776118897895,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-16T12:00:00+00:00,-0.0067797804844923915,-0.006779780484492348,15,0.0,0.0039359942612616095,0.019140881175009977,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-17T00:00:00+00:00,-0.002644086541735284,-0.003282320871922928,10,0.3,0.002576928179129998,0.01024097281268139,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-17T12:00:00+00:00,-0.006349603246264823,-0.006519514423031558,17,0.17647058823529413,0.00444971703728118,0.01853700260900492,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-18T00:00:00+00:00,-0.004513604602015368,-0.0046510612984310695,14,0.2857142857142857,0.003670672818126275,0.016276900312020604,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-18T12:00:00+00:00,-0.0057360813015915,-0.006250645935771293,16,0.25,0.004190522724914105,0.018421312821546864,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-19T00:00:00+00:00,-0.006827132947985022,-0.0071887462412273395,16,0.125,0.004135652427397467,0.018823935920629326,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-19T12:00:00+00:00,-0.004924182728669204,-0.0052963535102706905,12,0.0,0.0031504863861764767,0.014752184876769275,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-20T00:00:00+00:00,-0.004287669681796971,-0.004623857173308266,15,0.2,0.003873472775505868,0.016475786344429547,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-20T12:00:00+00:00,-0.004314064353583167,-0.004634622913587849,17,0.11764705882352941,0.004423790739855295,0.023358145350219132,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-21T00:00:00+00:00,-0.0027286271499505736,-0.003054705909071087,14,0.21428571428571427,0.003636361819890621,0.018841483167853078,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-21T12:00:00+00:00,-0.00636636828255777,-0.006366368282557877,15,0.0,0.003945865865972374,0.02112464480878282,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-22T00:00:00+00:00,-0.004806567052270007,-0.005088529431538258,13,0.07692307692307693,0.0034026580657659056,0.016930699435338346,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-22T12:00:00+00:00,-0.006646740739321803,-0.006797939704500933,17,0.11764705882352941,0.004462604434998786,0.02168949858584748,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-23T00:00:00+00:00,-0.00642723050915773,-0.0066479048207211955,16,0.0625,0.004237572583234746,0.020599479999592066,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-23T12:00:00+00:00,-0.004693401954436141,-0.00520997213546337,17,0.29411764705882354,0.004491573874924055,0.021727075450984037,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-24T00:00:00+00:00,-0.003620898793193883,-0.004023259048995365,13,0.23076923076923078,0.003399914261038147,0.016632321544005194,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-24T12:00:00+00:00,-0.004338103061918033,-0.004651593956696565,14,0.21428571428571427,0.0036507805559679277,0.018305765539041046,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-25T00:00:00+00:00,-0.00427457023275209,-0.0042745702327521284,13,0.23076923076923078,0.0034036511380722374,0.016986211094739936,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-25T12:00:00+00:00,-0.007075307212215044,-0.007668389103690165,20,0.25,0.005233743055519735,0.023994821521456322,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-26T00:00:00+00:00,-0.00547402548470234,-0.0062159170504937356,17,0.29411764705882354,0.0044213304399635224,0.018716769046690444,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-26T12:00:00+00:00,-0.005042242424927026,-0.005416579494922802,23,0.34782608695652173,0.005964739069761641,0.02536102923445164,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-27T00:00:00+00:00,-0.004798037475857976,-0.005172374545853731,18,0.2777777777777778,0.004670103321500632,0.021122966802271752,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-27T12:00:00+00:00,-0.004741987309362581,-0.005360425654310164,15,0.2,0.003923020864755581,0.01589967612708157,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-28T00:00:00+00:00,-0.002657803988677319,-0.0032766765830194444,14,0.14285714285714285,0.0036342300471031777,0.01854000528084992,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-28T12:00:00+00:00,-0.004430685243244623,-0.004430685243244636,14,0.21428571428571427,0.003651618680029206,0.016376148033200734,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-29T00:00:00+00:00,-0.0029046296945753644,-0.0030674733065971793,9,0.0,0.0023831171415145984,0.012392387791528627,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-29T12:00:00+00:00,-0.00296104768332425,-0.0031238912953462927,8,0.125,0.0021606810275460885,0.009760423728880535,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-30T00:00:00+00:00,-0.001761668159565561,-0.0023810947619408163,7,0.14285714285714285,0.0018446094164853986,0.009315480059223667,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-30T12:00:00+00:00,-0.004524225046940241,-0.004524225046940389,12,0.16666666666666666,0.0032004394894814383,0.013079092324719151,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-31T00:00:00+00:00,-0.003948553744284022,-0.003948553744284045,10,0.2,0.002679300391966721,0.010203469413196862,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-07-31T12:00:00+00:00,-0.00616666746087782,-0.006166667460877795,14,0.21428571428571427,0.0036924993841466044,0.014230141080519825,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-01T00:00:00+00:00,-0.006671762038521753,-0.006774017857792414,16,0.1875,0.004213978455113935,0.018058025936112616,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-01T12:00:00+00:00,-0.007085812311302848,-0.007085812311302897,18,0.1111111111111111,0.004714120228899644,0.021110656077046853,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-02T00:00:00+00:00,-0.0041084816800143155,-0.0049860269907509025,12,0.16666666666666666,0.0031481138550291284,0.014532364122591047,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-02T12:00:00+00:00,-0.00568809136641386,-0.005858104928915364,17,0.11764705882352941,0.004434976503081836,0.02181102823430012,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-03T00:00:00+00:00,-0.005092958962515881,-0.005115735235626251,13,0.0,0.003443059922269672,0.018202976558064462,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-03T12:00:00+00:00,-0.006139764498927889,-0.006413627158209478,18,0.0,0.004715547295680884,0.025815353187155738,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-04T00:00:00+00:00,-0.0031354612506930336,-0.0032583382783490933,12,0.16666666666666666,0.003164721197965026,0.016909430007939527,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-04T12:00:00+00:00,-0.0038032706196706274,-0.003926028175253005,12,0.08333333333333333,0.003136153529017283,0.016671412349796546,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-05T00:00:00+00:00,-0.0023753220989101214,-0.002520535850460859,8,0.125,0.00209108600865352,0.011026609030637966,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-05T12:00:00+00:00,-0.0013930071467016978,-0.0016502973191180326,7,0.14285714285714285,0.001846618434690388,0.008918800432071659,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-06T00:00:00+00:00,-0.0019858955002008583,-0.0020934049140626243,7,0.0,0.0018636411155124035,0.010031873036456447,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-06T12:00:00+00:00,-0.002051964318099678,-0.002266197411699089,10,0.2,0.0026652319148578445,0.013496025578943907,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-07T00:00:00+00:00,-0.001626947643469804,-0.0017620036632144398,8,0.125,0.002095274604110426,0.010641861576555466,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-07T12:00:00+00:00,-0.003519992573113182,-0.003528298255247808,11,0.09090909090909091,0.0029104868915461085,0.014305956976629387,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-08T00:00:00+00:00,-0.0024725027411063175,-0.0024725027411062195,7,0.14285714285714285,0.0018393322978914031,0.00813941903638535,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-08T12:00:00+00:00,-0.0045593756253434516,-0.005044701884695191,12,0.08333333333333333,0.003147827279585907,0.015026092407315526,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-09T00:00:00+00:00,-0.002926925537729706,-0.0031208199860971453,9,0.1111111111111111,0.0023860852184151194,0.01176372603942626,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-09T12:00:00+00:00,-0.0029600018271216766,-0.003365328901780762,13,0.15384615384615385,0.0034288786666881663,0.01829183062071097,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-10T00:00:00+00:00,-0.0026446643864559954,-0.002927619725950459,9,0.1111111111111111,0.002340338856391624,0.012817580897700152,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-10T12:00:00+00:00,-0.003554281872912652,-0.0038386515566353197,11,0.09090909090909091,0.002857109246773557,0.0152702857857475,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-11T00:00:00+00:00,-0.0014296066993215182,-0.001713976383044158,5,0.0,0.001290024888987538,0.00715208712642409,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-11T12:00:00+00:00,-0.0022366944219546292,-0.0024815821947490324,8,0.0,0.002086888735983981,0.01146617109888136,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-12T00:00:00+00:00,-0.0020068168410708595,-0.002010918476842871,8,0.125,0.002160259995277537,0.011048894749246278,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-12T12:00:00+00:00,-0.005052714796930605,-0.005092442220798299,14,0.0,0.0037099151566427646,0.01962373280027768,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-13T00:00:00+00:00,-0.002816357670141422,-0.0030127775240123,10,0.0,0.002653999191512021,0.013912905646943325,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-13T12:00:00+00:00,-0.004057916525835728,-0.004057916525835759,12,0.0,0.003203099421601537,0.016187818931974362,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-14T00:00:00+00:00,-0.0035206830956739234,-0.0035674941289866036,11,0.0,0.0029649736515734745,0.015413846261338736,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-14T12:00:00+00:00,-0.0063887753590057125,-0.0064605555322228,18,0.0,0.004771719206825087,0.024427869541101384,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-15T00:00:00+00:00,-0.004616405686466124,-0.004707156243376587,12,0.0,0.0032063995862190216,0.015800621810282717,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-15T12:00:00+00:00,-0.004854004983636975,-0.004895457074468035,13,0.0,0.003451113986661587,0.017221791551603104,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-16T00:00:00+00:00,-0.005699733744427576,-0.006122896882675644,15,0.0,0.00402049729101542,0.019695916420453395,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-16T12:00:00+00:00,-0.005137293428379774,-0.005242007886243072,15,0.06666666666666667,0.003924169349160106,0.020830130462067574,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-17T00:00:00+00:00,-0.0043166592675985055,-0.004568150723823328,13,0.07692307692307693,0.00343039821806698,0.017972438922264234,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-17T12:00:00+00:00,-0.004017578197528487,-0.0048697576469367565,18,0.2222222222222222,0.00467803481414835,0.022654331969313816,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-18T00:00:00+00:00,-0.003969658466112493,-0.0045315162622887595,16,0.25,0.004179976789573479,0.01977958800859408,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-18T12:00:00+00:00,-0.0018925402039697713,-0.0028325530321317016,16,0.5,0.004108914343722126,0.01839448547950716,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-19T00:00:00+00:00,-0.0002475555854842095,-0.0014832155292575644,16,0.625,0.00406119082307935,0.016555441164104467,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-19T12:00:00+00:00,-0.004346467211394286,-0.004642380381298272,26,0.5769230769230769,0.006659863516477443,0.019088563127771848,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-20T00:00:00+00:00,-0.004076994560596187,-0.004740613537258964,21,0.5238095238095238,0.0054215945982659195,0.018987725611853447,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-20T12:00:00+00:00,-0.008824810246602185,-0.0095279171173267,26,0.38461538461538464,0.006693869778905808,0.020502259920573133,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-21T00:00:00+00:00,-0.007624225692658922,-0.00803865073584098,25,0.44,0.006458196939930275,0.019766790961231625,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-21T12:00:00+00:00,-0.006514523872001008,-0.007517491094215734,26,0.4230769230769231,0.006718789528288512,0.023293570091530456,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-22T00:00:00+00:00,-0.004386766328415961,-0.005539940700596935,20,0.45,0.005167699013584505,0.015967608674023626,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-22T12:00:00+00:00,-0.006075596208192445,-0.006320987251488996,22,0.36363636363636365,0.005714364867338846,0.021497987286217615,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-23T00:00:00+00:00,-0.00392085570851094,-0.003920855708510973,18,0.5,0.004664402012423907,0.0140485716800941,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-23T12:00:00+00:00,-0.004428873732936379,-0.004428873732936434,14,0.2857142857142857,0.003605057022093854,0.013592970104839145,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-24T00:00:00+00:00,-0.004519397332477952,-0.00451939733247797,15,0.4666666666666667,0.0038799180106292297,0.011937449592191222,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-24T12:00:00+00:00,-0.005901780139008699,-0.006167232610626794,18,0.3333333333333333,0.004699803701106369,0.01613637387038257,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-25T00:00:00+00:00,-0.0063190404025934115,-0.00647011679981202,12,0.08333333333333333,0.003206531796078003,0.009730936203860901,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-25T12:00:00+00:00,-0.007372118794164705,-0.007543297366340851,17,0.11764705882352941,0.0044967143784352655,0.017062638199882664,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-26T00:00:00+00:00,-0.0034929189383822523,-0.0036647588572634726,11,0.09090909090909091,0.0029064517348008838,0.01400494275351863,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-26T12:00:00+00:00,-0.002789550717810426,-0.0031972988530574176,17,0.35294117647058826,0.004419015624654449,0.01812263848869429,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-27T00:00:00+00:00,-0.003834407180959383,-0.004040749315590952,15,0.2,0.003941577745284331,0.01641194218661775,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-27T12:00:00+00:00,-0.0036198904505619694,-0.004025197818147919,12,0.25,0.003077782191382563,0.014847589613665087,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-28T00:00:00+00:00,-0.0035502414537528374,-0.003995236847679329,11,0.18181818181818182,0.002851692897270632,0.012327683677198215,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-28T12:00:00+00:00,-0.008265120566971427,-0.00855761383881981,20,0.05,0.005225949386460891,0.020805624392671317,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-29T00:00:00+00:00,-0.0061196395086796865,-0.006412132780528101,16,0.0625,0.0042021599986292206,0.017344153798602466,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-29T12:00:00+00:00,-0.005229953097744295,-0.005691422759999343,16,0.1875,0.004123447125286092,0.018157509622923052,False,0,0,selection,"live config (a), ML-only proxy"
+1,base,2026-08-30T00:00:00+00:00,-0.005106308993781088,-0.005301732756380573,17,0.17647058823529413,0.004407599764478692,0.01924589786420448,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-06-20T00:00:00+00:00,-0.003217476860466691,-0.00345288397321053,7,0.2857142857142857,0.0027620798546430887,0.009291277542835378,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-06-20T12:00:00+00:00,-0.004243977308241795,-0.004290691676648861,13,0.38461538461538464,0.005044488631866127,0.015422033770259138,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-06-21T00:00:00+00:00,-0.004556043938491954,-0.0045574027116804805,10,0.2,0.003918349818627689,0.012558203276310154,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-06-21T12:00:00+00:00,-0.005952333542769562,-0.006133659017533044,16,0.3125,0.006305278947463133,0.017544197745496162,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-06-22T00:00:00+00:00,-0.00673504429530704,-0.006743303513375709,12,0.08333333333333333,0.0047590829693082036,0.014496224450291124,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-06-22T12:00:00+00:00,-0.007105949406767947,-0.007403941994686636,11,0.0,0.004377341274531612,0.011905087766849417,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-06-23T00:00:00+00:00,-0.004149988327643986,-0.004451255559385969,6,0.0,0.002455771233302812,0.005790724091251771,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-06-23T12:00:00+00:00,-0.006667359215898216,-0.006737186284691665,14,0.2857142857142857,0.0055533617761128525,0.013127451001223122,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-06-24T00:00:00+00:00,-0.008906132642668308,-0.009101328036831724,14,0.07142857142857142,0.00560457856966695,0.014665974737253035,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-06-24T12:00:00+00:00,-0.009699958476828452,-0.009782405836406882,19,0.2631578947368421,0.007470346556997202,0.017886667751870217,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-06-25T00:00:00+00:00,-0.008965444047251764,-0.009047891406830266,15,0.06666666666666667,0.005940897769593337,0.017822553576707107,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-06-25T12:00:00+00:00,-0.0060563719407834655,-0.0068958422876781444,17,0.23529411764705882,0.006672504793519355,0.01885727941511333,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-06-26T00:00:00+00:00,-0.008276284590946523,-0.008461175276257338,13,0.0,0.005188337044471309,0.015670485712472905,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-06-26T12:00:00+00:00,-0.005433901151356147,-0.005469276505308263,11,0.18181818181818182,0.004386055404697644,0.010147384423974271,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-06-27T00:00:00+00:00,-0.0015674124746920582,-0.0016997142922630104,6,0.16666666666666666,0.0023938356312901868,0.007702210076750017,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-06-27T12:00:00+00:00,-0.006749735620669393,-0.006946902917802311,18,0.16666666666666666,0.00708732641902794,0.023404671814031337,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-06-28T00:00:00+00:00,-0.0061800224436563515,-0.0063003418498113195,14,0.14285714285714285,0.005519701114084632,0.01870512897540398,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-06-28T12:00:00+00:00,-0.01059959369641763,-0.0107288530240085,21,0.19047619047619047,0.008215182433085907,0.02345406960005206,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-06-29T00:00:00+00:00,-0.006411450419053658,-0.006818451977956275,14,0.14285714285714285,0.005472543754189151,0.018041574960158034,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-06-29T12:00:00+00:00,-0.007664178270772202,-0.008301021631876626,18,0.2222222222222222,0.006994840179295377,0.02154251211128951,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-06-30T00:00:00+00:00,-0.007824270939736824,-0.007875321054249262,16,0.125,0.006203843938462726,0.0203946951129708,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-06-30T12:00:00+00:00,-0.010195795277517614,-0.010301164589144651,25,0.28,0.009681590381589314,0.029019840362772057,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-01T00:00:00+00:00,-0.007001206934379777,-0.007001220628090055,19,0.21052631578947367,0.007303399530932617,0.024951983233405063,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-01T12:00:00+00:00,-0.006060292980556525,-0.006171209569319935,19,0.3157894736842105,0.007312864954336622,0.024010202555790727,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-02T00:00:00+00:00,-0.005144279300693059,-0.00523205601410992,18,0.3333333333333333,0.006913768490866682,0.023922235000036752,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-02T12:00:00+00:00,-0.006279804253557413,-0.00641189421277788,17,0.17647058823529413,0.006600290549448279,0.0207473308592499,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-03T00:00:00+00:00,-0.0059239276470530395,-0.006622853462964096,13,0.15384615384615385,0.005028846877625384,0.01598571650120275,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-03T12:00:00+00:00,-0.005987973440146446,-0.006290984459591864,14,0.14285714285714285,0.005435333113152134,0.018287915894280433,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-04T00:00:00+00:00,-0.006475315049090566,-0.006475315049090602,14,0.14285714285714285,0.005501626274513897,0.01786456421754854,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-04T12:00:00+00:00,-0.007366048310463214,-0.007389094805510199,14,0.21428571428571427,0.005606238612270748,0.017060035330459338,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-05T00:00:00+00:00,-0.003857182196401595,-0.0038571821964016317,8,0.25,0.0032049376632350374,0.010198813722442465,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-05T12:00:00+00:00,-0.004888192055152068,-0.005147108759278596,9,0.1111111111111111,0.0035383489550616207,0.012151934196677585,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-06T00:00:00+00:00,-0.00517834344474056,-0.005437260148867251,8,0.0,0.0031996961267434674,0.011463785318036974,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-06T12:00:00+00:00,-0.006864218174975378,-0.007012006798322479,17,0.23529411764705882,0.006519368838282594,0.01903970724412176,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-07T00:00:00+00:00,-0.004575789341916089,-0.004723577965263126,10,0.0,0.003876811989504812,0.013595478117726916,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-07T12:00:00+00:00,-0.005154509586730769,-0.005682390145054672,12,0.25,0.004646031727941054,0.013450626751692736,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-08T00:00:00+00:00,-0.0040088079144942265,-0.004008807914494206,9,0.1111111111111111,0.003503862393343304,0.01135739918717247,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-08T12:00:00+00:00,-0.006656171995445367,-0.006712830091664568,19,0.2631578947368421,0.007337625939299573,0.02419477722256887,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-09T00:00:00+00:00,-0.00435197420284458,-0.004969218238158879,12,0.25,0.004699098139213144,0.015299399126954532,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-09T12:00:00+00:00,-0.008465253926104564,-0.008465253926104532,19,0.15789473684210525,0.007446868658262323,0.02369816701042227,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-10T00:00:00+00:00,-0.005778498214728153,-0.0057784982147282005,13,0.15384615384615385,0.004997749966631143,0.01591120256100895,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-10T12:00:00+00:00,-0.01020419632558695,-0.010327338586197277,21,0.09523809523809523,0.008183582523195997,0.02633274074841224,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-11T00:00:00+00:00,-0.008670344456265638,-0.008778385919880893,17,0.17647058823529413,0.006650285339801999,0.01953916936721861,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-11T12:00:00+00:00,-0.006393104510767836,-0.006645972853089432,14,0.21428571428571427,0.0054010640181668765,0.017588872797695852,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-12T00:00:00+00:00,-0.006823514138153419,-0.007133443986537258,16,0.1875,0.006143623855239663,0.020913823398597597,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-12T12:00:00+00:00,-0.006281573562645922,-0.007050807508870993,17,0.17647058823529413,0.0065996915538370495,0.022832255366387964,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-13T00:00:00+00:00,-0.006352070375100868,-0.007121304321325961,15,0.13333333333333333,0.005804711667100227,0.018463322513494352,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-13T12:00:00+00:00,-0.0041434968014816675,-0.004580215716647906,14,0.2857142857142857,0.005381945233648139,0.018906681220305213,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-14T00:00:00+00:00,-0.0030848585000523942,-0.0035222171401921853,12,0.3333333333333333,0.004565357271587315,0.015746819055453005,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-14T12:00:00+00:00,-0.004877788180574756,-0.004901171639586477,13,0.3076923076923077,0.0050749156542476736,0.014572879257582902,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-15T00:00:00+00:00,-0.0034027100445276548,-0.0036473191459012178,8,0.25,0.003092084672658446,0.007912215135420236,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-15T12:00:00+00:00,-0.006454837121994619,-0.0065357355065545075,14,0.0,0.005361715622015197,0.01857805071567321,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-16T00:00:00+00:00,-0.005057498340662337,-0.005395857255801717,8,0.0,0.003151770339320331,0.009257943200645158,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-16T12:00:00+00:00,-0.008739663309872064,-0.008739663309872192,15,0.0,0.005896148717375637,0.019104577373125483,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-17T00:00:00+00:00,-0.003931603717121558,-0.004581312556721673,10,0.3,0.003864645543520272,0.010230528426349328,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-17T12:00:00+00:00,-0.008570983027792667,-0.008754175173472212,17,0.11764705882352941,0.006672418679939152,0.01852366909591868,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-18T00:00:00+00:00,-0.006347141832191436,-0.006484391723146077,14,0.14285714285714285,0.005499058465072143,0.016253853844269906,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-18T12:00:00+00:00,-0.007813983694019422,-0.008187441736618006,16,0.1875,0.006277327470750033,0.01839072472663853,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-19T00:00:00+00:00,-0.008874027815187178,-0.009245263302728901,16,0.125,0.006189829101590407,0.01876660000513337,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-19T12:00:00+00:00,-0.006492492919936449,-0.006886357987077152,12,0.0,0.0047182883543584846,0.01471622150373979,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-20T00:00:00+00:00,-0.006220960511625428,-0.006444339803814758,15,0.2,0.0058069243930186,0.01646008862202781,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-20T12:00:00+00:00,-0.0065221223639162565,-0.006842198639226749,17,0.058823529411764705,0.006626780348030653,0.023330169472438263,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-21T00:00:00+00:00,-0.004544164531398778,-0.004864240806709219,14,0.14285714285714285,0.0054522394139778305,0.018824367607507518,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-21T12:00:00+00:00,-0.008318981986504097,-0.008318981986504048,15,0.0,0.005904507865898266,0.02106258334917536,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-22T00:00:00+00:00,-0.006506284327012669,-0.006663882579150626,13,0.07692307692307693,0.005102393747767825,0.01691598803106194,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-22T12:00:00+00:00,-0.0088755167141316,-0.009026488198420224,17,0.058823529411764705,0.006691484346660147,0.021673468685864516,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-23T00:00:00+00:00,-0.00853747464331636,-0.00875471353465651,16,0.0625,0.006348990054045875,0.020565890029624306,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-23T12:00:00+00:00,-0.006930226920448018,-0.007405322981106299,17,0.17647058823529413,0.00672852929456633,0.02169026175542294,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-24T00:00:00+00:00,-0.005320330418040956,-0.005671559406624782,13,0.15384615384615385,0.005098563852204061,0.016617569590516117,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-24T12:00:00+00:00,-0.006154717016143401,-0.006475330633451182,14,0.14285714285714285,0.005468686897039545,0.018269137497043068,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-25T00:00:00+00:00,-0.005973148078080324,-0.005973148078080248,13,0.15384615384615385,0.00510349580116583,0.01697081577161865,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-25T12:00:00+00:00,-0.009680183800975184,-0.010265620061301273,20,0.15,0.007835554863949606,0.023940575894462687,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-26T00:00:00+00:00,-0.007678696705555685,-0.008296052647138397,17,0.23529411764705882,0.006622729240267842,0.018680548500690345,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-26T12:00:00+00:00,-0.008014735845669611,-0.008399866898849417,23,0.2608695652173913,0.008935458711372588,0.025325129591090827,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-27T00:00:00+00:00,-0.007130610362755923,-0.007516127705858633,18,0.16666666666666666,0.00700135537300902,0.021107099944562755,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-27T12:00:00+00:00,-0.006689618283766315,-0.007319179819980315,15,0.2,0.005875702798750766,0.01586593945516346,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-28T00:00:00+00:00,-0.0044731175986895905,-0.005103252316882689,14,0.14285714285714285,0.005449043532199162,0.01852317483019446,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-28T12:00:00+00:00,-0.0062549732545145315,-0.006254973254514518,14,0.21428571428571427,0.005475356316391116,0.016362218414221284,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-29T00:00:00+00:00,-0.004095272557484552,-0.0042577119927664775,9,0.0,0.0035735096973257465,0.012377851361792437,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-29T12:00:00+00:00,-0.004040382421208858,-0.004202821856490679,8,0.125,0.0032400029754558403,0.009748271585683222,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-30T00:00:00+00:00,-0.0026837984735064565,-0.0033148011734783767,7,0.14285714285714285,0.0027667126771962745,0.009305591247137496,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-30T12:00:00+00:00,-0.006122037857453038,-0.006122037857452911,12,0.16666666666666666,0.004799052656253145,0.013065315775161311,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-31T00:00:00+00:00,-0.005286203460258059,-0.005286203460258099,10,0.2,0.0040177464633795465,0.01019230631604847,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-07-31T12:00:00+00:00,-0.008002774156787821,-0.00800277415678785,14,0.14285714285714285,0.005531947809133262,0.01419836350229125,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-01T00:00:00+00:00,-0.008758698561476083,-0.008859320796728354,16,0.125,0.006307476322124803,0.018007761123247076,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-01T12:00:00+00:00,-0.00943085796899052,-0.009430857968990458,18,0.1111111111111111,0.0070631697611236955,0.021078104731535697,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-02T00:00:00+00:00,-0.0056811423874005285,-0.006309863206818811,12,0.16666666666666666,0.004721166041761356,0.014520215538262852,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-02T12:00:00+00:00,-0.007902438756038252,-0.008084490018606227,17,0.11764705882352941,0.00664988765264159,0.021797166337041325,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-03T00:00:00+00:00,-0.006812376656493053,-0.006835172492911434,13,0.0,0.0051629830988024015,0.018187544503233184,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-03T12:00:00+00:00,-0.008486446207851096,-0.008771839888310429,18,0.0,0.007063779809559409,0.02577562208069671,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-04T00:00:00+00:00,-0.004715759517691535,-0.004838272736706228,12,0.16666666666666666,0.0047392278826328274,0.01687275533265615,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-04T12:00:00+00:00,-0.005369503580725945,-0.005491957153577531,12,0.08333333333333333,0.004701986879429826,0.016653137701764933,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-05T00:00:00+00:00,-0.0034194503976130147,-0.0035643047641912284,8,0.125,0.0031354653347084377,0.011012783953167979,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-05T12:00:00+00:00,-0.0023114691897613057,-0.002454528549113544,7,0.14285714285714285,0.0027641764421010213,0.008888572924316608,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-06T00:00:00+00:00,-0.0029170034936441907,-0.0030367043258927584,7,0.0,0.002794862059576877,0.010020182386224008,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-06T12:00:00+00:00,-0.0033785027938645186,-0.0034356430827254814,10,0.1,0.003991158122969497,0.013459920993225093,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-07T00:00:00+00:00,-0.002673553037376361,-0.002730748587638554,8,0.125,0.0031419701808220956,0.01062860594410442,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-07T12:00:00+00:00,-0.004970287150200478,-0.004970287150200425,11,0.09090909090909091,0.0043534718516339,0.014260926171810006,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-08T00:00:00+00:00,-0.0033913817002005227,-0.003391381700200591,7,0.14285714285714285,0.002758419904097368,0.008129068678970508,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-08T12:00:00+00:00,-0.006131368075711052,-0.0066285237392658125,12,0.08333333333333333,0.004720216219502604,0.015011126796619274,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-09T00:00:00+00:00,-0.0041185495178235184,-0.004187630381360052,9,0.1111111111111111,0.0035779787107390643,0.011750056138848842,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-09T12:00:00+00:00,-0.004672568235441258,-0.004967586084660747,13,0.15384615384615385,0.005141827031671317,0.0182763452132439,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-10T00:00:00+00:00,-0.003814105760026944,-0.004109123609246312,9,0.1111111111111111,0.0035099521897457905,0.012804794900358676,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-10T12:00:00+00:00,-0.004982171162275868,-0.005278533267968899,11,0.09090909090909091,0.004285108131261391,0.01525759737130511,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-11T00:00:00+00:00,-0.002074619143815287,-0.002370981249508297,5,0.0,0.001935037333481307,0.007144148751994972,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-11T12:00:00+00:00,-0.0032752035498759156,-0.003516278951392837,8,0.0,0.003124532167907984,0.011435615823851056,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-12T00:00:00+00:00,-0.0030815520534834776,-0.003085643661919102,8,0.0,0.0032342017720523664,0.01101759344178665,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-12T12:00:00+00:00,-0.006905425994233919,-0.006945093647654499,14,0.0,0.005563065215925688,0.01960777195213418,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-13T00:00:00+00:00,-0.004142360077034243,-0.004338402159924981,10,0.0,0.0039800810850866295,0.013898738744408968,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-13T12:00:00+00:00,-0.005656356446646332,-0.0056563564466463045,12,0.0,0.0048021630163462515,0.01616944813902419,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-14T00:00:00+00:00,-0.0049927227996142765,-0.005039397262727285,11,0.0,0.00443898509605005,0.015373775565920953,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-14T12:00:00+00:00,-0.008758360937283806,-0.008842329426099527,18,0.0,0.007141938389891434,0.02436186494161664,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-15T00:00:00+00:00,-0.0062165687523670085,-0.0063195116345302615,12,0.0,0.004807175543056569,0.015781297918420475,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-15T12:00:00+00:00,-0.006577165512181275,-0.00663095919105372,13,0.0,0.005174640658217136,0.01720470381594539,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-16T00:00:00+00:00,-0.007698892626889236,-0.008121138140426254,15,0.0,0.0060217400556281395,0.019655621383949315,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-16T12:00:00+00:00,-0.007085713555103203,-0.0072024995093051825,15,0.06666666666666667,0.005877711661256578,0.020790695142319043,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-17T00:00:00+00:00,-0.006029619020403442,-0.006169672413981253,13,0.07692307692307693,0.005143521987326814,0.017955163390287108,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-17T12:00:00+00:00,-0.006354443938534287,-0.007229880332073613,18,0.2222222222222222,0.007012246970610599,0.022630420472432716,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-18T00:00:00+00:00,-0.006057442854627833,-0.006506681863270525,16,0.25,0.006266169149046027,0.019758304850734366,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-18T12:00:00+00:00,-0.003945866492640133,-0.00477519653700087,16,0.4375,0.006159826023107604,0.018376288960579402,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-19T00:00:00+00:00,-0.002277851673632869,-0.0031542948858281905,16,0.5625,0.00608860325378,0.01653910841383633,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-19T12:00:00+00:00,-0.007653792304934755,-0.0077003077659251185,26,0.5384615384615384,0.009976064687976549,0.01907031213398497,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-20T00:00:00+00:00,-0.006778212327309322,-0.0070673944023786905,21,0.47619047619047616,0.008114502488450276,0.01894281625977839,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-20T12:00:00+00:00,-0.01216521631996036,-0.012877281365332172,26,0.34615384615384615,0.010025754842353176,0.020481879292485117,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-21T00:00:00+00:00,-0.010829459465807748,-0.010996000382789028,25,0.4,0.009672909865275177,0.01974221071085236,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-21T12:00:00+00:00,-0.009834312062128092,-0.010658841478613956,26,0.4230769230769231,0.010055079894780028,0.023271122964349786,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-22T00:00:00+00:00,-0.0069663390213804376,-0.007684699295242625,20,0.45,0.007732368617722882,0.01590721377182617,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-22T12:00:00+00:00,-0.008928200367279204,-0.009061661801343823,22,0.3181818181818182,0.008553076794661236,0.021436872469510548,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-23T00:00:00+00:00,-0.006249880917072216,-0.006249880917072348,18,0.5,0.00699339842456007,0.0140403815661251,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-23T12:00:00+00:00,-0.006230011811702099,-0.00623001181170213,14,0.2857142857142857,0.00540635640341227,0.013580650647631042,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-24T00:00:00+00:00,-0.006457667631671858,-0.006457667631671993,15,0.4666666666666667,0.005818391814446142,0.011928336287473022,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-24T12:00:00+00:00,-0.008247561011826868,-0.008482389255500822,18,0.3333333333333333,0.0070459761360933204,0.01612414898081143,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-25T00:00:00+00:00,-0.007920062511391828,-0.008070911612125253,12,0.08333333333333333,0.0048082872572116865,0.009722837603301037,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-25T12:00:00+00:00,-0.00958993155826778,-0.009760522414114181,17,0.11764705882352941,0.006727252342260217,0.017013514008093845,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-26T00:00:00+00:00,-0.004935883922116848,-0.005107245188279985,11,0.09090909090909091,0.004350219996944646,0.013962049345612017,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-26T12:00:00+00:00,-0.004996747283171633,-0.00542881901850123,17,0.35294117647058826,0.006625128002856218,0.018105486161798637,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-27T00:00:00+00:00,-0.005802805823184533,-0.006008420136352832,15,0.2,0.0059093648120560555,0.01639404433351032,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-27T12:00:00+00:00,-0.0051567770529013105,-0.005354118639851024,12,0.16666666666666666,0.004614936317887904,0.014831816886682224,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-28T00:00:00+00:00,-0.004974868489873046,-0.005431584757080499,11,0.18181818181818182,0.004276276087138541,0.012313262489584663,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-28T12:00:00+00:00,-0.010874050054976565,-0.011166103266736838,20,0.05,0.00783519871582494,0.02079274320784976,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-29T00:00:00+00:00,-0.008218706843911613,-0.008510760055671973,16,0.0625,0.006300997990998145,0.0173303748935065,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-29T12:00:00+00:00,-0.007290435037045186,-0.007725467011973963,16,0.125,0.006183222889438982,0.018144194747748536,False,0,0,selection,"live config (a), ML-only proxy"
+1,stress,2026-08-30T00:00:00+00:00,-0.007296769630807658,-0.007491512213517959,17,0.11764705882352941,0.006600271240473087,0.01920265627032321,False,0,0,selection,"live config (a), ML-only proxy"

@@ -136,6 +136,7 @@ Full rules: `docs/CHALLENGE.md`. Ground truth for the API: `docs/wallex_spot_swa
 | `journal/<mode>/` | DecisionLog (committed); `reports/decision_logs/` = exports (`scripts/export_decisions.py`) |
 | `api/`, `dashboard/` | read-only DRF API (`/api/overview`, `/api/decisions`) + Next.js 15 Persian RTL dashboard |
 | `scripts/go_live.sh` | `make go-live`: freeze check → preflight → smoke test → GO LIVE → tag → start live |
+| `research/smc/`, `config/smc.toml`, `scripts/smc_experiment.py` | ICT/SMC research (off, rejected: docs/RESEARCH_SMC.md); outside the live path |
 | `README.md`, `STRATEGY.md`, `RUNBOOK.md`, `DEMO_SCRIPT.md`, `CHANGELOG.md` | deliverable docs |
 
 ## 7. Wallex API facts (verified unless marked)
