@@ -3,6 +3,13 @@
 Every change to the trading code after the `live-v1` tag gets an entry here and a new tag (code freeze,
 RUNBOOK.md §2). Before go-live, `git log` is the history.
 
+## live-v1.1 deployed: 2026-10-23 12:33 Tehran (controlled restart, tag `live-v1.1-deploy`)
+
+- Switched the running live engine from live-v1 to live-v1.1 by a controlled restart: no open position, no resting
+  order, 10.4 h to the end. Reason: **safety fixes only** (restart-safe preflight, loss-limit references kept
+  across restarts, stale-state guard). **No strategy or risk change**: the trading code is live-v1.1; the deploy
+  commit adds only the inert `[smc] enabled = false` block and `config/smc.toml`, which live does not read.
+
 ## live-v1.1 (2026-10-23, safety fix while live-v1 runs; the running process is not restarted)
 
 - A supervisor restart of the live engine could not come back: its preflight failed on our own resting
