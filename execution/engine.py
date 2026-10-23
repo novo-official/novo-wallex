@@ -73,6 +73,10 @@ class EngineSettings:
     candle_refresh_seconds: int = 60
     entry_timeout_minutes: int = 15
     flatten_limit_timeout_seconds: int = 120
+    # MARKET orders are refused on the prop account (smoke test 2026-10-23, HTTP 422): every forced sell is an
+    # aggressive LIMIT this far under the best bid, re-placed at the new bid until the position is closed.
+    aggressive_exit_bps: int = 20
+    aggressive_exit_timeout_seconds: int = 30
     max_consecutive_errors: int = 5
     resume_after_clean_loops: int = 40  # an error halt (e.g. a DNS outage) lifts after ~10 min of clean loops
     ramp_hours: float = 2.0
@@ -236,8 +240,15 @@ class Engine:
         self._cancel_symbol_orders(position.symbol, ("take_profit", "entry"))
         position.tp_client_id = None
         bid, ask = self.feed.best_bid_ask(position.symbol)
-        if market:
-            tracked = self._place_sell(position.symbol, "MARKET", None, "exit", reason=reason)
+        if market:  # "market" = an aggressive limit: the exchange refuses MARKET orders
+            if bid is None:
+                self.journal.decision("EXIT_DEFERRED", symbol=position.symbol, reason=reason, problem="no best bid")
+                return
+            price = floor_decimals(
+                bid * (1 - Decimal(self.s.aggressive_exit_bps) / 10000), self._rules(position.symbol).price_decimals
+            )
+            expires = self.now() + timedelta(seconds=self.s.aggressive_exit_timeout_seconds)
+            tracked = self._place_sell(position.symbol, "LIMIT", price, "exit", expires, reason=reason)
         else:
             expires = self.now() + timedelta(seconds=self.s.flatten_limit_timeout_seconds)
             tracked = self._place_sell(position.symbol, "LIMIT", ask, "flatten_limit", expires, reason=reason)
@@ -410,14 +421,15 @@ class Engine:
                     position.quantity -= order.executed_qty  # part of it was sold before the cancel
                 if position is not None and position.exit_client_id == client_id:
                     position.exit_client_id = None
-            elif tracked.role == "flatten_limit" and expired:
+            elif tracked.role in ("flatten_limit", "exit") and expired:
                 self.broker.cancel(order)
                 tracked.processed = True
                 if position is not None:
                     position.quantity -= order.executed_qty
                     position.exit_client_id = None
                     # the balance decides what is left (a dust remainder closes the position)
-                    self.exit_position(position, "flatten: limit timed out, market", market=True)
+                    reason = tracked.meta.get("reason") or tracked.role
+                    self.exit_position(position, f"{reason}: limit timed out, aggressive limit", market=True)
 
     # --- marking, risk ------------------------------------------------------------------------------
 

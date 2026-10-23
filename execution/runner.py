@@ -154,6 +154,8 @@ def build_engine(mode: str) -> Engine:
         candle_refresh_seconds=int(engine_cfg["candle_refresh_seconds"]),
         entry_timeout_minutes=int(engine_cfg["entry_timeout_minutes"]),
         flatten_limit_timeout_seconds=int(engine_cfg["flatten_limit_timeout_seconds"]),
+        aggressive_exit_bps=int(engine_cfg.get("aggressive_exit_bps", 20)),
+        aggressive_exit_timeout_seconds=int(engine_cfg.get("aggressive_exit_timeout_seconds", 30)),
         max_consecutive_errors=int(engine_cfg["max_consecutive_errors"]),
         ramp_hours=float(live["risk"]["ramp_hours"]),
         ramp_factor=Decimal(live["risk"]["ramp_factor"]),

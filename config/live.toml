@@ -23,7 +23,9 @@ reconcile_seconds = 30
 candle_refresh_seconds = 60
 history_days = 50              # enough for the 4h EMA200 (~33 days)
 entry_timeout_minutes = 15     # maker entry limit: cancel if not filled
-flatten_limit_timeout_seconds = 120   # flatten: limit at best ask first, then market
+flatten_limit_timeout_seconds = 120   # flatten: limit at best ask first, then an aggressive limit
+aggressive_exit_bps = 20       # MARKET orders are refused on the prop account (422): forced sells = LIMIT 0.2%
+aggressive_exit_timeout_seconds = 30   # under the best bid, re-placed at the new bid every 30 s until closed
 max_consecutive_errors = 5     # then: halt new entries, keep managing exits
 
 [ai_activity]                  # user decision 2026-10-22: trend OFF; the only live module. Every entry = ML rank +

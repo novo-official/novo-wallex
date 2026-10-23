@@ -5,6 +5,10 @@ RUNBOOK.md §2). Before go-live, `git log` is the history.
 
 ## Unreleased (before live-v1)
 
+- 2026-10-23 (smoke test on the prop account): MARKET orders are refused (422), so every forced sell (stop, max
+  hold, flatten fallback, kill switch) is an aggressive LIMIT 0.2% under the best bid that expires after 30 s and
+  is re-placed at the new bid until closed; the engine never sends MARKET. USDTTMN orders are refused too.
+
 - 2026-10-23: every SELL (take-profit, stop, max-hold, flatten, kill switch) goes through one path: the
   available balance read at that moment, floored to the amount step, never the bought quantity; below the
   minimum order it is DUST (logged, not sold, left out of the ≥ 99% TMN check but reported); a rejected sell is

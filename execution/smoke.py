@@ -126,7 +126,10 @@ def round_trip(broker, symbol: str, rules, best_bid_ask, wait, timeout_s: float 
     received = after_buy.get(base, Decimal(0)) - before.get(base, Decimal(0))
     spent = before.get("TMN", Decimal(0)) - after_buy.get("TMN", Decimal(0))
     notional = buy.executed_qty * (buy.avg_price or ask)
-    if received < buy.executed_qty:
+    if buy.fee > 0 and buy.fee_asset:  # the order's own fee field (the balance is rounded to the amount step)
+        quote = buy.executed_qty if buy.fee_asset.upper() == base else notional
+        result.fee_buy = {"asset": buy.fee_asset.upper(), "rate": str(buy.fee / quote) if quote else "?"}
+    elif received < buy.executed_qty:
         result.fee_buy = {"asset": base, "rate": str((buy.executed_qty - received) / buy.executed_qty)}
     else:
         result.fee_buy = {"asset": "TMN", "rate": str((spent - notional) / notional) if notional else "?"}
@@ -137,17 +140,33 @@ def round_trip(broker, symbol: str, rules, best_bid_ask, wait, timeout_s: float 
     if sell_qty * bid < rules.min_notional:
         result.problems.append(f"cannot sell {sell_qty} {base}: below the minimum order")
         return result
-    sell = OrderState(new_client_id("R"), symbol, "SELL", "MARKET", None, sell_qty)
-    broker.place(sell)
-    _wait_done(broker, sell, wait, timeout_s)
-    result.steps.append({"step": "market sell of the available balance", **_order_fields(sell)})
+    # MARKET orders are refused on the prop account: an aggressive LIMIT under the bid, re-placed up to 3 times.
+    sold_qty, sold_value, sell = Decimal(0), Decimal(0), None
+    for attempt in range(1, 4):
+        sell_qty = broker.available().get(base, Decimal(0)).quantize(step, rounding=ROUND_DOWN)
+        bid, _ = best_bid_ask(symbol)
+        if sell_qty * bid < rules.min_notional:
+            break
+        price = (bid * (1 - Decimal("0.002"))).quantize(Decimal(1).scaleb(-rules.price_decimals), rounding=ROUND_DOWN)
+        sell = OrderState(new_client_id("R"), symbol, "SELL", "LIMIT", price, sell_qty)
+        broker.place(sell)
+        _wait_done(broker, sell, wait, 20.0)
+        if sell.status not in ("FILLED", "CANCELED", "REJECTED"):
+            broker.cancel(sell)
+            broker.refresh(sell)
+        result.steps.append(
+            {"step": f"aggressive limit sell {attempt}", **_order_fields(sell), "price": str(price), "bid": str(bid)}
+        )
+        sold_qty += sell.executed_qty
+        sold_value += sell.executed_qty * (sell.avg_price or price)
+        if sell.status in ("FILLED", "REJECTED"):
+            break
     after_sell = broker.available()
     got = after_sell.get("TMN", Decimal(0)) - after_buy.get("TMN", Decimal(0))
-    sold = sell.executed_qty * (sell.avg_price or bid)
     result.fee_sell = {
-        "asset": sell.fee_asset or "TMN",
-        "rate": str((sold - got) / sold) if sold else "?",
-        "order_fee": str(sell.fee),
+        "asset": (sell.fee_asset if sell else "") or "TMN",
+        "rate": str((sold_value - got) / sold_value) if sold_value else "?",
+        "order_fee": str(sell.fee) if sell else "0",
     }
     result.leftover = after_sell.get(base, Decimal(0)) - before.get(base, Decimal(0))
     result.leftover_tmn = result.leftover * bid
@@ -155,9 +174,8 @@ def round_trip(broker, symbol: str, rules, best_bid_ask, wait, timeout_s: float 
     result.steps.append(
         {"step": "after the sell", "leftover": str(result.leftover), "leftover_tmn": str(result.leftover_tmn)}
     )
-    if sell.status != "FILLED" or result.leftover >= step:
-        result.problems.append(
-            f"the sell did not close the position: status {sell.status}, {result.leftover} {base} left"
-        )
+    if result.leftover >= step:
+        status = sell.status if sell else "not sent"
+        result.problems.append(f"the sell did not close the position: status {status}, {result.leftover} {base} left")
     result.ok = not result.problems
     return result

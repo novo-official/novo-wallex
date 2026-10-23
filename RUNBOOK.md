@@ -33,8 +33,8 @@ make go-live
    LIMIT BUY about 5% under the best bid on USDTTMN (just above the 50,000 TMN minimum), reads it back by
    client_id, cancels it, confirms the cancel and that no order stays open. It prints every response field and
    the fee endpoint, and writes `logs/smoke-<time>.json` (local only).
-   - **Then the round trip (typed `ROUNDTRIP`):** one LIMIT BUY on BTCTMN at the best ask, about 55,000 TMN, then a
-     MARKET SELL of the whole available BTC balance. It reports which currency each fee was charged in (BTC or
+   - **Then the round trip (typed `ROUNDTRIP`):** one LIMIT BUY on BTCTMN at the best ask, about 55,000 TMN, then an
+     aggressive LIMIT SELL (0.2% under the bid, re-placed) of the whole available BTC balance (MARKET is refused). It reports which currency each fee was charged in (BTC or
      TMN), the real fee rates, the leftover dust and the cost (~0.6% of 55k). If the sell cannot close the
      position, go-live **aborts**. Report: `logs/roundtrip-<time>.json`.
    - **Check by eye:** `balance with the order resting`. If `value` dropped by the order notional and `locked` rose,

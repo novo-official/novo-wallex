@@ -178,7 +178,7 @@ def test_unfilled_entry_is_cancelled_after_the_timeout(tmp_path):
     assert entry.order.status == "CANCELED" and not engine.positions
 
 
-def test_end_of_challenge_flattens_with_a_limit_then_market(tmp_path):
+def test_end_of_challenge_flattens_with_a_limit_then_an_aggressive_limit(tmp_path):
     engine, feed, broker, strategy, clock = _engine(tmp_path, end_in_hours=3.0)
     engine.step()
     strategy.queue = [_entry(tp=None)]
@@ -191,11 +191,12 @@ def test_end_of_challenge_flattens_with_a_limit_then_market(tmp_path):
     engine.step()
     flatten = next(t for t in engine.orders.values() if t.role == "flatten_limit")
     assert flatten.order.side == "SELL" and flatten.order.price == feed.ask
-    clock.advance(seconds=125)  # the limit was not filled: market after the timeout
+    clock.advance(seconds=125)  # the limit was not filled: an aggressive limit under the bid after the timeout
     engine.step()
     clock.advance(seconds=15)
     engine.step()
-    assert any(t.role == "exit" and t.order.type == "MARKET" for t in engine.orders.values())
+    exits = [t for t in engine.orders.values() if t.role == "exit"]
+    assert exits and all(t.order.type == "LIMIT" and t.order.price <= feed.bid * Decimal("0.998") for t in exits)
     assert not engine.positions
     sells = [t for t in engine.orders.values() if t.order.side == "SELL" and t.order.status == "FILLED"]
     assert len(sells) == 1  # one sell in total
@@ -406,3 +407,34 @@ def test_rounding_dust_is_marked_and_swept_into_the_exit(tmp_path):
     clock.advance(seconds=15)
     engine.step()
     assert broker.balances()["BTC"] < Decimal("0.00001")  # everything sellable was sold, dust included
+
+
+def test_no_market_orders_and_an_unfilled_aggressive_exit_is_replaced_at_the_new_bid(tmp_path):
+    engine, feed, broker, strategy, clock = _engine(tmp_path)
+    engine.step()
+    strategy.queue = [_entry(tp=None)]
+    _cycle(engine, feed, clock)
+    feed.trades.append({"price": Decimal("99990"), "quantity": Decimal("1"), "time": clock.now + timedelta(seconds=1)})
+    clock.advance(seconds=15)
+    engine.step()
+    original, rested = broker.place, []
+
+    def place(order):  # the first exit rests unfilled (the bid moved away)
+        if order.side == "SELL" and not rested:
+            rested.append(order)
+            broker.orders[order.client_id] = order
+            return order
+        return original(order)
+
+    broker.place = place
+    feed.bid, feed.ask = Decimal("97900"), Decimal("98000")  # stop
+    clock.advance(seconds=15)
+    engine.step()
+    assert rested and rested[0].type == "LIMIT" and rested[0].price == Decimal("97704")  # 97900 x 0.998, floored
+    feed.bid, feed.ask = Decimal("97500"), Decimal("97600")
+    clock.advance(seconds=31)  # the aggressive limit expires: cancel, re-place at the new bid
+    engine.step()
+    clock.advance(seconds=15)
+    engine.step()
+    assert rested[0].status == "CANCELED" and "BTCTMN" not in engine.positions
+    assert all(t.order.type != "MARKET" for t in engine.orders.values())

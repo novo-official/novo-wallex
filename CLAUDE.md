@@ -161,7 +161,12 @@ Full rules: `docs/CHALLENGE.md`. Ground truth for the API: `docs/wallex_spot_swa
   `locked` (strings; whether `value` includes `locked` is UNVERIFIED until the smoke test), 283 assets.
   `/v1/account/openOrders` → `result.orders[]`. `/v1/account/fee` → per symbol `makerFeeRate`/`takerFeeRate`:
   **TMN 0.25% / 0.30%, USDT 0.10% / 0.13%**. `/v1/prop/user/packages/history` → 401 code 1201 «ابتدا وارد شوید»
-  (needs a web login, not the API key). Orders and `/v1/account/orders/{client_id}` still UNVERIFIED.
+  (needs a web login, not the API key).
+- **Prop account, smoke test 2026-10-23 (real orders):** LIMIT place/read/cancel on BTCTMN works (status NEW →
+  CANCELED, `raw_status` = status). `value` = total (includes `locked`): available = value − locked. **MARKET
+  orders are refused (422 «امکان ثبت سفارش قیمت بازار در سکو وجود ندارد»)**: forced sells are aggressive LIMITs.
+  **USDTTMN orders are refused (422)** on this account. Buy fee is taken in the coin (0.30% taker, balance
+  floored to 8 dp); sell fee in TMN (0.30%). A LIMIT at the best bid fills at once. Round trip cost 425 TMN on 55k.
 - UDF sends no bars for minutes without trades. At night even USDTTMN can go 6 h without a trade (book still
   live): the feed extends quiet symbols flat and the engine refuses entries on a market quiet > 120 min.
 - Orders (Swagger, P5 only): `POST /v1/account/orders` {symbol, side BUY/SELL, type LIMIT/MARKET/STOP_LIMIT/STOP_MARKET,

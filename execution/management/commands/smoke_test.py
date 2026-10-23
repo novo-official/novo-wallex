@@ -91,8 +91,9 @@ class Command(BaseCommand):
         _, ask = best_bid_ask(symbol)
         notional = rules.min_notional * Decimal("1.1")
         self.stdout.write(
-            f"Round trip on {symbol}: LIMIT BUY about {notional:.0f} TMN at the best ask {ask}, then a MARKET SELL "
-            "of the whole available BTC balance. Costs about 0.6% of that in fees and spread."
+            f"Round trip on {symbol}: LIMIT BUY about {notional:.0f} TMN at the best ask {ask}, then an aggressive "
+            "LIMIT SELL (0.2% under the bid, re-placed up to 3 times) of the whole available BTC balance. Costs about "
+            "0.8% of that in fees and spread."
         )
         if input("Type ROUNDTRIP to send it: ").strip() != "ROUNDTRIP":
             raise CommandError("round trip not confirmed: nothing was sent")
