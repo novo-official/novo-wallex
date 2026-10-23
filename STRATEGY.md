@@ -129,7 +129,7 @@ All fee tables use the **measured** fees from `GET /v1/account/fee` (2026-10-23)
 
 **The live configuration (a) with both LLM roles** (`reports/ai_activity_llm`, last 7 days, measured fees,
 blind replay): ML only −0.67% (20 trades) → + Officer −0.53% (15) → **+ Officer + Trade Agent −0.32%, max DD
-−0.36%, 11 trades (1.57/day)**. The Trade Agent approved 25 of 245 candidates. **Recommendation:** keep (a) with
+−0.36%, 11 trades (1.57/day)**. The Trade Agent approved 25 of 245 candidates. **Decision (team, 2026-10-23):** keep (a) with
 both roles (the current `config/live.toml`): the smallest loss that still meets ≥ 1 trade/day; (b) would be
 the choice only if not losing matters more than activity.
 - **Earlier phases:** trend rules (P2) about break-even per 3-day window at default fees; per-bar ML has real
