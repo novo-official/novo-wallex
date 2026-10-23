@@ -175,13 +175,21 @@ class Engine:
                 )
 
     def _sell_quantity(self, position: LivePosition) -> Decimal:
+        """Everything held of the coin, floored to the amount step: this also sells the rounding dust earlier
+        trades left (a coin-side buy fee leaves up to one step, ~6,000 TMN on ETHTMN). Live reads a fresh balance
+        first (the resting take-profit was just cancelled); if that read fails, only the position is sold."""
         rules = self._rules(position.symbol)
-        held = (
-            self.balances.get(self._base(position.symbol), position.quantity)
-            if self.s.mode == "live"
-            else position.quantity
-        )
-        return floor_decimals(min(position.quantity, held), rules.amount_decimals)
+        base = self._base(position.symbol)
+        if self.s.mode == "live":
+            try:
+                self.balances = self.broker.balances()
+            except Exception as exc:  # noqa: BLE001 - fall back to the tracked quantity
+                self.journal.decision("BALANCE_READ_FAILED", symbol=position.symbol, error=repr(exc))
+                return floor_decimals(position.quantity, rules.amount_decimals)
+            held = self.balances.get(base, position.quantity)
+        else:
+            held = self.broker.balances().get(base, position.quantity)
+        return floor_decimals(held, rules.amount_decimals)
 
     def exit_position(self, position: LivePosition, reason: str, market: bool = True) -> None:
         """Cancel the resting take-profit (self-trade guard), then sell: market, or limit at the best ask."""
@@ -378,13 +386,25 @@ class Engine:
     # --- marking, risk ------------------------------------------------------------------------------
 
     def mark(self) -> Decimal:
-        value = self.balances.get("TMN", ZERO) if self.balances else self.s.start_equity
-        if self.s.mode == "shadow":
-            value = self.broker.balances().get("TMN", ZERO)
-        for position in self.positions.values():
-            bid, _ = self.feed.best_bid_ask(position.symbol)
+        """Liquidation value: TMN plus every traded coin held (positions and rounding dust) at the best bid,
+        minus the taker fee. Live uses the last balance snapshot (reconcile, every 30 s)."""
+        balances = self.broker.balances() if self.s.mode == "shadow" else self.balances
+        if not balances:
+            value = self.s.start_equity
+            held = {p.symbol: p.quantity for p in self.positions.values()}
+        else:
+            value = balances.get("TMN", ZERO)
+            symbols = set(getattr(self.feed, "tradable", None) or self.feed.rules) | set(self.positions)
+            held = {}
+            for symbol in symbols:
+                position = self.positions.get(symbol)
+                amount = max(balances.get(self._base(symbol), ZERO), position.quantity if position else ZERO)
+                if amount > 0:
+                    held[symbol] = amount
+        for symbol, amount in held.items():
+            bid, _ = self.feed.best_bid_ask(symbol)
             if bid is not None:
-                value += position.quantity * bid * (1 - self.s.taker_fee)
+                value += amount * bid * (1 - self.s.taker_fee)
         return value
 
     def account_state(self, now: datetime, exposure: Decimal) -> AccountState:
@@ -658,12 +678,30 @@ class Engine:
                 self.journal.decision("HALT_ENTRIES", reason=f"{self.errors} consecutive errors")
         self.persist(now)
 
+    def _restore_ledger(self, state: dict) -> None:
+        """Shadow only: the simulated balances survive a restart (live balances come from the exchange)."""
+        if self.s.mode != "shadow" or not hasattr(self.broker, "ledger"):
+            return
+        if "ledger" in state:
+            self.broker.ledger = {asset: Decimal(amount) for asset, amount in state["ledger"].items()}
+            return
+        positions = state.get("positions", {})
+        if positions:  # a state file from before the ledger was saved: rebuild it from the open positions
+            ledger = {"TMN": Decimal(state.get("start_equity", self.s.start_equity))}
+            for symbol, raw in positions.items():
+                quantity = Decimal(raw["quantity"])
+                ledger["TMN"] -= quantity * Decimal(raw["entry_price"])
+                ledger[self._base(symbol)] = ledger.get(self._base(symbol), ZERO) + quantity
+            self.broker.ledger = ledger
+            self.journal.decision("LEDGER_REBUILT", ledger={k: str(v) for k, v in ledger.items()})
+
     def restore(self) -> None:
         """Reload positions and open orders after a restart (the exchange stays the truth: reconcile follows)."""
         path = self.state_dir / f"engine_state_{self.s.mode}.json"
         if not path.exists():
             return
         state = json.loads(path.read_text(encoding="utf-8"))
+        self._restore_ledger(state)
         for symbol, raw in state.get("positions", {}).items():
             take_profit = raw.get("take_profit")
             self.positions[symbol] = LivePosition(
@@ -733,6 +771,8 @@ class Engine:
             "last_cycle_bar": self.last_cycle_bar.isoformat() if self.last_cycle_bar is not None else None,
             "challenge_end": self.s.challenge_end.isoformat() if self.s.challenge_end else None,
         }
+        if self.s.mode == "shadow" and hasattr(self.broker, "ledger"):
+            state["ledger"] = {asset: str(amount) for asset, amount in self.broker.ledger.items()}
         temporary = self.state_dir / f"engine_state_{self.s.mode}.json.tmp"
         temporary.write_text(json.dumps(state, default=str, indent=1), encoding="utf-8")
         temporary.replace(self.state_dir / f"engine_state_{self.s.mode}.json")

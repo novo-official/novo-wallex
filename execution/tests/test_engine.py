@@ -245,8 +245,11 @@ def test_restart_restores_positions_and_orders(tmp_path):
     feed.trades.append({"price": Decimal("99990"), "quantity": Decimal("1"), "time": clock.now + timedelta(seconds=1)})
     clock.advance(seconds=15)
     engine.step()
-    again = Engine(engine.s, feed, broker, engine.guard, strategy, engine.journal, tmp_path / "state", clock=clock)
+    ledger = dict(broker.ledger)
+    fresh = ShadowBroker(feed, FEES, Decimal("5000000"))  # a restarted process starts with a new broker
+    again = Engine(engine.s, feed, fresh, engine.guard, strategy, engine.journal, tmp_path / "state", clock=clock)
     again.step()
+    assert fresh.ledger == ledger  # the simulated balances survived the restart
     assert "BTCTMN" in again.positions and again.positions["BTCTMN"].tp_client_id
     assert any(t.role == "take_profit" for t in again.orders.values())
 
@@ -381,3 +384,25 @@ def test_no_entry_on_a_market_without_recent_trades(tmp_path):
     assert not any(t.role == "entry" for t in engine.orders.values())
     skip = [d for d in _decisions(tmp_path) if d["kind"] == "SKIP"]
     assert skip and "240 min" in skip[0]["risk"]
+
+
+def test_rounding_dust_is_marked_and_swept_into_the_exit(tmp_path):
+    engine, feed, broker, strategy, clock = _engine(tmp_path)
+    feed.rules = {"BTCTMN": SymbolRules(5, 0, Decimal("50000"))}  # a coarse amount step, like ETHTMN
+    engine.step()
+    strategy.queue = [_entry(tp=None)]
+    _cycle(engine, feed, clock)
+    feed.trades.append({"price": Decimal("99990"), "quantity": Decimal("1"), "time": clock.now + timedelta(seconds=1)})
+    clock.advance(seconds=15)
+    engine.step()
+    position = engine.positions["BTCTMN"]
+    held = broker.balances()["BTC"]
+    assert held > position.quantity  # the coin-side fee left dust below one amount step
+    assert engine.mark() > broker.balances()["TMN"] + position.quantity * feed.bid * Decimal("0.9965")
+    broker.ledger["BTC"] += Decimal("0.00001")  # dust left by an earlier trade
+    feed.bid, feed.ask = Decimal("97900"), Decimal("98000")  # stop
+    clock.advance(seconds=15)
+    engine.step()
+    clock.advance(seconds=15)
+    engine.step()
+    assert broker.balances()["BTC"] < Decimal("0.00001")  # everything sellable was sold, dust included
