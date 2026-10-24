@@ -3,6 +3,19 @@
 Every change to the trading code after the `live-v1` tag gets an entry here and a new tag (code freeze,
 RUNBOOK.md §2). Before go-live, `git log` is the history.
 
+## live-v2 stopped: 2026-10-24 17:01 Tehran (team decision, before the 2026-10-26 23:00 end)
+
+- live-v2 ran 2026-10-24 10:12 → 17:01 Tehran on `f6878ec` (AI activity + smc_long). No trade: in every slot the
+  Officer's avoid list or the Trade Agent rejected the candidates; no SMC setup reached the live module.
+- The Mac slept 10:54–15:50 (lid closed, on battery): network errors halted entries, which resumed by themselves
+  at 15:59 after 40 clean loops.
+- Two engine crashes at 16:57 and 16:58 Tehran while writing the state file (`persist`, exit status 120); the
+  supervisor restarted within 10 s and the state was restored (restart-safe path of live-v1.1); nothing was open.
+  Cause not established (the disk was 98% full at the time).
+- Stopped by the team: live and shadow engines and the orderbook recorder, with no position and no open order.
+  Account at the stop: 4,989,101 TMN + 0.0000085 ETH dust (≈ 5,400 TMN), −0.11% vs 5,000,000 (all from
+  2026-10-23's run and smoke tests).
+
 ## live-v2 (2026-10-24, team decision: SMC alongside AI activity; tagged at go-live)
 
 - `smc_long` (ICT: 1h bullish structure, 15m sweep, displacement + BOS, FVG/OB retrace entry, stop under the
